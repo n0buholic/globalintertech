@@ -85,7 +85,7 @@
                     <img style="width: 400px; max-width: 100%;" src="assets/images/logo_700_white.png" alt="">
                 </div>
                 <a href="#gallery_event" class="btn-primary-line mt-5 me-3">Galeri Acara</a>
-                <a href="#career" class="btn-primary-line mt-5">Tentang</a>
+                <a href="#about_us" class="btn-primary-line mt-5">Tentang</a>
             </div>
         </div>
     </div>
