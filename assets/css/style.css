@@ -85,6 +85,7 @@ html, body {
   font-weight: 400;
   background-color: #fff;
   font-size: 16px;
+  padding-right: 0px !important;
   -ms-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

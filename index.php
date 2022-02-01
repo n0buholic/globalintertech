@@ -17,8 +17,8 @@
     <link href="assets/vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet" type="text/css" />
     <link href="assets/css/blink.css" rel="stylesheet" type="text/css" />
 
-    <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/custom.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/style.css?v=<?=time()?>" rel="stylesheet" type="text/css" />
+    <link href="assets/css/custom.css?v=<?=time()?>" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
@@ -680,11 +680,10 @@
     <script src="assets/js/jquery.magnific-popup.min.js"></script>
     <script src="assets/js/imgfix.min.js"></script>
     <script src="https://maps.google.com/maps/api/js?key=AIzaSyDrJGHJMMYlMde96uLIBxx9lDCDdrPo5TY"></script>
-    <!--<script src="https://maps.google.com/maps/api/js?key=AIzaSyCQ0LRe3o9LXFd60nxaCdZACiIsVx4k_cs"></script>-->
-    <script src="assets/js/map-script.js"></script>
+    <script src="assets/js/map-script.js?v=<?=time()?>"></script>
     <script src="assets/vendor/sweetalert2/dist/sweetalert2.min.js"></script>
 
-    <script src="assets/js/custom.js"></script>
+    <script src="assets/js/custom.js?v=<?=time()?>"></script>
 
 </body>
 
