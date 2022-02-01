@@ -1,0 +1,6 @@
+[23-Dec-2020 05:01:58 UTC] PHP Warning:  require_once(.../setty/config.php): failed to open stream: No such file or directory in /home/global89/public_html/karirax/sale.php on line 2
+[23-Dec-2020 05:01:58 UTC] PHP Fatal error:  require_once(): Failed opening required '.../setty/config.php' (include_path='.:/opt/alt/php56/usr/share/pear:/opt/alt/php56/usr/share/php') in /home/global89/public_html/karirax/sale.php on line 2
+[23-May-2021 06:06:57 UTC] PHP Warning:  require_once(.../setty/config.php): failed to open stream: No such file or directory in /home/global89/public_html/karirax/sale.php on line 2
+[23-May-2021 06:06:57 UTC] PHP Fatal error:  require_once(): Failed opening required '.../setty/config.php' (include_path='.:/opt/alt/php56/usr/share/pear:/opt/alt/php56/usr/share/php') in /home/global89/public_html/karirax/sale.php on line 2
+[23-May-2021 06:09:55 UTC] PHP Warning:  require_once(.../setty/config.php): failed to open stream: No such file or directory in /home/global89/public_html/karirax/sale.php on line 2
+[23-May-2021 06:09:55 UTC] PHP Fatal error:  require_once(): Failed opening required '.../setty/config.php' (include_path='.:/opt/alt/php56/usr/share/pear:/opt/alt/php56/usr/share/php') in /home/global89/public_html/karirax/sale.php on line 2
