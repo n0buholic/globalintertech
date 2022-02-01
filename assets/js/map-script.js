@@ -77,7 +77,7 @@
       dataZoomcontrol = $this.data("zoomcontrol"),
       dataHue = false,
       dataTitle = nama,
-      dataContent = `<br>${alamat}`;
+      dataContent = `<br>${alamat}<br><br><a href="https://www.google.com/maps/dir/?api=1&destination=${dataLat},${dataLng}" class="px-3 btn-primary-line btn-mini">Dapatkan Arah <i class="fa ms-1 fa-chevron-right"></i></a>`;
 
     if (dataZoom !== undefined && dataZoom !== false) {
       zoom = parseFloat(dataZoom);
@@ -113,15 +113,14 @@
     var image = theme_icon_path;
 
     if (dataContent !== undefined && dataContent !== false) {
-      contentString =
-        '<div class="map-data">' +
-        "<h6>" +
-        title +
-        "</h6>" +
-        '<div class="map-content">' +
-        dataContent +
-        "</div>" +
-        "</div>";
+      contentString = (`
+      <div class="map-data">
+        <h6>${title}</h6>
+        <div class="map-content">
+          ${dataContent}
+        </div>
+      </div>
+      `);
     }
     var infowindow = new google.maps.InfoWindow({
       content: contentString,
