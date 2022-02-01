@@ -38,9 +38,9 @@ if (substr($handphone, 0, 1) === "0") {
 }
 
 // config
-$to = "harranobu@gmail.com";
+$to = "sales02@glosindotech.com";
 $bcc = [
-    "lennypurnawatiningsih@gmail.com"
+    "glosindotech@gmail.com"
 ];
 
 $date = date("Y-m-d");
