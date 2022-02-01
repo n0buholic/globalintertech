@@ -53,7 +53,6 @@
 
   function GmapInit() {
     lokasi.forEach(function (lok) {
-      console.log("awa");
       addMarker(map, lok.nama, lok.alamat, lok.lat, lok.long);
     });
   }

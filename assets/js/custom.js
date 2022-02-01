@@ -1,5 +1,4 @@
 (function ($) {
-
   ("use strict");
 
   var CustomAlert = Swal.mixin({
@@ -10,23 +9,23 @@
     buttonsStyling: false,
   });
 
-  $('.gallery-view').click(function () {
-    var id = $(this).data('id');
+  $(".gallery-view").click(function () {
+    var id = $(this).data("id");
     var modal = $("#modalEvent");
     modal.find(".modal-body").html("");
     $.ajax({
-      url: '#', // event/form/form_lihat_foto
+      url: "#", // event/form/form_lihat_foto
       beforeSend: function () {
         CustomAlert.showLoading();
       },
-      data: 'id=' + id,
+      data: "id=" + id,
       cache: false,
       processData: false,
       success: function (data) {
         CustomAlert.close();
         // modal.find(".modal-body").html(data);
         modal.modal("show");
-      }
+      },
     });
   });
 
@@ -51,7 +50,7 @@
   $("a[href*=\\#]:not([href=\\#])").on("click", function () {
     if (
       location.pathname.replace(/^\//, "") ==
-      this.pathname.replace(/^\//, "") &&
+        this.pathname.replace(/^\//, "") &&
       location.hostname == this.hostname
     ) {
       var target = $(this.hash);
@@ -175,6 +174,7 @@
     }
   });
 
+  // submit form lamaran
   $("#form-lamaran").on("submit", function (e) {
     e.preventDefault();
     CustomAlert.showLoading();
@@ -185,6 +185,47 @@
         icon: "success",
       });
     }, 1000);
+  });
+
+  // submit form contact
+  $("#form-contact").on("submit", function (e) {
+    e.preventDefault();
+    const response = grecaptcha.getResponse();
+    const form = this;
+    if (response) {
+      $.ajax({
+        url: "api/send_email.php",
+        method: "POST",
+        data: new FormData(form),
+        dataType: "JSON",
+        processData: false,
+        contentType: false,
+        beforeSend: CustomAlert.showLoading(),
+        success: function (data) {
+          if (data.success) {
+            CustomAlert.fire({
+              title: "Sukses",
+              text: data.message,
+              icon: "success",
+            });
+            grecaptcha.reset();
+            form.reset();
+          } else {
+            CustomAlert.fire({
+              title: "Gagal",
+              text: data.message,
+              icon: "error",
+            });
+          }
+        },
+      });
+    } else {
+      CustomAlert.fire({
+        title: "Gagal",
+        text: "Silahkan selesaikan captcha",
+        icon: "error",
+      });
+    }
   });
 
   // Header Scrolling Set White Background
