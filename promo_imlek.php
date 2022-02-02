@@ -20,9 +20,15 @@
     <link href="assets/css/custom.css" rel="stylesheet" type="text/css" />
 </head>
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+
     .title {
-        color: gold;
+        font-family: 'Satisfy', cursive;
+        color: #f0bc59;
         font-size: 45px;
+    }
+    .x2 {
+        font-size: 80px;
     }
 
     .page {
@@ -83,16 +89,17 @@
         </div>
         <div class="page-bottom">
             <div class="container">
-                <div class="row justify-content-center text-center mb-5">
+                <div class="row justify-content-center text-center mt-2 mb-5">
                     <div class="col-md-8">
-                        <h1 class="fw-bold title font-size-24 mt-2 mb-5">PROMO IMLEK 2022</h1>
                         <img style="width: 500px; max-width: 80%;" src="assets/images/lunar_new_year/tiger.svg">
+                        <h1 class="fw-bold title font-size-20 mt-4">Selamat Tahun Baru Imlek</h1>
+                        <h1 class="fw-bold title x2 font-size-24 mb-5">2022</h1>
                     </div>
                 </div>
                 <div class="row justify-content-center mb-4">
                     <div class="col-md-8">
                         <div class="card">
-                            <div class="card-header"><b><i class="fa fa-fw fa-edit"></i> FORMULIR PROMO</b></div>
+                            <div class="card-header"><b><i class="fa fa-fw fa-edit"></i> FORMULIR DATA DIRI</b></div>
                             <div class="card-body">
                                 <form id="form-promo" action="#" method="POST">
                                     <div class="form-group mb-2">

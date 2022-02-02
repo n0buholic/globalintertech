@@ -53,7 +53,8 @@ if (substr($handphone, 0, 1) === "0") {
 // config
 $to = "sales02@glosindotech.com";
 $bcc = [
-    "glosindotech@gmail.com"
+    "glosindotech@gmail.com",
+    "harranobu@gmail.com"
 ];
 
 $date = date("Y-m-d");
@@ -63,12 +64,12 @@ try {
     $mail->isSMTP();
     $mail->Host       = 'globalintertech.co.id';
     $mail->SMTPAuth   = true;
-    $mail->Username   = 'dev@globalintertech.co.id';
+    $mail->Username   = 'contact@globalintertech.co.id';
     $mail->Password   = 'n@k@t@123';
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
     $mail->Port       = 465;
 
-    $mail->setFrom('dev@globalintertech.co.id');
+    $mail->setFrom('contact@globalintertech.co.id');
     $mail->addAddress($to);
 
     foreach ($bcc as $email) {
