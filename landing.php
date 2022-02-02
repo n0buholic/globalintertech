@@ -61,6 +61,7 @@
                         <img class="w-100" src="assets/images/logo_700.png" alt="">
                     </div>
                     <h4 class="mt-4 mb-5">Global Integra Technology</h4>
+                    <a target="_blank" href="https://www.globalintertech.co.id/" class="btn-primary-line w-100 my-2"><i class="fas fa-globe me-1"></i> WEBSITE</a>
                     <a href="#contact" class="btn-primary-line w-100 my-2"><i class="fab fa-whatsapp me-1"></i> KONTAK</a>
                     <a href="#ecommerce" class="btn-primary-line w-100 my-2"><i class="fas fa-shopping-bag me-1"></i> E-COMMERCE</a>
                     <a href="#location" class="btn-primary-line w-100 my-2"><i class="fas fa-map-marked-alt me-1"></i> ALAMAT STORE OFFLINE</a>
