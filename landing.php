@@ -33,6 +33,10 @@
         font-size: 16px;
     }
 
+    .promo-container img {
+        border-radius: 30px;
+    }
+
     .logo-container {
         width: 150px;
         height: 150px;
@@ -81,6 +85,7 @@
                     </div>
                     <h4 class="mt-4 mb-5">Global Integra Technology</h4>
                     <a target="_blank" href="https://www.globalintertech.co.id/" class="btn-primary-line w-100 my-2"><i class="fas fa-globe me-1"></i> WEBSITE</a>
+                    <a href="#promotion" class="btn-primary-line w-100 my-2"><i class="fas fa-tags me-1"></i> PROMO BERLANGSUNG</a>
                     <a href="#contact" class="btn-primary-line w-100 my-2"><i class="fab fa-whatsapp me-1"></i> KONTAK</a>
                     <a href="#ecommerce" class="btn-primary-line w-100 my-2"><i class="fas fa-shopping-bag me-1"></i> E-COMMERCE</a>
                     <a href="#location" class="btn-primary-line w-100 my-2"><i class="fas fa-map-marked-alt me-1"></i> ALAMAT STORE OFFLINE</a>
@@ -93,6 +98,31 @@
                         </a>
                         <a target="_blank" href="#" class="btn btn-primary-line icon-container mx-1">
                             <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section py-3" id="promotion">
+        <div class="container" style="height: 100vh;">
+            <div class="row align-items-center text-center text-white h-100">
+                <div class="col-12">
+                    <div class="center-heading mb-3">
+                        <h2 class="section-title text-white">PROMO BERLANGSUNG</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 promo-container">
+                            <img class="img-fluid" src="assets/images/landing/promo/1.jpeg">
+                        </div>
+                        <div class="col-6 promo-container">
+                            <img class="img-fluid" src="assets/images/landing/promo/2.jpeg">
+                        </div>
+                    </div>
+                    <div class="my-5">
+                        <a href="#contact" class="btn btn-primary-line icon-container mx-1">
+                            <i class="fas fa-chevron-down"></i>
                         </a>
                     </div>
                 </div>
