@@ -16,6 +16,19 @@ $name = trim(@$_POST["name"]);
 $email = trim(@$_POST["email"]);
 $handphone = trim(@$_POST["handphone"]);
 $message = trim(@$_POST["message"]);
+$token = trim(@$_POST["g-recaptcha-response"]);
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, array("secret" => "6Ld2mRMeAAAAAKmu7R6RJeCV4LzKJPb6Vqg9XEuh", "response" => @$token, "remoteip" => getUserIP()));
+$output = curl_exec($ch);
+curl_close($ch);
+$res = json_decode($output, true);
+
+if ($res["success"] == false) {
+    JSON(false, "Recaptcha gagal diverifikasi.");
+}
 
 if (!$name || empty($name)) {
     JSON(false, "Nama tidak boleh kosong.");
@@ -58,7 +71,7 @@ try {
     $mail->setFrom('dev@globalintertech.co.id');
     $mail->addAddress($to);
 
-    foreach($bcc as $email) {
+    foreach ($bcc as $email) {
         $mail->addBCC = $email;
     }
 
@@ -81,4 +94,26 @@ function JSON($status, $message)
         "message" => $message
     ], JSON_PRETTY_PRINT);
     die();
+}
+
+function getUserIP()
+{
+    // Get real visitor IP behind CloudFlare network
+    if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
+        $_SERVER['REMOTE_ADDR'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+        $_SERVER['HTTP_CLIENT_IP'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+    }
+    $client  = @$_SERVER['HTTP_CLIENT_IP'];
+    $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
+    $remote  = $_SERVER['REMOTE_ADDR'];
+
+    if (filter_var($client, FILTER_VALIDATE_IP)) {
+        $ip = $client;
+    } elseif (filter_var($forward, FILTER_VALIDATE_IP)) {
+        $ip = $forward;
+    } else {
+        $ip = $remote;
+    }
+
+    return $ip;
 }
