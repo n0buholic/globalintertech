@@ -642,7 +642,16 @@
         </div>
     </footer>
 
-    <div class="modal" id="modalEvent" tabindex="-1">
+    <div class="modal fade popup" id="promo" tabindex="-1">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <a target="_blank" href="/promo-imlek"><img class="w-100" src="assets/images/promo-imlek.jpg" alt=""></a>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalEvent" tabindex="-1">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">

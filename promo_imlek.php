@@ -240,16 +240,20 @@
                             <div class="card-body">
                                 <form id="form-promo" action="#" method="POST">
                                     <div class="form-group mb-2">
-                                        <label for="nama">Nama Lengkap</label>
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Nama Lengkap">
+                                        <label for="nama">Nama Lengkap *</label>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Nama Lengkap" required>
                                     </div>
                                     <div class="form-group mb-2">
-                                        <label for="handphone">No. HP/WhatsApp</label>
-                                        <input type="text" class="form-control" id="handphone" name="handphone" placeholder="No. HP/WhatsApp">
+                                        <label for="handphone">No. HP/WhatsApp *</label>
+                                        <input type="number" class="form-control" id="handphone" name="handphone" placeholder="No. HP/WhatsApp" required>
                                     </div>
                                     <div class="form-group mb-2">
-                                        <label for="package">Paket Promo</label>
-                                        <select class="form-control" name="package">
+                                        <label for="handphone">Alamat Email (opsional)</label>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Alamat Email">
+                                    </div>
+                                    <div class="form-group mb-2">
+                                        <label for="package">Paket Promo *</label>
+                                        <select class="form-control" name="package" required>
                                             <option value="1">4CH HIKVISION 2MP - Rp 3.700.000</option>
                                             <option value="1">8CH HIKVISION 2MP - Rp 5.700.000</option>
                                             <option value="1">16CH HIKVISION 2MP - Rp 9.899.000</option>
