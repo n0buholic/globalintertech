@@ -1,2 +1,3 @@
 RewriteEngine On
 RewriteRule ^promo-imlek promo_imlek.php
+RewriteRule ^landing landing.php
