@@ -49,6 +49,25 @@
         justify-content: space-around;
         font-size: 24px;
     }
+
+    .embed-container {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        border-radius: 30px;
+    }
+
+    .embed-container iframe,
+    .embed-container object,
+    .embed-container embed {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
 </style>
 
 <body>
@@ -65,7 +84,6 @@
                     <a href="#contact" class="btn-primary-line w-100 my-2"><i class="fab fa-whatsapp me-1"></i> KONTAK</a>
                     <a href="#ecommerce" class="btn-primary-line w-100 my-2"><i class="fas fa-shopping-bag me-1"></i> E-COMMERCE</a>
                     <a href="#location" class="btn-primary-line w-100 my-2"><i class="fas fa-map-marked-alt me-1"></i> ALAMAT STORE OFFLINE</a>
-                    <a href="#video" class="btn-primary-line w-100 my-2"><i class="fas fa-play-circle me-1"></i> VIDEO COMPANY</a>
                     <div class="mt-5">
                         <a target="_blank" href="#" class="btn btn-primary-line icon-container mx-1">
                             <i class="fab fa-facebook"></i>
@@ -131,27 +149,16 @@
                     <div class="center-heading mb-3">
                         <h2 class="section-title text-white">ALAMAT STORE OFFLINE</h2>
                     </div>
-                    <a target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=-3.351034362128312,114.61648273166458" class="btn-primary-line w-100 my-2"><i class="fas fa-building me-1"></i> Retail dan Gudang</a>
-                    <a target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=-3.327111092019475,114.59787828775406" class="btn-primary-line w-100 my-2"><i class="fas fa-tools me-1"></i> Service Centre</a>
-                    <div class="my-5">
-                        <a href="#video" class="btn btn-primary-line icon-container mx-1">
-                            <i class="fas fa-chevron-down"></i>
-                        </a>
+                    <a target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=-3.351034362128312,114.61648273166458" class="btn-primary-line w-100 my-2"><i class="fas fa-map-marked-alt me-1"></i> Alamat Retail dan Gudang</a>
+                    <a href="#video-1" class="btn-primary-line w-100 my-2" data-bs-toggle="collapse" role="button" aria-expanded="false"><i class="fas fa-play-circle me-1"></i> Video Retail dan Gudang</a>
+                    <div class="collapse mt-2" id="video-1">
+                        <div class='embed-container'><iframe src='https://www.youtube.com/embed/VH7d-_4za0o' frameborder='0' allowfullscreen></iframe></div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="section py-3" id="video">
-        <div class="container" style="height: 100vh;">
-            <div class="row align-items-center text-center text-white h-100">
-                <div class="col-12">
-                    <div class="center-heading mb-3">
-                        <h2 class="section-title text-white">VIDEO COMPANY</h2>
-                    </div>
-                    <div>
-
+                    <div class="my-5"></div>
+                    <a target="_blank" href="https://www.google.com/maps/dir/?api=1&destination=-3.327111092019475,114.59787828775406" class="btn-primary-line w-100 my-2"><i class="fas fa-map-marked-alt me-1"></i> Alamat Service Centre</a>
+                    <a href="#video-2" class="btn-primary-line w-100 my-2" data-bs-toggle="collapse" role="button" aria-expanded="false"><i class="fas fa-play-circle me-1"></i> Video Service Centre</a>
+                    <div class="collapse mt-2" id="video-2">
+                        <div class='embed-container'><iframe src='https://www.youtube.com/embed/EK9VmaxDBiY' frameborder='0' allowfullscreen></iframe></div>
                     </div>
                     <div class="my-5">
                         <a href="#main" class="btn btn-primary-line icon-container mx-1">
