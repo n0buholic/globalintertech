@@ -1,3 +1,4 @@
 RewriteEngine On
-RewriteRule ^promo-imlek promo_imlek.php
-RewriteRule ^landing landing.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [PT,L]
