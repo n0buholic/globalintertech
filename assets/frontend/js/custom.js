@@ -385,5 +385,5 @@
   }
 
   // imlek popup
-  // setTimeout(() => $("#promo").modal("show"), 1 * 1000)
+  setTimeout(() => $("#promo").modal("show"), 1 * 1000)
 })(window.jQuery);
