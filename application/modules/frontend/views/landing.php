@@ -195,6 +195,11 @@
                 <div class="collapse mt-2" id="video-2">
                     <div class='embed-container'><iframe src='https://www.youtube.com/embed/EK9VmaxDBiY' frameborder='0' allowfullscreen></iframe></div>
                 </div>
+                <div class="my-5"></div>
+                <a href="#video-3" class="btn-primary-line w-100 my-2" data-bs-toggle="collapse" role="button" aria-expanded="false"><i class="fas fa-play-circle me-1"></i> Video Cara Klaim Garansi</a>
+                <div class="collapse mt-2" id="video-3">
+                    <div class='embed-container'><iframe src='https://www.youtube.com/embed/7PzOLeqsEoY' frameborder='0' allowfullscreen></iframe></div>
+                </div>
                 <div class="my-5">
                     <a href="#main" class="btn btn-primary-line icon-container mx-1">
                         <i class="fas fa-chevron-up"></i>
