@@ -113,12 +113,12 @@ class Frontend extends MX_Controller
 			$mail->isSMTP();
 			$mail->Host       = 'globalintertech.co.id';
 			$mail->SMTPAuth   = true;
-			$mail->Username   = $account["account"];
+			$mail->Username   = $account["email"];
 			$mail->Password   = $account["password"];
 			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
 			$mail->Port       = 465;
 
-			$mail->setFrom($account["account"]);
+			$mail->setFrom($account["email"]);
 			$mail->addAddress($to);
 
 			foreach ($bcc as $email) {
@@ -193,12 +193,12 @@ class Frontend extends MX_Controller
 			$mail->isSMTP();
 			$mail->Host       = 'globalintertech.co.id';
 			$mail->SMTPAuth   = true;
-			$mail->Username   = $account["account"];
+			$mail->Username   = $account["email"];
 			$mail->Password   = $account["password"];
 			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
 			$mail->Port       = 465;
 
-			$mail->setFrom($account["account"]);
+			$mail->setFrom($account["email"]);
 			$mail->addAddress($to);
 
 			foreach ($bcc as $email) {
