@@ -1,6 +1,7 @@
 (function ($) {
   ("use strict");
 
+  // saat pilih paket melalui select
   $("[name=package]").on("change", function () {
     const selectedDetail = $(".selected-detail");
     const id = this.value;
@@ -23,6 +24,7 @@
     }
   })
 
+  // saat klik paket di feature list
   $(".package").on("click", function () {
     const id = $(this).data("id");
     const modal = $("#detail-modal");
@@ -311,6 +313,7 @@
               icon: "success",
             });
             form.reset();
+            $(".selected-detail").hide();
           } else {
             CustomAlert.fire({
               title: "Gagal",
