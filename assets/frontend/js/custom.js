@@ -1,11 +1,22 @@
 (function ($) {
   ("use strict");
 
+  var CustomAlert = Swal.mixin({
+    customClass: {
+      confirmButton: "btn-primary-line",
+      cancelButton: "btn-danger-line",
+    },
+    buttonsStyling: false,
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+  });
+
   // saat pilih paket melalui select
   $("[name=package]").on("change", function () {
     const selectedDetail = $(".selected-detail");
     const id = this.value;
     if (id.length > 0) {
+      CustomAlert.showLoading();
       $.getJSON(base_url + "frontend/get_items_promo_imlek/" + id, function (data) {
         selectedDetail.find("table.detail tbody").html("")
         data.data.forEach(function (item) {
@@ -18,6 +29,7 @@
           `)
         });
         selectedDetail.show();
+        CustomAlert.close();
       });
     } else {
       selectedDetail.hide();
@@ -28,6 +40,7 @@
   $(".package").on("click", function () {
     const id = $(this).data("id");
     const modal = $("#detail-modal");
+    CustomAlert.showLoading();
     $.getJSON(base_url + "frontend/get_items_promo_imlek/" + id, function (data) {
       modal.find("table.detail tbody").html("")
       data.data.forEach(function (item) {
@@ -40,6 +53,7 @@
         `)
       });
       modal.modal("show");
+      CustomAlert.close();
     });
   })
 
@@ -55,14 +69,6 @@
     autoplay: {
       delay: 5000,
     },
-  });
-
-  var CustomAlert = Swal.mixin({
-    customClass: {
-      confirmButton: "btn-primary-line",
-      cancelButton: "btn-danger-line",
-    },
-    buttonsStyling: false,
   });
 
   $(".gallery-view").click(function () {
