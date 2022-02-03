@@ -122,7 +122,7 @@ class Frontend extends MX_Controller
 			$mail->addAddress($to);
 
 			foreach ($bcc as $email) {
-				$mail->addCC = $email;
+				$mail->addBCC($email);
 			}
 
 			$mail->isHTML(true);
@@ -202,7 +202,7 @@ class Frontend extends MX_Controller
 			$mail->addAddress($to);
 
 			foreach ($bcc as $email) {
-				$mail->addCC = $email;
+				$mail->addBCC($email);
 			}
 
 			$mail->isHTML(true);
