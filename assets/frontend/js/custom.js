@@ -1,6 +1,46 @@
 (function ($) {
   ("use strict");
 
+  $("[name=package]").on("change", function () {
+    const selectedDetail = $(".selected-detail");
+    const id = this.value;
+    if (id.length > 0) {
+      $.getJSON(base_url + "frontend/get_items_promo_imlek/" + id, function (data) {
+        selectedDetail.find("table.detail tbody").html("")
+        data.data.forEach(function (item) {
+          selectedDetail.find("table.detail tbody").append(`
+          <tr>
+            <td>${item.name}</td>
+            <td>${item.type}</td>
+            <td>${item.qty}</td>
+          </tr>
+          `)
+        });
+        selectedDetail.show();
+      });
+    } else {
+      selectedDetail.hide();
+    }
+  })
+
+  $(".package").on("click", function () {
+    const id = $(this).data("id");
+    const modal = $("#detail-modal");
+    $.getJSON(base_url + "frontend/get_items_promo_imlek/" + id, function (data) {
+      modal.find("table.detail tbody").html("")
+      data.data.forEach(function (item) {
+        modal.find("table.detail tbody").append(`
+        <tr>
+          <td>${item.name}</td>
+          <td>${item.type}</td>
+          <td>${item.qty}</td>
+        </tr>
+        `)
+      });
+      modal.modal("show");
+    });
+  })
+
   new Swiper(".swiper", {
     loop: true,
     pagination: {
@@ -64,7 +104,7 @@
   $("a[href*=\\#]:not([href=\\#])").on("click", function () {
     if (
       location.pathname.replace(/^\//, "") ==
-        this.pathname.replace(/^\//, "") &&
+      this.pathname.replace(/^\//, "") &&
       location.hostname == this.hostname
     ) {
       var target = $(this.hash);
@@ -75,8 +115,7 @@
           $(".menu-trigger").removeClass("active");
           $(".header-area .nav").slideUp(200);
         }
-        $("html,body").animate(
-          {
+        $("html,body").animate({
             scrollTop: target.offset().top - 30,
           },
           0
@@ -146,8 +185,7 @@
       });
     }
 
-    $("#preloader").animate(
-      {
+    $("#preloader").animate({
         opacity: "0",
       },
       600,
@@ -231,14 +269,14 @@
             });
           }
         },
-        error: function() {
+        error: function () {
           CustomAlert.fire({
             title: "Gagal",
             text: "Terjadi kesalahan",
             icon: "error",
           });
         },
-        complete: function() {
+        complete: function () {
           grecaptcha.reset();
         }
       });
@@ -281,14 +319,14 @@
             });
           }
         },
-        error: function() {
+        error: function () {
           CustomAlert.fire({
             title: "Gagal",
             text: "Terjadi kesalahan",
             icon: "error",
           });
         },
-        complete: function() {
+        complete: function () {
           grecaptcha.reset();
         }
       });

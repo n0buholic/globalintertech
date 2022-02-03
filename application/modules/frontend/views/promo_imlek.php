@@ -33,6 +33,10 @@
         color: white;
     }
 
+    .table-custom thead tr {
+        background: linear-gradient(135deg, #ce9b33 0%, #e56829 100%);
+    }
+
     .features-small-item .features-title,
     .features-small-item p {
         color: white;
@@ -158,10 +162,14 @@
         color: #ffbbbb !important;
         font-weight: bolder;
     }
+
+    .package {
+        cursor: pointer;
+    }
 </style>
 
-<img class="left d-none d-md-block" src="<?= base_url("assets/frontend/images/lunar_new_year/left.svg") ?>">
-<img class="right d-none d-md-block" src="<?= base_url("assets/frontend/images/lunar_new_year/right.svg") ?>">
+<img class="left d-none d-lg-block" src="<?= base_url("assets/frontend/images/lunar_new_year/left.svg") ?>">
+<img class="right d-none d-lg-block" src="<?= base_url("assets/frontend/images/lunar_new_year/right.svg") ?>">
 <section class="page">
     <div class="top-logo">
         <img src="<?= base_url("assets/frontend/images/lunar_new_year/hikvision_logo.svg") ?>">
@@ -169,7 +177,7 @@
     <div class="page-bottom">
         <div class="container">
             <div class="row justify-content-center text-center mb-5">
-                <div class="col-md-8">
+                <div class="col-md-10">
                     <h1 class="fw-bold title font-size-20 mt-1">Happy Lunar New Year</h1>
                     <h1 class="fw-bold title x2 font-size-24 mb-2">2022</h1>
                     <img style="width: 500px; max-width: 80%;" src="<?= base_url("assets/frontend/images/lunar_new_year/tiger.svg") ?>">
@@ -177,36 +185,17 @@
                 </div>
             </div>
             <div class="row justify-content-center text-center mt-5">
-                <div class="col-md-8">
+                <div class="col-md-10">
                     <div class="double-line-frame">
                         <div class="row justify-content-center">
-                            <div class="col-lg-4 col-12">
-                                <div class="features-small-item">
-                                    <div class="icon">
-                                        4CH
+                            <?php foreach ($product as $p) { ?>
+                                <div class="col-lg-4 col-12">
+                                    <div class="features-small-item package" data-id="<?= $p->id ?>">
+                                        <h5 class="features-title fw-bold"><?= $p->name ?></h5>
+                                        <p class="display-5"><?= $ctr->toRupiah($p->price) ?></p>
                                     </div>
-                                    <h5 class="features-title fw-bold">HIKVISION 2MP</h5>
-                                    <p class="display-5">Rp 3.700.000</p>
                                 </div>
-                            </div>
-                            <div class="col-lg-4 col-12">
-                                <div class="features-small-item">
-                                    <div class="icon">
-                                        8CH
-                                    </div>
-                                    <h5 class="features-title fw-bold">HIKVISION 2MP</h5>
-                                    <p class="display-5">Rp 5.700.000</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-12">
-                                <div class="features-small-item">
-                                    <div class="icon">
-                                        16CH
-                                    </div>
-                                    <h5 class="features-title fw-bold">HIKVISION 2MP</h5>
-                                    <p class="display-5">Rp 9.899.000</p>
-                                </div>
-                            </div>
+                            <?php } ?>
                             <div class="col-12">
                                 <img src="<?= base_url("assets/frontend/images/lunar_new_year/hikvision.png") ?>" style="width: 350px; max-width: 80%;">
                             </div>
@@ -221,37 +210,62 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8 mt-5">
+                <div class="col-md-10 mt-5">
                     <div class="alert alert-custom alert-warning">
                         <span class="text-gold">Jika Anda berminat, silahkan isi formulir data diri Anda dibawah ini.</span>
                     </div>
                 </div>
             </div>
             <div class="row justify-content-center mb-4">
-                <div class="col-md-8">
+                <div class="col-md-10">
                     <div class="card">
                         <div class="card-header"><b><i class="fa fa-fw fa-edit"></i> FORMULIR DATA DIRI</b></div>
                         <div class="card-body">
                             <form id="form-promo-imlek" action="<?= base_url("frontend/submit_promo_imlek") ?>" method="POST">
-                                <div class="form-group mb-2">
-                                    <label for="nama">Nama Lengkap *</label>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Nama Lengkap" required>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2">
+                                            <label for="nama">Nama Lengkap *</label>
+                                            <input type="text" class="form-control" id="name" name="name" placeholder="Nama Lengkap" required>
+                                        </div>
+                                        <div class="form-group mb-2">
+                                            <label for="handphone">No. HP/WhatsApp *</label>
+                                            <input type="number" class="form-control" id="handphone" name="handphone" placeholder="No. HP/WhatsApp" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2">
+                                            <label for="handphone">Alamat Email (opsional)</label>
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Alamat Email">
+                                        </div>
+                                        <div class="form-group mb-2">
+                                            <label for="package">Paket Promo *</label>
+                                            <select class="form-control" name="package" required>
+                                                <option value="">-- PILIH PAKET --</option>
+                                                <?php foreach ($product as $p) { ?>
+                                                    <option value="<?= $p->id ?>"><?= $p->name ?> - <?= $ctr->toRupiah($p->price) ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12 mt-3 selected-detail" style="display: none;">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped align-middle table-custom detail">
+                                                <thead>
+                                                    <tr>
+                                                        <th>NAMA</th>
+                                                        <th>TIPE</th>
+                                                        <th>QTY</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group mb-2">
-                                    <label for="handphone">No. HP/WhatsApp *</label>
-                                    <input type="number" class="form-control" id="handphone" name="handphone" placeholder="No. HP/WhatsApp" required>
-                                </div>
-                                <div class="form-group mb-2">
-                                    <label for="handphone">Alamat Email (opsional)</label>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Alamat Email">
-                                </div>
-                                <div class="form-group mb-2">
-                                    <label for="package">Paket Promo *</label>
-                                    <select class="form-control" name="package" required>
-                                        <?php foreach ($product as $p) { ?>
-                                            <option value="<?= $p->id ?>"><?= $p->name ?> - <?= $ctr->toRupiah($p->price) ?></option>
-                                        <?php } ?>
-                                    </select>
+                                    <small class="text-danger fw-bold d-block">* Harga yang tertera sudah termasuk instalasi dan waranty product selama 2 tahun</small>
                                 </div>
                                 <div class="form-group mb-2">
                                     <div id="recaptcha"></div>
@@ -265,7 +279,7 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="col-md-8">
+                <div class="col-md-10">
                     <div class="card">
                         <div class="card-header"><b><i class="fa fa-fw fa-bookmark"></i> SYARAT DAN KETENTUAN</b></div>
                         <div class="card-body">
@@ -285,7 +299,7 @@
                             </ul>
                             <div class="mt-5 text-center">
                                 <p class="my-0">Supported by</p>
-                                <img src="<?=base_url("assets/frontend/images/logo_700.png")?>" style="width: 150px;">
+                                <img src="<?= base_url("assets/frontend/images/logo_700.png") ?>" style="width: 150px;">
                             </div>
                         </div>
                     </div>
@@ -306,3 +320,29 @@
         </div>
     </div>
 </footer>
+
+<div class="modal fade" id="detail-modal" tabindex="-1">
+    <div class="modal-dialog modal-md modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-dark">Detail Paket</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle table-custom detail">
+                        <thead>
+                            <tr>
+                                <th>NAMA</th>
+                                <th>TIPE</th>
+                                <th>QTY</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

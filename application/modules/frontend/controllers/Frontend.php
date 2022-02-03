@@ -31,8 +31,15 @@ class Frontend extends MX_Controller
 	public function promo_imlek()
 	{
 		$this->data["title"] = "Promo Imlek 2022 - Global Integra Technology";
-		$this->data["product"] = $this->db->get("promo_imlek_product")->result();
+		$this->data["product"] = $this->db->get("promo_package")->result();
 		viewPage("base/frontend", "promo_imlek", $this->data);
+	}
+
+	public function get_items_promo_imlek($id = null) {
+		if ($id == null) $this->JSON_Output(false);
+
+		$data = $this->db->select("b.name, b.type, a.qty")->join("promo_item b", "b.id = a.item_id")->join("promo_package c", "c.id = a.package_id")->where("a.package_id", $id)->get("promo_package_detail a")->result();
+		$this->JSON_Output(true, "", $data);
 	}
 
 	public function submit_promo_imlek()
@@ -75,12 +82,12 @@ class Frontend extends MX_Controller
 		}
 
 		$q = [
-			"table" => "promo_imlek_data",
+			"table" => "promo_data",
 			"data" => [
 				"name" => $name,
 				"email" => @$email,
 				"handphone" => $handphone,
-				"product" => $package
+				"package_id" => $package
 			]
 		];
 
