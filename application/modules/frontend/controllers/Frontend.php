@@ -35,7 +35,8 @@ class Frontend extends MX_Controller
 		viewPage("base/frontend", "promo_imlek", $this->data);
 	}
 
-	public function get_items_promo_imlek($id = null) {
+	public function get_items_promo_imlek($id = null)
+	{
 		if ($id == null) $this->JSON_Output(false);
 
 		$data = $this->db->select("b.name, b.type, a.qty")->join("promo_item b", "b.id = a.item_id")->join("promo_package c", "c.id = a.package_id")->where("a.package_id", $id)->get("promo_package_detail a")->result();
@@ -81,6 +82,10 @@ class Frontend extends MX_Controller
 			$this->JSON_Output(false, "Silahkan pilih paket promo.");
 		}
 
+		if (substr($handphone, 0, 1) === "0") {
+			$handphone = "62" . substr($handphone, 1);
+		}
+
 		$q = [
 			"table" => "promo_data",
 			"data" => [
@@ -91,7 +96,40 @@ class Frontend extends MX_Controller
 			]
 		];
 
+		$package = $this->db->where("id", $package)->get("promo_package")->row();
+
 		if ($this->DB_Insert($q)) {
+			// config
+			$receipent = getReceipent();
+			$to = $receipent["to"];
+			$bcc = $receipent["bcc"];
+
+			$account = getSMTPPromo();
+
+			$date = date("Y-m-d");
+			$time = date("h:i:s");
+
+			$mail = new PHPMailer(true);
+			$mail->isSMTP();
+			$mail->Host       = 'globalintertech.co.id';
+			$mail->SMTPAuth   = true;
+			$mail->Username   = $account["account"];
+			$mail->Password   = $account["password"];
+			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+			$mail->Port       = 465;
+
+			$mail->setFrom($account["account"]);
+			$mail->addAddress($to);
+
+			foreach ($bcc as $email) {
+				$mail->addBCC = $email;
+			}
+
+			$mail->isHTML(true);
+			$mail->Subject = "Pendaftaran Baru Promo Imlek 2022 - Global Integra Technology";
+			$mail->Body    = "Tanggal: $date<br>Jam: $time<br><br>Nama: $name<br>Email: $email<br>No.HP/WhatsApp: <a href=\"https://wa.me/$handphone\">$handphone</a><br>Paket: {$package->name}";
+
+			$mail->send();
 			$this->JSON_Output(true, "Berhasil mendaftar promo imlek");
 		} else {
 			$this->JSON_Output(false, "Gagal mendaftar promo imlek");
@@ -141,25 +179,26 @@ class Frontend extends MX_Controller
 		}
 
 		// config
-		$to = "sales02@glosindotech.com";
-		$bcc = [
-			"glosindotech@gmail.com",
-			"harranobu@gmail.com"
-		];
+		$receipent = getReceipent();
+		$to = $receipent["to"];
+		$bcc = $receipent["bcc"];
+
+		$account = getSMTPContact();
 
 		$date = date("Y-m-d");
 		$time = date("h:i:s");
 
 		try {
+			$mail = new PHPMailer(true);
 			$mail->isSMTP();
 			$mail->Host       = 'globalintertech.co.id';
 			$mail->SMTPAuth   = true;
-			$mail->Username   = 'contact@globalintertech.co.id';
-			$mail->Password   = 'n@k@t@123';
+			$mail->Username   = $account["account"];
+			$mail->Password   = $account["password"];
 			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
 			$mail->Port       = 465;
 
-			$mail->setFrom('contact@globalintertech.co.id');
+			$mail->setFrom($account["account"]);
 			$mail->addAddress($to);
 
 			foreach ($bcc as $email) {

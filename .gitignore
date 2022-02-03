@@ -1,2 +1,3 @@
 application/config/database.php
+application/helpers/email_account_helper.php
 assets/upload
