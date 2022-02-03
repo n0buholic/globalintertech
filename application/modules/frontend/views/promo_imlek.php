@@ -17,6 +17,10 @@
         font-size: 70px;
     }
 
+    .x3 {
+        font-size: 140px;
+    }
+
     .features-small-item {
         display: block;
         background: linear-gradient(135deg, #ce9b33 0%, #e56829 100%);
@@ -172,10 +176,9 @@
                     <h1 class="fw-bold desc font-size-20 mt-3">YEAR OF TIGER</h1>
                 </div>
             </div>
-            <div class="row justify-content-center text-center my-5">
+            <div class="row justify-content-center text-center mt-5">
                 <div class="col-md-8">
                     <div class="double-line-frame">
-                        <p class="text-gold"><strong>CV. Global Integra Technology</strong> mengadakan <strong>Promo Imlek 2022</strong>.</p>
                         <div class="row justify-content-center">
                             <div class="col-lg-4 col-12">
                                 <div class="features-small-item">
@@ -204,9 +207,23 @@
                                     <p class="display-5">Rp 9.899.000</p>
                                 </div>
                             </div>
+                            <div class="col-12">
+                                <img src="<?= base_url("assets/frontend/images/lunar_new_year/hikvision.png") ?>" style="width: 350px; max-width: 80%;">
+                            </div>
                         </div>
-                        <p class="text-gold">Jika Anda berminat, silahkan isi formulir data diri Anda dibawah ini, terima kasih!</p>
-                        <img src="<?= base_url("assets/frontend/images/lunar_new_year/hikvision.png") ?>" style="width: 350px; max-width: 80%; position: relative; bottom: -40px;">
+                        <div class="row mt-4">
+                            <div class="col-md-4 my-2">
+                                <img src="<?= base_url("assets/frontend/images/lunar_new_year/angpao.png") ?>" style="width: 250px; max-width: 100%;">
+                            </div>
+                            <div class="col-md-8 align-self-center my-2">
+                                <p class="my-0 text-gold x3">Dapatkan juga ANGPAO hingga <span class="fw-bold">Rp 1.000.000!</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 mt-5">
+                    <div class="alert alert-custom alert-warning">
+                        <span class="text-gold">Jika Anda berminat, silahkan isi formulir data diri Anda dibawah ini.</span>
                     </div>
                 </div>
             </div>
@@ -215,7 +232,7 @@
                     <div class="card">
                         <div class="card-header"><b><i class="fa fa-fw fa-edit"></i> FORMULIR DATA DIRI</b></div>
                         <div class="card-body">
-                            <form id="form-promo" action="#" method="POST">
+                            <form id="form-promo-imlek" action="<?= base_url("frontend/submit_promo_imlek") ?>" method="POST">
                                 <div class="form-group mb-2">
                                     <label for="nama">Nama Lengkap *</label>
                                     <input type="text" class="form-control" id="name" name="name" placeholder="Nama Lengkap" required>
@@ -231,10 +248,13 @@
                                 <div class="form-group mb-2">
                                     <label for="package">Paket Promo *</label>
                                     <select class="form-control" name="package" required>
-                                        <option value="1">4CH HIKVISION 2MP - Rp 3.700.000</option>
-                                        <option value="1">8CH HIKVISION 2MP - Rp 5.700.000</option>
-                                        <option value="1">16CH HIKVISION 2MP - Rp 9.899.000</option>
+                                        <?php foreach ($product as $p) { ?>
+                                            <option value="<?= $p->id ?>"><?= $p->name ?> - <?= $ctr->toRupiah($p->price) ?></option>
+                                        <?php } ?>
                                     </select>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <div id="recaptcha"></div>
                                 </div>
                                 <div class="form-group d-grid mt-4">
                                     <button class="btn-primary-line" type="submit">Kirim <i class="ms-2 fa fa-fw fas fa-arrow-right"></i></button>
@@ -250,8 +270,23 @@
                         <div class="card-header"><b><i class="fa fa-fw fa-bookmark"></i> SYARAT DAN KETENTUAN</b></div>
                         <div class="card-body">
                             <ul>
-                                <li>asd</li>
+                                <li>Demi kenyamanan, kami membuat portal untuk registrasi sesuai dengan paket yang diinginkan
+                                    <a href="https://www.globalintertech.co.id/promo-imlek">https://www.globalintertech.co.id/promo-imlek</a>
+                                </li>
+                                <li>
+                                    Setiap pembelanjaan Paket Hikvision berhak mendapatkan Angpao dengan mengikuti Lucky Wheel, Cashback
+                                    sampai dengan 1 juta Rupiah!
+                                </li>
+                                <li>Konsumen dapat melakukan transaksi berulang selama periode promo berlangsung</li>
+                                <li>Cashback akan langsung dipotong pada saat transaksi</li>
+                                <li>Cashback hanya berlaku untuk pembelian paket, tidak bisa digunakan untuk pembelian regular</li>
+                                <li>Dengan melakukan transaksi didalam program ini, maka konsumen dianggap mengerti dan menyetujui semua syarat dan ketentuan yang berlaku.</li>
+                                <li>Global Integra Technology sewaktu-waktu berhak mengubah syarat dan ketentuan ini yang akan diinformasikan pada website <a href="https://www.globalintertech.co.id/promo-imlek">https://www.globalintertech.co.id/promo-imlek</a></li>
                             </ul>
+                            <div class="mt-5 text-center">
+                                <p class="my-0">Supported by</p>
+                                <img src="<?=base_url("assets/frontend/images/logo_700.png")?>" style="width: 150px;">
+                            </div>
                         </div>
                     </div>
                 </div>

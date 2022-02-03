@@ -31,7 +31,64 @@ class Frontend extends MX_Controller
 	public function promo_imlek()
 	{
 		$this->data["title"] = "Promo Imlek 2022 - Global Integra Technology";
+		$this->data["product"] = $this->db->get("promo_imlek_product")->result();
 		viewPage("base/frontend", "promo_imlek", $this->data);
+	}
+
+	public function submit_promo_imlek()
+	{
+		$name = $this->input->post("name", true);
+		$email = $this->input->post("email", true);
+		$handphone = $this->input->post("handphone");
+		$package = $this->input->post("package", true);
+		$token = $this->input->post("g-recaptcha-response", true);
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, array("secret" => "6Ld2mRMeAAAAAKmu7R6RJeCV4LzKJPb6Vqg9XEuh", "response" => $token, "remoteip" => $this->getUserIP()));
+		$output = curl_exec($ch);
+		curl_close($ch);
+		$res = json_decode($output, true);
+
+		if ($res["success"] == false) {
+			$this->JSON_Output(false, "Recaptcha gagal diverifikasi.");
+		}
+
+		/*
+		$checkNumber = $this->db->where("handphone", $handphone)->count_all_result("promo_imlek_data");
+		if ($checkNumber > 0) {
+			$this->JSON_Output(false, "Nomor handphone sudah terdaftar, Anda tidak dapat mengikuti program promo lagi");
+		}
+		*/
+
+		if (!$name || empty($name)) {
+			$this->JSON_Output(false, "Nama tidak boleh kosong.");
+		}
+
+		if (!$handphone || empty($handphone)) {
+			$this->JSON_Output(false, "No.HP/WhatsApp tidak boleh kosong.");
+		}
+
+		if (!$package || empty($package)) {
+			$this->JSON_Output(false, "Silahkan pilih paket promo.");
+		}
+
+		$q = [
+			"table" => "promo_imlek_data",
+			"data" => [
+				"name" => $name,
+				"email" => @$email,
+				"handphone" => $handphone,
+				"product" => $package
+			]
+		];
+
+		if ($this->DB_Insert($q)) {
+			$this->JSON_Output(true, "Berhasil mendaftar promo imlek");
+		} else {
+			$this->JSON_Output(false, "Gagal mendaftar promo imlek");
+		}
 	}
 
 	public function send_email()

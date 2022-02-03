@@ -222,7 +222,6 @@
               text: data.message,
               icon: "success",
             });
-            grecaptcha.reset();
             form.reset();
           } else {
             CustomAlert.fire({
@@ -232,6 +231,66 @@
             });
           }
         },
+        error: function() {
+          CustomAlert.fire({
+            title: "Gagal",
+            text: "Terjadi kesalahan",
+            icon: "error",
+          });
+        },
+        complete: function() {
+          grecaptcha.reset();
+        }
+      });
+    } else {
+      CustomAlert.fire({
+        title: "Gagal",
+        text: "Silahkan selesaikan captcha",
+        icon: "error",
+      });
+    }
+  });
+
+  // submit form promo imlek
+  $("#form-promo-imlek").on("submit", function (e) {
+    e.preventDefault();
+    const response = grecaptcha.getResponse();
+    const form = this;
+    if (response) {
+      $.ajax({
+        url: $(this).attr("action"),
+        method: "POST",
+        data: new FormData(form),
+        dataType: "JSON",
+        processData: false,
+        contentType: false,
+        beforeSend: CustomAlert.showLoading(),
+        success: function (data) {
+          if (data.success) {
+            CustomAlert.fire({
+              title: "Sukses",
+              text: data.message,
+              icon: "success",
+            });
+            form.reset();
+          } else {
+            CustomAlert.fire({
+              title: "Gagal",
+              text: data.message,
+              icon: "error",
+            });
+          }
+        },
+        error: function() {
+          CustomAlert.fire({
+            title: "Gagal",
+            text: "Terjadi kesalahan",
+            icon: "error",
+          });
+        },
+        complete: function() {
+          grecaptcha.reset();
+        }
       });
     } else {
       CustomAlert.fire({
