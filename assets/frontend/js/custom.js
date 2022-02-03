@@ -7,7 +7,7 @@
       cancelButton: "btn-danger-line",
     },
     buttonsStyling: false,
-    allowOutsideClick: false,
+    closeOnClickOutside: false,
     allowEscapeKey: false,
   });
 
