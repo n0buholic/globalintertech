@@ -285,7 +285,7 @@
                         <div class="card-body">
                             <ul>
                                 <li>Demi kenyamanan, kami membuat portal untuk registrasi sesuai dengan paket yang diinginkan
-                                    <a href="https://www.globalintertech.co.id/promo-imlek">https://www.globalintertech.co.id/promo-imlek</a>
+                                    <a href="https://www.globalintertech.co.id/promo-imlek-hikvision">https://www.globalintertech.co.id/promo-imlek-hikvision</a>
                                 </li>
                                 <li>
                                     Setiap pembelanjaan Paket Hikvision berhak mendapatkan Angpao dengan mengikuti Lucky Wheel, Cashback
@@ -295,7 +295,7 @@
                                 <li>Cashback akan langsung dipotong pada saat transaksi</li>
                                 <li>Cashback hanya berlaku untuk pembelian paket, tidak bisa digunakan untuk pembelian regular</li>
                                 <li>Dengan melakukan transaksi didalam program ini, maka konsumen dianggap mengerti dan menyetujui semua syarat dan ketentuan yang berlaku.</li>
-                                <li>Global Integra Technology sewaktu-waktu berhak mengubah syarat dan ketentuan ini yang akan diinformasikan pada website <a href="https://www.globalintertech.co.id/promo-imlek">https://www.globalintertech.co.id/promo-imlek</a></li>
+                                <li>Global Integra Technology sewaktu-waktu berhak mengubah syarat dan ketentuan ini yang akan diinformasikan pada website <a href="https://www.globalintertech.co.id/promo-imlek-hikvision">https://www.globalintertech.co.id/promo-imlek-hikvision</a></li>
                             </ul>
                             <div class="mt-5 text-center">
                                 <p class="my-0">Supported by</p>
