@@ -4,7 +4,7 @@
 		else { $link = "https://".$_SERVER["SERVER_NAME"]."/global"; }
 	$sumber = "../img/logo.png"; $src = encode_base64($sumber); setcookie('captcha_garansi', '', 0, '/');
 ?>
-<div class="row" style="margin-top:2em;">
+<div class="row" style="margin:2em 1em;">
 	<div class="col-md-4"></div>
 	<div class="col-md-4" style="border:1px solid #eee;box-shadow:3px 3px 5px #888;border-radius:0.5em;padding:1em;">
 		<div style="padding: 1em;padding-left: 0em;font-weight: bold;">
@@ -12,9 +12,8 @@
 		</div>		
 		<form role="form" id="frm_cek_garansi">
 			<div class="form-group">
-				<div class="input-group">
+				<div class="">
 					<input id="textsn" name="textsn" type="text" placeholder="masukkan serial number" class="form-control" data-elemen="html_text_sn" />
-					<span class="input-group-btn"><button class="btn btn-success" type="submit"><i class="icon-search"></i></button></span>
 				</div>
 				<div class="form-group" style="margin-top: 1em;">
 					<label class="row col-md-12">Kode Validasi</label>
@@ -22,6 +21,9 @@
 				</div>
 				<div class="form-group">
 					<input type="number" id="captcha" name="captcha" value="" placeholder="masukkan kode validasi" class="form-control" autocomplete="off" />
+				</div>
+				<div class="form-group">
+					<button class="btn btn-success btn-block" type="submit"><i class="icon-search"></i> Temukan Data</button>
 				</div>
 			</div>
 		</form>
