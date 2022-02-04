@@ -55,4 +55,6 @@ $route['404_override'] = 'errors/not_found';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['landing'] = 'frontend/landing';
-$route['promo-imlek'] = 'frontend/promo_imlek';
+
+$route['promo-imlek-hikvision'] = 'frontend/promo_imlek_hikvision';
+$route['promo-imlek-proview'] = 'frontend/promo_imlek_proview';
