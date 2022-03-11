@@ -64,8 +64,8 @@
     }
 </style>
 
-<section id="main">
-    <div class="container" style="height: 100vh;">
+<section id="main" class="section py-3" style="min-height: 100vh;">
+    <div class="container">
         <div class="row h-100 align-items-center text-center text-white">
             <div class="col-12 my-2">
                 <div class="bg-white logo-container">
@@ -98,7 +98,7 @@
     </div>
 </section>
 
-<section class="section py-3" id="promotion">
+<section class="section py-3" id="promotion" style="min-height: 100vh;">
     <div class="container" style="height: 100vh;">
         <div class="row align-items-center text-center text-white h-100">
             <div class="col-12">
@@ -135,7 +135,7 @@
     </div>
 </section>
 
-<section class="section py-3" id="contact">
+<section class="section py-3" id="contact" style="min-height: 100vh;">
     <div class="container" style="height: 100vh;">
         <div class="row align-items-center text-center text-white h-100">
             <div class="col-12">
@@ -158,7 +158,7 @@
     </div>
 </section>
 
-<section class="section py-3" id="ecommerce">
+<section class="section py-3" id="ecommerce" style="min-height: 100vh;">
     <div class="container" style="height: 100vh;">
         <div class="row align-items-center text-center text-white h-100">
             <div class="col-12">
@@ -177,7 +177,7 @@
     </div>
 </section>
 
-<section class="section py-3" id="location">
+<section class="section py-3" id="location" style="min-height: 100vh;">
     <div class="container" style="height: 100vh;">
         <div class="row align-items-center text-center text-white h-100">
             <div class="col-12">
