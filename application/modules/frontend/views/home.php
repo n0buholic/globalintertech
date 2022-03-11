@@ -602,8 +602,8 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="row gx-1">
-                <div class="col-6"><a target="_blank" href="<?= base_url("/promo-imlek-hikvision") ?>"><img class="w-100" src="<?= base_url("assets/frontend/images/lunar_new_year/promo-imlek-hikvision.jpeg") ?>" alt=""></a></div>
-                <div class="col-6"><a target="_blank" href="<?= base_url("/promo-imlek-proview") ?>"><img class="w-100" src="<?= base_url("assets/frontend/images/lunar_new_year/promo-imlek-proview.jpeg") ?>" alt=""></a></div>
+                <div class="col-6"><a target="_blank" href="<?= base_url("promo-2022-hikvision") ?>"><img class="w-100" src="<?= base_url("assets/frontend/images/promo/banner_promo_hikvision.jpeg") ?>" alt=""></a></div>
+                <div class="col-6"><a target="_blank" href="<?= base_url("promo-2022-proview") ?>"><img class="w-100" src="<?= base_url("assets/frontend/images/promo/banner_promo_proview.jpeg") ?>" alt=""></a></div>
             </div>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
         </div>

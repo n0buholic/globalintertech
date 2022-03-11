@@ -56,5 +56,8 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['landing'] = 'frontend/landing';
 
-$route['promo-imlek-hikvision'] = 'frontend/promo_imlek_hikvision';
-$route['promo-imlek-proview'] = 'frontend/promo_imlek_proview';
+// $route['promo-imlek-hikvision'] = 'frontend/promo_imlek_hikvision';
+// $route['promo-imlek-proview'] = 'frontend/promo_imlek_proview';
+
+$route['promo-2022-hikvision'] = 'frontend/promo_2022_hikvision';
+$route['promo-2022-proview'] = 'frontend/promo_2022_proview';
