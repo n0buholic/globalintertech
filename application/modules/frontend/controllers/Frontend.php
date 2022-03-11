@@ -125,7 +125,7 @@ class Frontend extends MX_Controller
 			$to = $receipent["to"];
 			$bcc = $receipent["bcc"];
 
-			$account = getSMTPPromo();
+			$account = getSMTPAccount();
 
 			$date = date("Y-m-d");
 			$time = date("h:i:s");
@@ -204,7 +204,7 @@ class Frontend extends MX_Controller
 		$to = $receipent["to"];
 		$bcc = $receipent["bcc"];
 
-		$account = getSMTPContact();
+		$account = getSMTPAccount();
 
 		$date = date("Y-m-d");
 		$time = date("h:i:s");
