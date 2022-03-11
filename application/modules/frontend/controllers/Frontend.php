@@ -139,11 +139,11 @@ class Frontend extends MX_Controller
 			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
 			$mail->Port       = 465;
 
-			$mail->setFrom($account["email"]);
+			$mail->setFrom("dev@glosindotech.com", "Global Integra Technology");
 			$mail->addAddress($to);
 
-			foreach ($bcc as $email) {
-				$mail->addBCC($email);
+			foreach ($bcc as $e) {
+				$mail->addBCC($e);
 			}
 			$type = ucfirst($package->type);
 			$mail->isHTML(true);
@@ -151,7 +151,7 @@ class Frontend extends MX_Controller
 			$mail->Body    = "Tanggal: $date<br>Jam: $time<br><br>Nama: $name<br>Email: $email<br>No.HP/WhatsApp: <a href=\"https://wa.me/$handphone\">$handphone</a><br>Paket: [${$type}] {$package->name}";
 
 			$mail->send();
-			$this->JSON_Output(true, "Berhasil mendaftar promo");
+			$this->JSON_Output(true, "Pendaftaran promo berhasil, data yang Anda masukkan sudah kami terima, silahkan menunggu beberapa saat ");
 		} else {
 			$this->JSON_Output(false, "Gagal mendaftar promo");
 		}
@@ -219,11 +219,11 @@ class Frontend extends MX_Controller
 			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
 			$mail->Port       = 465;
 
-			$mail->setFrom($account["email"]);
+			$mail->setFrom("dev@glosindotech.com", "Global Integra Technology");
 			$mail->addAddress($to);
 
-			foreach ($bcc as $email) {
-				$mail->addBCC($email);
+			foreach ($bcc as $e) {
+				$mail->addBCC($e);
 			}
 
 			$mail->isHTML(true);
