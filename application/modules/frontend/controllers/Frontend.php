@@ -132,7 +132,7 @@ class Frontend extends MX_Controller
 
 			$mail = new PHPMailer(true);
 			$mail->isSMTP();
-			$mail->Host       = 'globalintertech.co.id';
+			$mail->Host       = 'smtp.gmail.com';
 			$mail->SMTPAuth   = true;
 			$mail->Username   = $account["email"];
 			$mail->Password   = $account["password"];
