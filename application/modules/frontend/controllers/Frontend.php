@@ -148,7 +148,7 @@ class Frontend extends MX_Controller
 			$type = ucfirst($package->type);
 			$mail->isHTML(true);
 			$mail->Subject = "Pendaftaran Baru Promo $type 2022 - Global Integra Technology";
-			$mail->Body    = "Tanggal: $date<br>Jam: $time<br><br>Nama: $name<br>Email: $email<br>No.HP/WhatsApp: <a href=\"https://wa.me/$handphone\">$handphone</a><br>Paket: [${$type}] {$package->name}";
+			$mail->Body    = "Tanggal: $date<br>Jam: $time<br><br>Nama: $name<br>Email: $email<br>No.HP/WhatsApp: <a href=\"https://wa.me/$handphone\">$handphone</a><br>Paket: [{$type}] {$package->name}";
 
 			$mail->send();
 			$this->JSON_Output(true, "Pendaftaran promo berhasil, data yang Anda masukkan sudah kami terima, silahkan menunggu beberapa saat ");
