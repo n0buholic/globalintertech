@@ -28,11 +28,18 @@ class Frontend extends MX_Controller
 		viewPage("base/frontend", "landing", $this->data);
 	}
 
-	public function promo_imlek()
+	public function promo_imlek_hikvision()
 	{
-		$this->data["title"] = "Promo Imlek 2022 - Global Integra Technology";
-		$this->data["product"] = $this->db->get("promo_package")->result();
-		viewPage("base/frontend", "promo_imlek", $this->data);
+		$this->data["title"] = "Promo Imlek Hikvision 2022 - Global Integra Technology";
+		$this->data["product"] = $this->db->where("type", "hikvision")->get("promo_package")->result();
+		viewPage("base/frontend", "promo_imlek_hikvision", $this->data);
+	}
+
+	public function promo_imlek_proview()
+	{
+		$this->data["title"] = "Promo Imlek Proview 2022 - Global Integra Technology";
+		$this->data["product"] = $this->db->where("type", "proview")->get("promo_package")->result();
+		viewPage("base/frontend", "promo_imlek_proview", $this->data);
 	}
 
 	public function get_items_promo_imlek($id = null)
@@ -124,10 +131,10 @@ class Frontend extends MX_Controller
 			foreach ($bcc as $email) {
 				$mail->addBCC($email);
 			}
-
+			$type = ucfirst($package->type);
 			$mail->isHTML(true);
-			$mail->Subject = "Pendaftaran Baru Promo Imlek 2022 - Global Integra Technology";
-			$mail->Body    = "Tanggal: $date<br>Jam: $time<br><br>Nama: $name<br>Email: $email<br>No.HP/WhatsApp: <a href=\"https://wa.me/$handphone\">$handphone</a><br>Paket: {$package->name}";
+			$mail->Subject = "Pendaftaran Baru Promo Imlek $type 2022 - Global Integra Technology";
+			$mail->Body    = "Tanggal: $date<br>Jam: $time<br><br>Nama: $name<br>Email: $email<br>No.HP/WhatsApp: <a href=\"https://wa.me/$handphone\">$handphone</a><br>Paket: [${$type}] {$package->name}";
 
 			$mail->send();
 			$this->JSON_Output(true, "Berhasil mendaftar promo imlek");
