@@ -39,14 +39,14 @@ class Frontend extends MX_Controller
 	{
 		$this->data["title"] = "Promo Proview 2022 - Global Integra Technology";
 		$this->data["product"] = $this->db->where("type", "proview")->get("promo_package")->result();
-		viewPage("base/frontend", "promo_2022_proview", $this->data);
+		viewPage("base/promo", "promo_2022_proview", $this->data);
 	}
 
 	public function promo_2022_hikvision()
 	{
 		$this->data["title"] = "Promo Hikvision 2022 - Global Integra Technology";
 		$this->data["product"] = $this->db->where("type", "hikvision")->get("promo_package")->result();
-		viewPage("base/frontend", "promo_2022_hikvision", $this->data);
+		viewPage("base/promo", "promo_2022_hikvision", $this->data);
 	}
 
 	public function promo_imlek_proview()

@@ -1,5 +1,5 @@
 <?php
-$uri = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+$uri = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 ?>
 <style>
     .title {
@@ -223,12 +223,12 @@ $uri = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].$_SERVER['REQU
 <section id="form" class="section padding-bottom-80 colored">
     <div class="container">
         <div class="row justify-content-center mb-4">
-            <div class="col-md-10 mt-5">
+            <div class="col-md-12 mt-5">
                 <div class="alert alert-custom alert-info">
                     <span class="">Jika Anda berminat, silahkan isi formulir data diri Anda dibawah ini.</span>
                 </div>
             </div>
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header"><b><i class="fa fa-fw fa-edit"></i> FORMULIR DATA DIRI</b></div>
                     <div class="card-body">
@@ -295,7 +295,7 @@ $uri = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].$_SERVER['REQU
 <section id="term" class="section padding-bottom-80">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header"><b><i class="fa fa-fw fa-bookmark"></i> SYARAT DAN KETENTUAN</b></div>
                     <div class="card-body">
@@ -304,12 +304,9 @@ $uri = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].$_SERVER['REQU
                                 <a href="<?php echo $uri ?>"><?php echo $uri ?></a>
                             </li>
                             <li>
-                                Setiap pembelanjaan Paket Proview berhak mendapatkan Cashback dengan mengikuti Lucky Wheel, Cashback
-                                sampai dengan 1 juta Rupiah!
+                                Setiap pembelanjaan Paket Proview berhak mendapatkan Merchandise menarik dari Proview.
                             </li>
-                            <li>Konsumen dapat melakukan transaksi berulang selama periode promo berlangsung</li>
-                            <li>Cashback akan langsung dipotong pada saat transaksi</li>
-                            <li>Cashback hanya berlaku untuk pembelian paket, tidak bisa digunakan untuk pembelian regular</li>
+                            <li>Program bagi-bagi merchandise hanya berlaku untuk pembelian paket, tidak bisa digunakan untuk pembelian regular</li>
                             <li>Dengan melakukan transaksi didalam program ini, maka konsumen dianggap mengerti dan menyetujui semua syarat dan ketentuan yang berlaku.</li>
                             <li>Global Integra Technology sewaktu-waktu berhak mengubah syarat dan ketentuan ini yang akan diinformasikan pada website <a href="<?php echo $uri ?>"><?php echo $uri ?></a></li>
                         </ul>
