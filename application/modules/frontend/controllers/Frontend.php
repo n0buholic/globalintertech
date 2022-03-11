@@ -151,7 +151,7 @@ class Frontend extends MX_Controller
 			$mail->Body    = "Tanggal: $date<br>Jam: $time<br><br>Nama: $name<br>Email: $email<br>No.HP/WhatsApp: <a href=\"https://wa.me/$handphone\">$handphone</a><br>Paket: [{$type}] {$package->name}";
 
 			$mail->send();
-			$this->JSON_Output(true, "Pendaftaran promo berhasil, data yang Anda masukkan sudah kami terima, silahkan menunggu beberapa saat ");
+			$this->JSON_Output(true, "Pendaftaran promo berhasil, data yang Anda masukkan sudah kami terima, silahkan menunggu beberapa saat sampai tim kami menghubungi Anda. Terima kasih!");
 		} else {
 			$this->JSON_Output(false, "Gagal mendaftar promo");
 		}
