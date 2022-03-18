@@ -80,9 +80,9 @@ class MX_Controller
 	public function Auth_Guard()
 	{
 		if (!$this->session->userdata("logged_in") || $this->session->userdata("logged_in") === null || empty($this->session->userdata("logged_in"))) {
-			if ($this->uri->segment(1) !== "auth") redirect(base_url("auth"));
+			if ($this->uri->segment(2) !== "login") redirect(base_url("backend/login"));
 		} else {
-			if ($this->uri->segment(1) === "auth") redirect(base_url("dashboard"));
+			if ($this->uri->segment(2) === "login") redirect(base_url("backend/dashboard"));
 		}
 	}
 

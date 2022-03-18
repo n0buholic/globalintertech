@@ -56,6 +56,14 @@ class Frontend extends MX_Controller
 		viewPage("base/frontend", "promo_imlek_proview", $this->data);
 	}
 
+	public function catalogue()
+	{
+		$this->data["title"] = "Katalog";
+		$this->data["categories"] = $this->db->get("catalogue_category")->result();
+		$this->data["items"] = $this->db->get("catalogue_item")->result();
+		viewPage("base/blank", "catalogue", $this->data);
+	}
+
 	public function get_items_promo_imlek($id = null)
 	{
 		if ($id == null) $this->JSON_Output(false);

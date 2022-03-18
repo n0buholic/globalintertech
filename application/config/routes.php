@@ -61,3 +61,5 @@ $route['landing'] = 'frontend/landing';
 
 $route['promo-2022-hikvision'] = 'frontend/promo_2022_hikvision';
 $route['promo-2022-proview'] = 'frontend/promo_2022_proview';
+
+$route['catalogue'] = 'frontend/catalogue';
