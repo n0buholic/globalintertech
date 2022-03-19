@@ -33,6 +33,13 @@ class Backend extends MX_Controller
 		viewPage("base/backend", "dashboard", $this->data);
 	}
 
+	public function sortCatalogue()
+	{
+		$this->data["title"] = "Urut Katalog";
+        $this->data["catalogue"] = $this->db->select("a.*, b.name as category_name")->from("catalogue_item a")->join("catalogue_category b", "b.id = a.category_id")->get()->result();
+		viewPage("base/backend", "sort_catalogue", $this->data);
+	}
+
     public function catalogue()
 	{
 		$this->data["title"] = "Katalog";

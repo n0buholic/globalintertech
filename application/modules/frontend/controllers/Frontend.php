@@ -59,8 +59,11 @@ class Frontend extends MX_Controller
 	public function catalogue()
 	{
 		$this->data["title"] = "Katalog";
-		$this->data["categories"] = $this->db->get("catalogue_category")->result();
-		$this->data["items"] = $this->db->get("catalogue_item")->result();
+		$categories = $this->db->get("catalogue_category")->result();
+		foreach($categories as &$cat) {
+			$cat->items = $this->db->where("category_id", $cat->id)->get("catalogue_item")->result();
+		}
+		$this->data["categories"] = $categories;
 		viewPage("base/blank", "catalogue", $this->data);
 	}
 

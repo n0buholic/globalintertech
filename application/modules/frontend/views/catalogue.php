@@ -76,9 +76,11 @@
             <div class="col-12">
                 <nav class="main-nav">
                     <ul class="nav">
-                        <?php foreach ($categories as $cat) { ?>
-                            <li><a href="#<?= str_replace(" ", "-", strtolower($cat->name)) ?>"><?= $cat->name ?></a></li>
-                        <?php } ?>
+                        <?php foreach ($categories as $cat) {
+                            if (count($cat->items) > 0) { ?>
+                                <li><a href="#<?= str_replace(" ", "-", strtolower($cat->name)) ?>"><?= $cat->name ?></a></li>
+                        <?php }
+                        } ?>
                     </ul>
                     <a class="menu-trigger">
                         <span>Menu</span>
@@ -89,60 +91,52 @@
     </div>
 </header>
 
-<?php foreach ($categories as $cat) { ?>
-    <section class="category-name text-white py-3" id="<?= str_replace(" ", "-", strtolower($cat->name)) ?>">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <h3 class="fw-bold"><?= $cat->name ?></h3>
-                    <p><?= $cat->description ?></p>
+<?php foreach ($categories as $cat) {
+    if (count($cat->items) > 0) { ?>
+        <section class="category-name text-white py-3" id="<?= str_replace(" ", "-", strtolower($cat->name)) ?>">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h3 class="fw-bold"><?= $cat->name ?></h3>
+                        <p><?= $cat->description ?></p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
-    <?php
-    $items = $this->db->from("catalogue_item")->where("category_id", $cat->id)->get()->result();
-    ?>
-    <section class="products">
-        <div class="container">
-            <?php foreach ($items as $item) {
-                $specification = @explode("<br />", nl2br($item->specification));
-            ?>
-                <div class="row product py-5">
-                    <div class="col-4">
-                        <img src="<?= base_url("assets/frontend/images/uploads/catalogue/" . $item->image) ?>" class="img-fluid">
-                    </div>
-                    <div class="col-8">
-                        <div class="row g-3">
-                            <div class="col-12">
-                                <h3 class="fw-bold mb-1"><?= $item->name ?></h3>
-                                <h5><?= $ctr->toRupiah($item->price) ?></h5>
-                            </div>
-                            <div class="col-12">
-                                <p class="fw-bold mb-2">Spesifikasi:</p>
-                                <small>
-                                    <?= implode("&nbsp;&nbsp;|&nbsp;&nbsp;", $specification) ?>
-                                </small>
+        </section>
+        <?php
+        $items = $this->db->from("catalogue_item")->where("category_id", $cat->id)->get()->result();
+        ?>
+        <section class="products">
+            <div class="container">
+                <?php foreach ($cat->items as $item) {
+                    $specification = @explode("<br />", nl2br($item->specification));
+                ?>
+                    <div class="row product py-5">
+                        <div class="col-4">
+                            <img src="<?= base_url("assets/frontend/images/uploads/catalogue/" . $item->image) ?>" class="img-fluid">
+                        </div>
+                        <div class="col-8">
+                            <div class="row g-3">
+                                <div class="col-12">
+                                    <h3 class="fw-bold mb-1"><?= $item->name ?></h3>
+                                    <h5><?= $ctr->toRupiah($item->price) ?></h5>
+                                </div>
+                                <div class="col-12">
+                                    <p class="fw-bold mb-2">Spesifikasi:</p>
+                                    <small>
+                                        <?= implode("&nbsp;&nbsp;|&nbsp;&nbsp;", $specification) ?>
+                                    </small>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            <?php } ?>
-        </div>
-    </section>
-<?php } ?>
+                <?php } ?>
+            </div>
+        </section>
+<?php }
+} ?>
 
 <a href="#" class="back-to-top" style="display: block;"><i class="fa fa-chevron-up"></i></a>
-
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <p class="text-center">© Global Integra Technology © Copyright 2017 - 2021</p>
-            </div>
-        </div>
-    </div>
-</footer>
 
 <script>
     $(function() {

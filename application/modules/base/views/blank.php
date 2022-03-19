@@ -20,6 +20,7 @@
 <script src="<?= base_url("assets/frontend/vendor/swiper/swiper-bundle.js") ?>"></script>
 <body>
     <?= $view ?>
+    <?= $this->load->view("template/frontend/footer") ?>
 </body>
 
 </html>

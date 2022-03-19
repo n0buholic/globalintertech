@@ -17,15 +17,22 @@
 			</li>
 			<li class="sidebar-item">
 				<a class="sidebar-link" href="<?= base_url("backend/catalogue") ?>">
-					<i class="align-middle me-2 fas fa-fw fa-box"></i> <span class="align-middle">Katalog</span>
+					<i class="align-middle me-2 fas fa-fw fa-box"></i> <span class="align-middle">List Katalog</span>
 				</a>
 			</li>
+			<!--
+			<li class="sidebar-item">
+				<a class="sidebar-link" href="<?= base_url("backend/sort-catalogue") ?>">
+					<i class="align-middle me-2 fas fa-fw fa-box"></i> <span class="align-middle">Urut Katalog</span>
+				</a>
+			</li>
+			-->
 			<li class="sidebar-header">
 				Landing
 			</li>
 			<li class="sidebar-item">
 				<a class="sidebar-link" href="<?= base_url("backend/promo") ?>">
-					<i class="align-middle me-2 fas fa-fw fa-tag"></i> <span class="align-middle">Promo Landing</span>
+					<i class="align-middle me-2 fas fa-fw fa-tag"></i> <span class="align-middle">List Promo</span>
 				</a>
 			</li>
 		</ul>
