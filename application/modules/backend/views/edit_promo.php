@@ -47,7 +47,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group mb-3 float-start">
-                                    <a href="<?=base_url("api/delete_promo?id=$promo->id")?>" class="btn btn-danger"><i class="fa fa-fw fa-trash me-1"></i>Hapus</a>
+                                    <a href="<?=base_url("api/delete_promo?id=$promo->id")?>" class="btn btn-danger no-smoothstate"><i class="fa fa-fw fa-trash me-1"></i>Hapus</a>
                                 </div>
                                 <div class="form-group mb-3 float-end">
                                     <button class="btn btn-primary"><i class="fa fa-fw fa-edit me-1"></i>Ubah</button>
