@@ -27,13 +27,20 @@
                             <tbody>
                                 <?php foreach ($catalogue as $cat) { ?>
                                     <tr>
-                                        <td><?= $cat->name ?></td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <div style="width: 100px; height: 100px; display: block;">
+                                                    <img class="img-fluid" src="<?= base_url("assets/frontend/images/uploads/catalogue/" . $cat->image) ?>">
+                                                </div>
+                                                <span class="ms-2 align-self-center fw-bold"><?= $cat->name ?></span>
+                                            </div>
+                                        </td>
                                         <td><?= $cat->category_name ?></td>
                                         <td><?= $ctr->toRupiah($cat->price) ?></td>
                                         <td>
                                             <div class="float-end">
                                                 <a href="<?= base_url("backend/edit_catalogue?id=$cat->id") ?>" class="btn btn-primary btn-sm"><i class="fa fa-fw fa-edit"></i> Ubah</a>
-                                                <a href="<?= base_url("api/delete_catalogue?id=$cat->id") ?>" class="btn btn-danger btn-sm"><i class="fa fa-fw fa-trash"></i> Hapus</a>
+                                                <a href="<?= base_url("api/delete_catalogue?id=$cat->id") ?>" class="btn btn-danger btn-sm no-smoothstate"><i class="fa fa-fw fa-trash"></i> Hapus</a>
                                             </div>
                                         </td>
                                     </tr>

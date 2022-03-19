@@ -112,7 +112,7 @@
                                 <div class="swiper-wrapper">
                                     <?php foreach ($promotion as $promo) { ?>
                                         <div class="swiper-slide">
-                                            <a target="_blank" href="<?= $promo->url ?>"><img class="img-fluid" src="<?= base_url("assets/frontend/images/landing/promo/" . $promo->image) ?>"></a>
+                                            <a target="_blank" href="<?= $promo->url ?>"><img class="img-fluid" src="<?= base_url("assets/frontend/images/uploads/promo/" . $promo->image) ?>"></a>
                                         </div>
                                     <?php } ?>
                                 </div>

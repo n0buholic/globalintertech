@@ -13,7 +13,7 @@
                             <div class="col-md-4">
                                 <h5 class="card-title mb-3">Gambar Produk</h5>
                                 <div class="mb-3">
-                                    <img id="preview-image" src="<?= base_url("assets/frontend/images/catalogue/assets/placeholder.jpg") ?>" class="img-fluid">
+                                    <img id="preview-image" src="<?= base_url("assets/backend/images/placeholder.jpg") ?>" class="img-fluid">
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="image">Gambar</label>

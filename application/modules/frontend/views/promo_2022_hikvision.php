@@ -323,16 +323,6 @@ $uri = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].$_SERVER['REQU
 
 <a href="#" class="back-to-top" style="display: block;"><i class="fa fa-chevron-up"></i></a>
 
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <p class="text-center">Global Integra Technology</p>
-            </div>
-        </div>
-    </div>
-</footer>
-
 <div class="modal fade" id="detail-modal" tabindex="-1">
     <div class="modal-dialog modal-md modal-dialog-centered">
         <div class="modal-content">

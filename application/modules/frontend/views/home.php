@@ -588,16 +588,6 @@
 
 <a href="#" class="back-to-top" style="display: block;"><i class="fa fa-chevron-up"></i></a>
 
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <p class="text-center">© Global Integra Technology © Copyright 2017 - 2021</p>
-            </div>
-        </div>
-    </div>
-</footer>
-
 <div class="modal fade popup" id="promo" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">

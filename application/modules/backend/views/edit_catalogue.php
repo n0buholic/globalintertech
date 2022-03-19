@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="header">
         <h1 class="header-title">
-            Tambah Katalog
+            Ubah Katalog
         </h1>
     </div>
     <div class="row">

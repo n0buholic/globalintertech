@@ -5,6 +5,7 @@
 <body>
     <?= $view ?>
     <?= $this->load->view("template/frontend/script") ?>
+    <?= $this->load->view("template/frontend/footer") ?>
 </body>
 
 </html>

@@ -38,13 +38,6 @@ class Api extends MX_Controller
         $this->JSON_Output(true, "Berhasil keluar Aplikasi", ["redirect" => base_url("backend/login")]);
     }
 
-	public function fetch_category()
-	{
-		$q = $this->input->get("term");
-		$data = $this->db->select("id, name as text")->from("catalogue_category")->where("name LIKE '%$q%'")->get()->result();
-		$this->JSON_Output(true, "", $data);
-	}
-
 	public function add_catalogue()
 	{
 		$data = [];
@@ -161,7 +154,6 @@ class Api extends MX_Controller
 		redirect("backend/catalogue");
 	}
 
-
 	public function add_category()
 	{
 		$data = [];
@@ -188,5 +180,128 @@ class Api extends MX_Controller
 				$this->JSON_Output(true, "");
 			}
 		}
+	}
+
+	public function fetch_category()
+	{
+		$q = $this->input->get("term");
+		$data = $this->db->select("id, name as text")->from("catalogue_category")->where("name LIKE '%$q%'")->get()->result();
+		$this->JSON_Output(true, "", $data);
+	}
+
+	public function add_promo()
+	{
+		$data = [];
+
+		foreach ($this->input->post() as $name => $value) {
+			$data[$name] = $value;
+		}
+
+		$time = time();
+
+		$config['upload_path']          = './assets/frontend/images/uploads/promo/';
+		$config['allowed_types']        = 'jpg|jpeg|png';
+		$config['file_ext_tolower']     = TRUE;
+		$config['max_size']				= 1024;
+		$config['file_name']            = "$data[name]-$time}";
+
+		$this->Make_Dir($config['upload_path']);
+
+		$this->load->library('upload', $config);
+
+		if (!$this->upload->do_upload('image')) {
+			$this->JSON_Output(false, "Upload gagal: {$this->upload->display_errors()}");
+		} else {
+			$data['image'] = $this->upload->data()['file_name'];
+
+			$this->load->library('image_lib');
+
+			$configer =  array(
+				'image_library'   => 'gd2',
+				'source_image'    =>  $this->upload->data()['full_path'],
+				'maintain_ratio'  =>  TRUE,
+				'width'           =>  500,
+				'height'          =>  500,
+			);
+			$this->image_lib->clear();
+			$this->image_lib->initialize($configer);
+			$this->image_lib->resize();
+		}
+
+		$q = [
+			"table" => "promotion",
+			"data" => $data
+		];
+
+		if ($this->DB_Insert($q)) {
+			$this->JSON_Output(true, "Berhasil menambah promo", ["redirect" => base_url("backend/promo")]);
+		} else {
+			$this->JSON_Output(true, "Gagal menambah promo");
+		}
+	}
+
+	public function edit_promo()
+	{
+		$data = [];
+
+		foreach ($this->input->post() as $name => $value) {
+			$data[$name] = $value;
+		}
+
+		if ($_FILES['image']['size'] > 0) {
+			$time = time();
+
+			$config['upload_path']          = './assets/frontend/images/uploads/promo/';
+			$config['allowed_types']        = 'jpg|jpeg|png';
+			$config['file_ext_tolower']     = TRUE;
+			$config['max_size']				= 1024;
+			$config['file_name']            = "$data[name]-$time}";
+
+			$this->Make_Dir($config['upload_path']);
+
+			$this->load->library('upload', $config);
+
+			if (!$this->upload->do_upload('image')) {
+				$this->JSON_Output(false, "Upload gagal: {$this->upload->display_errors()}");
+			} else {
+				$data['image'] = $this->upload->data()['file_name'];
+
+				$this->load->library('image_lib');
+
+				$configer =  array(
+					'image_library'   => 'gd2',
+					'source_image'    =>  $this->upload->data()['full_path'],
+					'maintain_ratio'  =>  TRUE,
+					'width'           =>  500,
+					'height'          =>  500,
+				);
+				$this->image_lib->clear();
+				$this->image_lib->initialize($configer);
+				$this->image_lib->resize();
+			}
+		}
+
+		$q = [
+			"table" => "promotion",
+			"data" => $data,
+			"where" => "id = $data[id]"
+		];
+
+		if ($this->DB_Update($q)) {
+			$this->JSON_Output(true, "Berhasil mengubah promo", ["redirect" => base_url("backend/promo")]);
+		} else {
+			$this->JSON_Output(true, "Gagal mengubah promo");
+		}
+	}
+
+	public function delete_promo()
+	{
+		$q = [
+			"table" => "promotion",
+			"where" => "id = {$this->input->get('id')}"
+		];
+
+		$this->DB_Delete($q);
+		redirect("backend/promo");
 	}
 }

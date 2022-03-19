@@ -54,4 +54,27 @@ class Backend extends MX_Controller
 		}
 		viewPage("base/backend", "edit_catalogue", $this->data);
 	}
+
+	public function promo()
+	{
+		$this->data["title"] = "Promo";
+        $this->data["promo"] = $this->db->from("promotion")->get()->result();
+		viewPage("base/backend", "promo", $this->data);
+	}
+
+	public function add_promo()
+	{
+		$this->data["title"] = "Tambah Promo";
+		viewPage("base/backend", "add_promo", $this->data);
+	}
+
+	public function edit_promo()
+	{
+		$this->data["title"] = "Ubah Katalog";
+		$this->data["promo"] = $this->db->from("promotion")->get()->row();
+		if (!$this->data["promo"]) {
+			redirect("backend/promo");
+		}
+		viewPage("base/backend", "edit_promo", $this->data);
+	}
 }
