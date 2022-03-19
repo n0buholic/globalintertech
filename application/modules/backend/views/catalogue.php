@@ -29,8 +29,8 @@
                                     <tr>
                                         <td>
                                             <div class="d-flex">
-                                                <div style="width: 100px; height: 100px; display: block;">
-                                                    <img class="img-fluid" src="<?= base_url("assets/frontend/images/uploads/catalogue/" . $cat->image) ?>">
+                                                <div style="width: 100px; height: 100px; display: grid;">
+                                                    <img class="img-fluid img-thumbnail rounded align-self-center" src="<?= base_url("assets/frontend/images/uploads/catalogue/" . $cat->image) ?>">
                                                 </div>
                                                 <span class="ms-2 align-self-center fw-bold"><?= $cat->name ?></span>
                                             </div>
