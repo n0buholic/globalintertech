@@ -2,18 +2,22 @@
 <script src="https://cdn.jsdelivr.net/npm/smoothstate@0.7.2/src/jquery.smoothState.js"></script>
 
 <script>
-    var base_url = "<?= base_url() ?>";
+    var base_url = "<?= base_url() ?>",
+        smoothState;
 
-    var options = {
-        prefetch: true,
-        cacheLength: 0,
-        blacklist: '.no-smoothstate',
-        forms: 'form.smoothstate',
-        onAfter: function() {
-            init();
-        },
-    },
-    smoothState = $('#wrapper').smoothState(options).data('smoothState');
+    $(function() {
+        const options = {
+            prefetch: true,
+            cacheLength: 0,
+            blacklist: '.no-smoothstate',
+            forms: 'form.smoothstate',
+            repeatDelay: 500,
+            onAfter: function() {
+                init();
+            },
+        }
+        smoothState = $('#wrapper').smoothState(options).data('smoothState');
+    })
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>

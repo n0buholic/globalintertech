@@ -10,7 +10,7 @@
 					<i class="align-middle fas fa-cog"></i>
 				</a>
 				<div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-					<a class="dropdown-item" id="logout" href="#!"><i class="align-middle me-1 fas fa-fw fa-arrow-alt-circle-right"></i> Keluar</a>
+					<a class="dropdown-item no-smoothstate" id="logout" href="#!"><i class="align-middle me-1 fas fa-fw fa-arrow-alt-circle-right"></i> Keluar</a>
 				</div>
 			</li>
 		</ul>
