@@ -29,6 +29,7 @@ class Backend extends MX_Controller
 		$this->Auth_Guard();
 		$this->data["title"] = "Dashboard";
         $this->data["catalogue_count"] = $this->db->count_all_results("catalogue_item");
+		$this->data["promo_count"] = $this->db->count_all_results("promotion");
 		viewPage("base/backend", "dashboard", $this->data);
 	}
 

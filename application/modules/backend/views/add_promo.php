@@ -25,7 +25,7 @@
                                 <h5 class="card-title mb-3">Informasi Promo</h5>
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="name">Nama Promo</label>
-                                    <input type="text" class="form-control" name="name" id="name" placeholder="Nama Produk" required>
+                                    <input type="text" class="form-control" name="name" id="name" placeholder="Nama Promo" required>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="url">URL Tujuan</label>
