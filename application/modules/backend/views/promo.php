@@ -35,7 +35,7 @@
                                                 <span class="ms-2 align-self-center fw-bold"><?= $pro->name ?></span>
                                             </div>
                                         </td>
-                                        <td><a target="_blank" href="<?= $pro->url ?>"></a></td>
+                                        <td><a target="_blank" href="<?= $pro->url ?>"><?= $pro->url ?></a></td>
                                         <td><?= $pro->start_date ?> - <?= $pro->end_date ?></td>
                                         <td>
                                             <div class="float-end">
