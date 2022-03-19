@@ -3,7 +3,8 @@
 
 <script>
     var base_url = "<?= base_url() ?>",
-        smoothState;
+        smoothState,
+        sidebarOpened;
 
     $(function() {
         const options = {
@@ -12,7 +13,21 @@
             blacklist: '.no-smoothstate',
             forms: 'form.smoothstate',
             repeatDelay: 500,
-            onAfter: function() {
+            onReady: {
+                duration: 100,
+                render: function($container, $newContent) {
+                    console.log($($newContent[0]))
+                    sidebarOpened ? $($newContent[0]).addClass("toggled") : null;
+                    $container.html($newContent);
+                }
+            },
+            onStart: {
+                duration: 0,
+                render: function($container) {
+                    sidebarOpened = $container.find("#sidebar").hasClass("toggled");
+                }
+            },
+            onAfter: function($container, $newContent) {
                 init();
             },
         }
