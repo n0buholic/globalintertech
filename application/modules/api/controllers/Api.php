@@ -46,6 +46,8 @@ class Api extends MX_Controller
 			$data[$name] = $value;
 		}
 
+		$data["price"] = str_replace(".", "", $data["price"]);
+
 		$time = time();
 
 		$config['upload_path']          = './assets/frontend/images/uploads/catalogue/';
@@ -96,6 +98,8 @@ class Api extends MX_Controller
 		foreach ($this->input->post() as $name => $value) {
 			$data[$name] = $value;
 		}
+
+		$data["price"] = str_replace(".", "", $data["price"]);
 
 		if ($_FILES['image']['size'] > 0) {
 			$time = time();
