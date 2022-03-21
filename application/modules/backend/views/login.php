@@ -44,6 +44,8 @@
             contentType: false,
             data: new FormData($(this)[0]),
             dataType: "JSON",
+            beforeSend: () => $.LoadingOverlay("show"),
+            complete: () => $.LoadingOverlay("hide"),
             success: function(data) {
                 if (data.success) {
                     Swal.fire(
