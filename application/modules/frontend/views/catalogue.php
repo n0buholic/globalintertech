@@ -46,7 +46,7 @@
     }
 
     .product {
-        border-top: 1px solid #6F8BA4;
+        border-top: 1px solid #dee8f1;
     }
 
     .product:first-child {
