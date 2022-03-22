@@ -1,8 +1,7 @@
 <?php
-	date_default_timezone_set('Asia/Kuala_Lumpur'); require_once("../setty/config.php"); require_once("../setty/func.php");
-	if($_SERVER["SERVER_NAME"] != "localhost"){ $link = "https://".$_SERVER["SERVER_NAME"]; }
-		else { $link = "https://".$_SERVER["SERVER_NAME"]."/global"; }
-	$sumber = "../img/logo.png"; $src = encode_base64($sumber); setcookie('captcha_garansi', '', 0, '/');
+	date_default_timezone_set('Asia/Kuala_Lumpur'); require_once("../setty/func.php");
+	if($_SERVER["SERVER_NAME"] !=="localhost"){ $link = "https://".$_SERVER["SERVER_NAME"]; }
+		else { $link = "https://".$_SERVER["SERVER_NAME"] . "/global/"; } $sumber = "../img/logo.png"; $src = encode_base64($sumber);
 ?>
 <div class="row" style="margin:2em 1em;">
 	<div class="col-md-4"></div>
@@ -36,7 +35,31 @@
 	<div class="col-md-4"></div>
 </div>
 <script type="text/javascript">		
-	$(document).ready(function(){ $('input').prop('autocomplete', 'off'); $('#html_data_detail').html('<div class="alert alert-danger text-center">data tidak ditemukan.</div>');
+	$(document).ready(function(){
+		function html_info(data)
+		{
+			let html = '';
+			html += "<table class='table tabel-striped'>";
+			html += "<tr class='success'><td>Customer</td><td><i class='icon-caret-right'></i> <span>"+ data.customer +"</span></td></tr>";
+			html += "<tr><td>Status</td><td><i class='icon-caret-right'></i> <span>"+ data.sts_garansi +"</span></td></tr>";
+			/*<tr><td>Supplier</td><td><i class='icon-caret-right'></i> <i>".$det_supp->nama."</i></td></tr>*/
+			html += "<tr><td>Invoice</td><td><i class='icon-caret-right'></i> <span>"+ data.invoice +"</span></td></tr>";
+			html += "<tr><td>Type Produk</td><td><i class='icon-caret-right'></i> <span>"+ data.produk +"</span></td></tr>";
+			html += "<tr class='success'><td>Serial Number</td><td><i class='icon-caret-right'></i> <span>"+ data.sn +"</span></td></tr>";
+			html += "<tr><td>Tgl. Pembelian</td><td><i class='icon-caret-right'></i> <span>"+ data.tgl_beli +"</span></td></tr>";
+			html += "<tr><td>Tgl. Batas Garansi</td><td><i class='icon-caret-right'></i> <span>"+ data.tgl_bts_garansi +"</span></td></tr>";
+			let str, sisa_garansi;
+			if(parseInt(data.sisa_garansi) >= 0) { str = 'Sisa Garansi'; sisa_garansi = data.sisa_garansi; }
+			else { str = 'Tanggal Sekarang'; sisa_garansi = data.tgl_now; }
+			html += "<tr><td>"+ str +"</td><td><i class='icon-caret-right'></i> <span>"+ sisa_garansi +"</span></td></tr>";
+			html += "</table>"; return html;
+		}
+
+		function alert_not_found(text)
+		{
+			return '<div class="alert alert-danger text-center">'+ text +'</div>';
+		}
+		$('input').prop('autocomplete', 'off'); $('#html_data_detail').html(alert_not_found('data tidak ditemukan.'));
 		$('#frm_cek_garansi').validate({
 			rules: { textsn: 'required', captcha:{ required:true, digits:true, maxlength:6, minlength:6 } },
 	        errorClass: 'help-block',
@@ -48,10 +71,18 @@
 	            $(element).parents('.form-group').removeClass('has-error').addClass('has-success');
 	        },
 	        submitHandler: function(form, e) { e.preventDefault();
-	        	var str = $('#textsn').val(), captcha = $('#captcha').val();
-	        	$.ajax({ type: 'POST', beforeSend: function(){ $('.loading').fadeIn('slow'); }, url: 'lap_garansi', data: {str:str, captcha:captcha}, dataType:'json', cache: false, success: function(msg){
-	        			if(msg[0] !== 'reload'){ $('#html_data_detail').html(msg[1]); $('#img_captcha').attr('src', 'captcha');
-	        				$('input').val(''); } else { window.location = msg[1]; }
-	        			$('.loading').fadeOut('slow'); } }); return false; } });//end
+	        	let str = $('#textsn').val(), captcha = $('#captcha').val();
+	        	
+	        	let captchaK = '';
+	        	$.ajax({ type: 'POST', url: 'ambil_cookie', cache: false, async:false, success: (msg) => { captchaK = msg; } });
+
+	        	$.ajax({ type: 'POST', beforeSend: () => { $('.loading').fadeIn('slow'); }, url: 'https://global.cmbstore.id/rest-api/view/View_info_sn.php', data: { str, captchaK, captcha }, dataType:'json', cache: false, complete: () => { $('.loading').fadeOut('slow'); }, success: (msg) => {
+	        			if(msg.status == 'valid') { $('#html_data_detail').html(html_info(msg)); }
+	        			else { $('#html_data_detail').html(alert_not_found(msg.text)); }
+	        		}
+	        	});
+	        	return false;
+	        }
+	    });
 	});//end document
 </script>
