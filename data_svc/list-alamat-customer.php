@@ -24,7 +24,7 @@
 
 <script type="text/javascript">
 	$(document).ready( () => { let telp = '<?= $telp; ?>';
-		$.ajax({ url:'rest-api/view/View_service', data:{ mode:'list_alamat', telp }, type:'POST', dataType:'json', cache:false, success: (data) => { let html = '<li class="list-group-item"><b><i class="bi bi-list-ul"></i> Pilih Alamat</b></li></li>';
+		$.ajax({ url:'https://global.cmbstore.id/rest-api/view/View_service', data:{ mode:'list_alamat', telp }, type:'POST', dataType:'json', cache:false, success: (data) => { let html = '<li class="list-group-item"><b><i class="bi bi-list-ul"></i> Pilih Alamat</b></li></li>';
 				$.each(data, (inx, elm) => {
 					html += '<li class="list-group-item li-pointer" data-id="'+ elm.id_customer +'">'+ elm.alamat +' <span class="float-right"><span class="badge badge-secondary">'+ elm.total +'</span> <i class="bi bi-chevron-double-right"></i></span></li>';
 				}); $('#dynamic-alamat').html(html);

@@ -52,7 +52,7 @@
 				html += '<li class="list-group-item li-pointer" data-id="'+ elm.id_service +'">'+ elm.id_service +' '+ sts_svc +' <span class="float-right"><i class="bi bi-chevron-double-right"></i></span></li>';
 			}); return html;
 		}
-		$.ajax({ url:'rest-api/view/View_service', data:{ mode:'log_service_customer', id_customer }, type:'POST', dataType:'json', cache:false, complete: () => { $('.loading').fadeOut('slow'); }, success: (data) => {
+		$.ajax({ url:'https://global.cmbstore.id/rest-api/view/View_service', data:{ mode:'log_service_customer', id_customer }, type:'POST', dataType:'json', cache:false, complete: () => { $('.loading').fadeOut('slow'); }, success: (data) => {
 				$('#dynamic-svc').html(ls_no_service(data.ls_svc)); $('#html-alamat').html('<i><b>Alamat</b>:<br>'+ data.alamat +'</i>');
 		} });
 		$('button').on('click', () => {
@@ -66,7 +66,7 @@
 		});
 		$('#textfind').keyup( function() {
 			let filter = $(this).val();
-			$.ajax({ url:'rest-api/view/View_service', data:{ mode:'log_service_customer', id_customer, filter }, type:'POST', dataType:'json', cache:false, success: (data) => { $('#dynamic-svc').html(ls_no_service(data.ls_svc)); } });
+			$.ajax({ url:'https://global.cmbstore.id/rest-api/view/View_service', data:{ mode:'log_service_customer', id_customer, filter }, type:'POST', dataType:'json', cache:false, success: (data) => { $('#dynamic-svc').html(ls_no_service(data.ls_svc)); } });
 		});
 	});
 </script>

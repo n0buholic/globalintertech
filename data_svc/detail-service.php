@@ -38,7 +38,7 @@
 
 <script type="text/javascript">
 	$(document).ready( () => { let id_customer = '<?= $id_customer; ?>', telp = '<?= $telp; ?>', id_service = '<?= $id_service; ?>';		
-		$.ajax({ url:'rest-api/view/View_service', data:{ mode:'detail_service', id_service }, type:'POST', dataType:'json', cache:false, complete: () => { $('.loading').fadeOut('slow'); }, success: (data) => {
+		$.ajax({ url:'https://global.cmbstore.id/rest-api/view/View_service', data:{ mode:'detail_service', id_service }, type:'POST', dataType:'json', cache:false, complete: () => { $('.loading').fadeOut('slow'); }, success: (data) => {
 				$('#html-svc').html(id_service); $('#html-daftar').html(data.detail.tgl_masuk);
 				$('#html-proses').html(data.detail.tgl_proses); $('#html-selesai').html(data.detail.tgl_selesai);
 				$('#html-keluhan').html('<i>'+ data.detail.keluhan +'</i>');

@@ -43,7 +43,7 @@
 	        submitHandler: (form, e) => { e.preventDefault();
 	        	let telp = $('#texttelp').val();
 
-	        	$.ajax({ beforeSend: () => { $('.loading').fadeIn('slow'); }, url:'rest-api/view/View_service', data:{ mode:'cek_jumlah_alamat', telp }, type:'POST', dataType:'json', cache:false, complete: () => { $('.loading').fadeOut('slow'); }, success: (data) => {
+	        	$.ajax({ beforeSend: () => { $('.loading').fadeIn('slow'); }, url:'https://global.cmbstore.id/rest-api/view/View_service', data:{ mode:'cek_jumlah_alamat', telp }, type:'POST', dataType:'json', cache:false, complete: () => { $('.loading').fadeOut('slow'); }, success: (data) => {
 	        			if(data.link == 'not-found')
 	        			{	
 	        				$('#html-alert').after('<div class="alert alert-danger" role="alert">Nomor telp belum terdaftar.</div>');
