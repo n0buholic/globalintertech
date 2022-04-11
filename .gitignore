@@ -3,3 +3,4 @@ application/helpers/email_account_helper.php
 assets/upload
 assets/frontend/images/uploads
 setty
+file_upload
