@@ -11,10 +11,11 @@
 		<div class="col-md-12">
 			<div class="alert alert-secondary" role="alert">
 				<form id="frm-customer">
-				  <div class="form-group" id="html-alert">
+				  <div class="form-group">
 				    <label for="texttelp"><i class="bi bi-caret-right-fill"></i> Masukkan No. Telp/HP</label>
 				    <input type="text" class="form-control" name="texttelp" id="texttelp" autocomplete="off">
 				  </div>
+				  <div class="form-group" id="html-alert"></div>
 				  <div class="row">
 				  	<div class="col">
 				  		<button type="submit" class="btn btn-success float-right"><i class="bi bi-search"></i> Cari Data</button>
@@ -46,7 +47,7 @@
 	        	$.ajax({ beforeSend: () => { $('.loading').fadeIn('slow'); }, url:'https://global.cmbstore.id/rest-api/view/View_service', data:{ mode:'cek_jumlah_alamat', telp }, type:'POST', dataType:'json', cache:false, complete: () => { $('.loading').fadeOut('slow'); }, success: (data) => {
 	        			if(data.link == 'not-found')
 	        			{	
-	        				$('#html-alert').after('<div class="alert alert-danger" role="alert">Nomor telp belum terdaftar.</div>');
+	        				$('#html-alert').html('<div class="alert alert-danger" role="alert">Nomor telp belum terdaftar.</div>');
 	        			} else
 	        			{
 		        			$.ajax({ url:data.link, data:{ telp, id_customer:data.id_customer }, type:'POST', cache:false, success: (page) => { $('#div-load-page').html(page); } });
