@@ -111,7 +111,7 @@
                 <?php foreach ($cat->items as $item) {
                     $specification = @explode("<br />", nl2br($item->specification));
                 ?>
-                    <div class="row product py-5 g-3">
+                    <div class="row product py-5 g-4">
                         <div class="col-12 col-lg-4">
                             <img src="<?= base_url("assets/frontend/images/uploads/catalogue/" . $item->image) ?>" class="img-fluid">
                         </div>
