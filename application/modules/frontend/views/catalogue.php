@@ -112,10 +112,10 @@
                     $specification = @explode("<br />", nl2br($item->specification));
                 ?>
                     <div class="row product py-5">
-                        <div class="col-4">
+                        <div class="col-12 col-lg-4">
                             <img src="<?= base_url("assets/frontend/images/uploads/catalogue/" . $item->image) ?>" class="img-fluid">
                         </div>
-                        <div class="col-8">
+                        <div class="col-12 col-lg-8">
                             <div class="row g-3">
                                 <div class="col-12">
                                     <h3 class="fw-bold mb-1"><?= $item->brand_name ?> | <?= $item->name ?></h3>
