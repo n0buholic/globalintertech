@@ -34,12 +34,22 @@
                                     </select>
                                 </div>
                                 <div class="form-group mb-3">
+                                    <label class="form-label" for="brand_id">Brand</label>
+                                    <select class="form-control select2" data-bs-toggle="select2" id="brand_id" name="brand_id" required>
+                                        <option></option>
+                                    </select>
+                                </div>
+                                <div class="form-group mb-3">
                                     <label class="form-label" for="price">Harga Produk</label>
                                     <input type="text" class="form-control mask-rupiah" name="price" id="price" placeholder="Harga Produk" required>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label class="form-label" for="specification">Spesifikasi</label>
                                     <textarea class="form-control" name="specification" id="specification" placeholder="Spesifikasi" rowspan="10" required></textarea>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label class="form-label" for="price">Link Datasheet</label>
+                                    <input type="text" class="form-control" name="datasheet" id="datasheet" placeholder="Link Datasheet">
                                 </div>
                                 <div class="form-group mb-3 float-end">
                                     <button class="btn btn-primary"><i class="fa fa-fw fa-plus me-1"></i>Tambah</button>
@@ -55,8 +65,8 @@
 
 <script>
     $(document).ready(function() {
-        const select = $("[name=category_id]");
-        select.select2({
+        const category = $("[name=category_id]");
+        category.select2({
             tags: true,
             placeholder: "Pilih Kategori",
             ajax: {
@@ -93,7 +103,51 @@
                         name: selected.text,
                     },
                     success: function(data) {
-                        select.find('[value="' + selected.name + '"]').replaceWith('<option selected value="' + data.data.id + '">' + data.data.text + '</option>');
+                        select.find('[value="' + selected.text + '"]').replaceWith('<option selected value="' + data.data.id + '">' + data.data.text + '</option>');
+                    }
+                })
+            }
+        });
+
+        const brand = $("[name=brand_id]");
+        brand.select2({
+            tags: true,
+            placeholder: "Pilih Brand",
+            ajax: {
+                url: base_url + "api/fetch_brand",
+                delay: 250,
+                processResults: (data) => {
+                    return {
+                        results: data.data
+                    };
+                }
+            },
+            createTag: function(params) {
+                const term = $.trim(params.term);
+
+                if (term === '') {
+                    return null;
+                }
+
+                return {
+                    id: term,
+                    text: term,
+                    isNew: true
+                };
+            }
+        }).on("select2:selecting", function(selected) {
+            selected = selected.params.args.data;
+            if (selected.isNew) {
+                const select = $(this)
+                $.ajax({
+                    url: base_url + "api/add_brand",
+                    method: "POST",
+                    data: {
+                        dynamic: true,
+                        name: selected.text,
+                    },
+                    success: function(data) {
+                        select.find('[value="' + selected.text + '"]').replaceWith('<option selected value="' + data.data.id + '">' + data.data.text + '</option>');
                     }
                 })
             }

@@ -186,6 +186,41 @@ class Api extends MX_Controller
 		}
 	}
 
+	public function fetch_brand()
+	{
+		$q = $this->input->get("term");
+		$data = $this->db->select("id, name as text")->from("catalogue_brand")->where("name LIKE '%$q%'")->get()->result();
+		$this->JSON_Output(true, "", $data);
+	}
+
+	public function add_brand()
+	{
+		$data = [];
+
+		foreach ($this->input->post() as $name => $value) {
+			$data[$name] = $value;
+		}
+
+		unset($data["dynamic"]);
+
+		$q = [
+			"table" => "catalogue_brand",
+			"data" => $data
+		];
+
+		if ($this->DB_Insert($q)) {
+			$id = $this->db->insert_id();
+			if ($this->input->post("dynamic")) {
+				$this->JSON_Output(true, "", [
+					"text" => $data["name"],
+					"id" => $id
+				]);
+			} else {
+				$this->JSON_Output(true, "");
+			}
+		}
+	}
+
 	public function fetch_category()
 	{
 		$q = $this->input->get("term");
