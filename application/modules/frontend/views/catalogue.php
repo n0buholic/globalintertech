@@ -118,7 +118,7 @@
                         <div class="col-8">
                             <div class="row g-3">
                                 <div class="col-12">
-                                    <h3 class="fw-bold mb-1"><?= $item->name ?></h3>
+                                    <h3 class="fw-bold mb-1"><?= $item->brand_name ?> | <?= $item->name ?></h3>
                                     <h5><?= $ctr->toRupiah($item->price) ?></h5>
                                 </div>
                                 <div class="col-12">
@@ -127,6 +127,11 @@
                                         <?= implode("&nbsp;&nbsp;|&nbsp;&nbsp;", $specification) ?>
                                     </small>
                                 </div>
+                                <?php if ($item->datasheet) { ?>
+                                    <div class="col-12">
+                                        <a target="_blank" href="<?= $item->datasheet ?>" class="btn-primary-line mt-3">Datasheet</a>
+                                    </div>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>

@@ -61,7 +61,7 @@ class Frontend extends MX_Controller
 		$this->data["title"] = "Katalog";
 		$categories = $this->db->get("catalogue_category")->result();
 		foreach($categories as &$cat) {
-			$cat->items = $this->db->where("category_id", $cat->id)->get("catalogue_item")->result();
+			$cat->items = $this->db->select("a.*, b.name as brand_name")->join("catalogue_brand b", "b.id = a.brand_id", "left")->where("a.category_id", $cat->id)->get("catalogue_item a")->result();
 		}
 		$this->data["categories"] = $categories;
 		viewPage("base/blank", "catalogue", $this->data);
