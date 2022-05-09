@@ -36,6 +36,7 @@
                                                 <span class="ms-2 align-self-center fw-bold"><?= $cat->name ?></span>
                                             </div>
                                         </td>
+                                        <td><?= $cat->brand_name ?></td>
                                         <td><?= $cat->category_name ?></td>
                                         <td><?= $ctr->toRupiah($cat->price) ?></td>
                                         <td>
