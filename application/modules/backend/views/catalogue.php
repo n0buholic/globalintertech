@@ -19,6 +19,7 @@
                             <thead>
                                 <tr>
                                     <th>Nama</th>
+                                    <th>Brand</th>
                                     <th>Kategori</th>
                                     <th>Harga</th>
                                     <th width="180"></th>

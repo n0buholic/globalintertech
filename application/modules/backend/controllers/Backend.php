@@ -43,7 +43,7 @@ class Backend extends MX_Controller
     public function catalogue()
 	{
 		$this->data["title"] = "Katalog";
-        $this->data["catalogue"] = $this->db->select("a.*, b.name as category_name")->from("catalogue_item a")->join("catalogue_category b", "b.id = a.category_id", "left")->get()->result();
+        $this->data["catalogue"] = $this->db->select("a.*, b.name as category_name, c.name as brand_name")->from("catalogue_item a")->join("catalogue_category b", "b.id = a.category_id", "left")->join("catalogue_brand c", "c.id = a.brand_id", "left")->get()->result();
 		viewPage("base/backend", "catalogue", $this->data);
 	}
 
