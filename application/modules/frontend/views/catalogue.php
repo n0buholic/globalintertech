@@ -100,6 +100,7 @@
         height: 40px;
         justify-content: center;
         right: 50%;
+        transform: translateX(50%);
     }
 
     .back-to-top.show {
