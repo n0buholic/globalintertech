@@ -169,7 +169,6 @@
 
     nav.main-nav {
         justify-content: space-between;
-        display: flex;
     }
 
     .header-area.header-sticky .nav li a {
@@ -191,6 +190,11 @@
 
 <header class="header-area">
     <nav class="main-nav">
+        <!-- one page search product mobile -->
+        <div class="search-product mobile d-flex d-lg-none">
+            <input type="text" placeholder="Cari produk...">
+        </div>
+
         <ul class="nav">
             <?php foreach ($categories as $cat) {
                 if (count($cat->items) > 0) { ?>
@@ -202,11 +206,7 @@
         <div class="search-product desktop d-none d-lg-flex">
             <input type="text" placeholder="Cari produk...">
         </div>
-
-        <!-- one page search product mobile -->
-        <div class="search-product mobile d-flex d-lg-none">
-            <input type="text" placeholder="Cari produk...">
-        </div>
+        
         <a class="menu-trigger">
             <span>Menu</span>
         </a>
