@@ -18,6 +18,8 @@
 <script src="<?= base_url("assets/frontend/vendor/sweetalert2/dist/sweetalert2.min.js") ?>"></script>
 
 <script src="<?= base_url("assets/frontend/vendor/swiper/swiper-bundle.js") ?>"></script>
+
+<script src="<?= base_url("assets/frontend/js/custom.js?v=" . time()) ?>"></script>
 <body>
     <?= $view ?>
     <?= $this->load->view("template/frontend/footer") ?>

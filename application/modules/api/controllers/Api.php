@@ -343,4 +343,23 @@ class Api extends MX_Controller
 		$this->DB_Delete($q);
 		redirect("backend/promo");
 	}
+
+	public function request_quotation() {
+		$data = [];
+
+		foreach ($this->input->post() as $name => $value) {
+			$data[$name] = $value;
+		}
+
+		$q = [
+			"table" => "sales_quote",
+			"data" => $data
+		];
+
+		if ($this->DB_Insert($q)) {
+			$this->JSON_Output(true, "Berhasil mengirimkan permintaan penawaran");
+		} else {
+			$this->JSON_Output(true, "Gagal mengirimkan permintaan penawaran");
+		}
+	}
 }

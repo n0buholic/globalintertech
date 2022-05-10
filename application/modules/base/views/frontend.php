@@ -3,8 +3,8 @@
 <?= $this->load->view("template/frontend/head") ?>
 
 <body>
-    <?= $view ?>
     <?= $this->load->view("template/frontend/script") ?>
+    <?= $view ?>
     <?= $this->load->view("template/frontend/footer") ?>
 </body>
 

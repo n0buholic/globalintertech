@@ -1,16 +1,15 @@
+var CustomAlert = Swal.mixin({
+  customClass: {
+    confirmButton: "btn-primary-line",
+    cancelButton: "btn-danger-line",
+  },
+  buttonsStyling: false,
+  allowOutsideClick: () => !Swal.isLoading(),
+  allowEscapeKey: false,
+  backdrop: true
+});
+
 (function ($) {
-  ("use strict");
-
-  var CustomAlert = Swal.mixin({
-    customClass: {
-      confirmButton: "btn-primary-line",
-      cancelButton: "btn-danger-line",
-    },
-    buttonsStyling: false,
-    allowOutsideClick: () => !Swal.isLoading(),
-    allowEscapeKey: false,
-  });
-
   // saat pilih paket melalui select
   $("[name=package]").on("change", function () {
     const selectedDetail = $(".selected-detail");
