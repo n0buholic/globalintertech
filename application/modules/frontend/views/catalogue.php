@@ -85,7 +85,7 @@
         border-top: 1px solid #dee8f1;
     }
 
-    .product:first-child {
+    .product:first-child:not([style*="display:none"]) {
         border-top: 0px;
     }
 
