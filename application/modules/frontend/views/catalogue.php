@@ -82,11 +82,11 @@
     }
 
     .product {
-        border-top: 1px solid #dee8f1;
+        border-bottom: 1px solid #dee8f1;
     }
 
-    .product:first-child:not([style*="display:none"]) {
-        border-top: 0px;
+    .product:last-child {
+        border-bottom: 0px;
     }
 
     .header-area .main-nav .nav {
