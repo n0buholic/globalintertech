@@ -578,17 +578,18 @@
             cart = cart.filter(item => item.id != id);
             localStorage.setItem("cart", JSON.stringify(cart));
             $(this).parents(".cart-item").fadeOut(200, function() {
+                $(this).remove();
                 checkCart();
                 updateTotalPrice();
                 if (cart.length == 0) {
                     $(".cart-container").find(".cart-items").append(`
-                <div class="cart-item">
-                    <div class="row align-items-center">
-                        <div class="col-12 text-center">
-                            <span class="fw-bold">Produk masih kosong</span>
+                    <div class="cart-item">
+                        <div class="row align-items-center">
+                            <div class="col-12 text-center">
+                                <span class="fw-bold">Produk masih kosong</span>
+                            </div>
                         </div>
                     </div>
-                </div>
                 `);
                 }
             });
