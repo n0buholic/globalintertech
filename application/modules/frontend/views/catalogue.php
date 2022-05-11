@@ -474,9 +474,9 @@
     }
 
     $(".search-product input").on("keyup change", function() {
-        const matcher = new RegExp($(this).val(), 'gi');
+        const matcher = $(this).val();
         $('.product').show().not(function() {
-            return matcher.test($(this).find(".product-name, .product-price, .product-description").text())
+            return $(this).find(".product-name, .product-price, .product-description").text().toLocaleLowerCase().includes(matcher.toLowerCase())
         }).hide();
         $(".products").each(function() {
             if ($(this).find(".product:visible").length == 0) {
