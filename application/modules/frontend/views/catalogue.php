@@ -577,7 +577,7 @@
         if (findProduct) {
             cart = cart.filter(item => item.id != id);
             localStorage.setItem("cart", JSON.stringify(cart));
-            $(this).parents(".cart-item").remove();
+            $(this).parents(".cart-item").fadeOut(200);
             checkCart();
             updateTotalPrice();
             if (cart.length == 0) {
