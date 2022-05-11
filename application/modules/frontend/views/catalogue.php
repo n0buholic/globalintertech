@@ -147,6 +147,7 @@
         background: white;
         top: 0;
         left: 0;
+        overflow-y: auto;
     }
 
     .search-product.desktop {
