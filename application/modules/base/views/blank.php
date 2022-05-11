@@ -2,6 +2,7 @@
 <html lang="en">
 <?= $this->load->view("template/frontend/head") ?>
 <script src="<?= base_url("assets/frontend/js/jquery-3.6.0.min.js") ?>"></script>
+<script src="<?= base_url("assets/frontend/js/jquery-ui.min.js") ?>"></script>
 
 <script src="<?= base_url("assets/frontend/js/popper.js") ?>"></script>
 <script src="<?= base_url("assets/frontend/js/bootstrap.min.js") ?>"></script>

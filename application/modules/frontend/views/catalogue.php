@@ -21,7 +21,7 @@
     }
 
     .qty-wrapper {
-        width: 140px;
+        width: 90px;
         border-radius: 6px;
         overflow: hidden;
         position: relative;
@@ -33,6 +33,7 @@
 
     .qty-wrapper * {
         border-radius: 0px;
+        font-size: 10px;
     }
 
     .header {
@@ -87,6 +88,10 @@
 
     .product:last-child {
         border-bottom: 0px;
+    }
+
+    .cart-item:last-child {
+        border-bottom: 0px !important;
     }
 
     .header-area .main-nav .nav {
@@ -175,6 +180,32 @@
     .header-area.header-sticky .nav li a {
         width: max-content;
     }
+
+    .shake {
+        animation: shake .7s;
+    }
+
+    @keyframes shake {
+
+        0%,
+        100% {
+            transform: translateX(0px);
+        }
+
+        20%,
+        80% {
+            transform: translateX(-3px) rotate(-7deg);
+        }
+
+        40%,
+        60% {
+            transform: translateX(3px) rotate(7deg);
+        }
+
+        50% {
+            transform: translateX(0px);
+        }
+    }
 </style>
 
 <div class="header position-relative" id="header">
@@ -207,7 +238,7 @@
         <div class="search-product desktop d-none d-lg-flex">
             <input type="text" placeholder="Cari produk...">
         </div>
-        
+
         <a class="menu-trigger">
             <span>Menu</span>
         </a>
@@ -245,20 +276,7 @@
                                     <h5 class="product-price"><?= $ctr->toRupiah($item->price) ?></h5>
                                 </div>
                                 <div class="col-12 action">
-                                    <div class="input-group qty-wrapper border">
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-light btn-sm btn-number h-100" data-type="minus">
-                                                <i class="fa fa-minus"></i>
-                                            </button>
-                                        </span>
-                                        <input type="text" class="form-control form-control-sm input-number quantity text-center" style="height: 35px;" value="1" disabled>
-                                        <span class="input-group-btn">
-                                            <button type="button" class="btn btn-light btn-sm btn-number h-100" data-type="plus">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                        </span>
-                                    </div>
-                                    <button class="btn-primary-line mt-3 add-to-cart mt-4" data-product='<?= json_encode($item) ?>'><i class="fa fa-plus-circle me-1"></i> Tambah</button>
+                                    <button class="btn-primary-line mt-3 add-to-cart" data-product='<?= json_encode($item) ?>'>Tambah</button>
                                 </div>
                                 <div class="col-12">
                                     <p class="fw-bold mb-2">Spesifikasi:</p>
@@ -300,9 +318,8 @@
 </div>
 
 <div class="cart-container p-3" style="display: none;">
-    <div class="cart-header d-flex justify-content-between align-items-center">
-        <h3 class="fw-bold">List Produk</h3>
-        <button class="close-cart btn btn-danger"><i class="fa fa-times"></i></button>
+    <div class="cart-header">
+        <h3 class="fw-bold d-flex align-items-center"><i style="font-size: 18px;" class="fa fa-chevron-left close-cart me-3"></i> Produk</h3>
     </div>
     <div class="cart-body py-3">
         <div class="cart-items">
@@ -313,8 +330,7 @@
             <div class="col-8 text-end">
                 <p class="fw-bold">Total</p>
             </div>
-            <div class="col-4 d-flex justify-content-between">
-                <p class="fw-bold">Rp</p>
+            <div class="col-4 text-end">
                 <p class="fw-bold total-price"></p>
             </div>
             <div class="col-12">
@@ -325,16 +341,15 @@
 </div>
 
 <div class="customer-data-container p-3" style="display: none;">
-    <div class="customer-data-header d-flex justify-content-between align-items-center">
-        <h3 class="fw-bold">Data Customer</h3>
-        <button class="close-customer-data btn btn-danger"><i class="fa fa-times"></i></button>
+    <div class="customer-data-header">
+        <h3 class="fw-bold d-flex align-items-center"><i style="font-size: 18px;" class="fa fa-chevron-left close-customer-data me-3"></i> Data Customer</h3>
     </div>
-    <div class="customer-data-body py-3">
+    <div class="customer-data-body py-3 mt-3">
         <div class="row">
             <div class="col-12 mb-3">
                 <div class="form-group">
                     <label for="">Nama Lengkap</label>
-                    <input type="text" class="form-control" name="name" placeholder="Nama">
+                    <input type="text" class="form-control" name="name" placeholder="Nama Lengkap">
                 </div>
             </div>
             <div class="col-12 mb-3">
@@ -397,61 +412,43 @@
     }
 
     function checkItemInCart() {
-        $(".product").each(function() {
-            $(this).find(".remove-from-cart").remove();
-            const product = $(this).data("product");
-            const cart = JSON.parse(localStorage.getItem("cart"));
-            if (cart) {
-                const item = cart.find(item => item.id == product.id);
-                if (item) {
-                    $(this).find(".action").append(`<span class="text-danger ms-3 mt-3 remove-from-cart" data-id='${product.id}'><i class="fa fa-times-circle me-1"></i> Hapus</span>`);
-                }
-            }
-        });
+        return false;
     }
 
     function openCart() {
         $(".cart-container").find(".cart-items").html("");
         const cart = JSON.parse(localStorage.getItem("cart"));
         if (cart && cart.length > 0) {
-            $(".cart-container").find(".cart-items").html(`
-                <div class="cart-item mb-2">
-                    <div class="row fw-bolder">
-                        <div class="col-7">
-                            Produk
-                        </div>
-                        <div class="col-1">
-                            Qty
-                        </div>
-                        <div class="col-4">
-                            Harga
-                        </div>
-                    </div>
-                </div>
-            `);
-
             cart.forEach(item => {
                 $(".cart-container").find(".cart-items").append(`
-                <div class="cart-item my-1">
+                <div class="cart-item py-3 border-bottom">
                     <div class="row align-items-center">
                         <div class="col-2">
                             <img src="<?= base_url("assets/frontend/images/uploads/catalogue/") ?>${item.image}" class="img-fluid">
                         </div>
-                        <div class="col-5">
-                            <span class="fw-bold mb-1">${item.brand_name} | ${item.name}</span>
-                        </div>
-                        <div class="col-1 text-center">
-                            <span class="fw-bold">${item.qty}</span>
-                        </div>
-                        <div class="col-4 d-flex justify-content-between">
-                            <span class="fw-bold">Rp </span>
-                            <span class="fw-bold">${formatRupiah(item.price * item.qty)}</span>
+                        <div class="col-10">
+                            <p class="mb-0">${item.brand_name} | ${item.name}</p>
+                            <p class="fw-bold" style="font-size: 12px;">Rp${formatRupiah(item.price)}</p>
+                            <div class="d-flex align-items-center mt-2">
+                                <div class="input-group qty-wrapper border">
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-light btn-sm btn-number h-100" data-type="minus">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </span>
+                                    <input type="text" class="form-control form-control-sm input-number quantity text-center" style="height: 15px;" value="${item.qty}" data-id="${item.id}" disabled>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-light btn-sm btn-number h-100" data-type="plus">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </span>
+                                </div>
+                                <i class="fa fa-trash ms-3 text-danger remove-from-cart" data-id="${item.id}"></i>
+                            </div>
                         </div>
                     </div>
                 </div>`);
             });
-
-            $(".cart-container").find(".total-price").text(formatRupiah(cart.map(item => item.price * item.qty).reduce((a, b) => a + b, 0)));
         } else {
             $(".cart-container").find(".cart-items").append(`
             <div class="cart-item">
@@ -462,10 +459,19 @@
                 </div>
             </div>
             `);
-
-            $(".cart-container").find(".total-price").text(0);
         }
+
+        updateTotalPrice();
     };
+
+    function updateTotalPrice() {
+        const cart = JSON.parse(localStorage.getItem("cart"));
+        if (cart && cart.length > 0) {
+            $(".cart-container").find(".total-price").text(`Rp${formatRupiah(cart.map(item => item.price * item.qty).reduce((a, b) => a + b, 0))}`);
+        } else {
+            $(".cart-container").find(".total-price").text(`Rp0`);
+        }
+    }
 
     $(".search-product input").on("keyup change", function() {
         const matcher = new RegExp($(this).val(), 'gi');
@@ -502,23 +508,65 @@
         $(".customer-data-container").fadeOut(200);
     });
 
-    $(".add-to-cart").on("click", function() {
-        const product = $(this).data("product");
-        product.qty = parseInt($(this).parent().find(".quantity").val());
-        let cart = JSON.parse(localStorage.getItem("cart"));
-        if (cart) {
-            const findProduct = cart.find(item => item.id === product.id);
-            if (findProduct) {
-                findProduct.qty = parseInt(findProduct.qty) + parseInt(product.qty);
-            } else {
-                cart.push(product);
-            }
-        } else {
-            cart = [product];
+    $(document).on("click", ".add-to-cart", function() {
+        const fixedCart = $(".fixed-cart");
+        const button = $(this);
+        const productImage = button.parents(".product").find("img");
+        if (productImage) {
+            const imgclone = productImage.clone()
+                .offset({
+                    top: productImage.offset().top,
+                    left: productImage.offset().left
+                })
+                .css({
+                    'opacity': '0.5',
+                    'position': 'absolute',
+                    'height': productImage.height(),
+                    'width': productImage.width(),
+                    'z-index': '100'
+                })
+                .appendTo($('body'))
+                .animate({
+                    'top': fixedCart.offset().top + 10,
+                    'left': fixedCart.offset().left + 10,
+                    'width': 10,
+                    'height': 10
+                }, 1000, 'easeInOutExpo');
+
+            setTimeout(function() {
+                fixedCart.addClass('shake');
+                setTimeout(function() {
+                    fixedCart.removeClass('shake');
+                }, 700);
+
+                // selesai tambah
+
+                const product = button.data("product");
+                product.qty = 1;
+                let cart = JSON.parse(localStorage.getItem("cart"));
+                if (cart) {
+                    const findProduct = cart.find(item => item.id === product.id);
+                    if (findProduct) {
+                        findProduct.qty = parseInt(findProduct.qty) + parseInt(product.qty);
+                    } else {
+                        cart.push(product);
+                    }
+                } else {
+                    cart = [product];
+                }
+
+                localStorage.setItem("cart", JSON.stringify(cart));
+                checkCart();
+                checkItemInCart();
+            }, 1000);
+
+            imgclone.animate({
+                'width': 0,
+                'height': 0
+            }, function() {
+                $(this).detach()
+            });
         }
-        localStorage.setItem("cart", JSON.stringify(cart));
-        checkCart();
-        checkItemInCart();
     });
 
     $(document).on("click", ".remove-from-cart", function() {
@@ -527,21 +575,51 @@
         const findProduct = cart.find(item => item.id == id);
         if (findProduct) {
             cart = cart.filter(item => item.id != id);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            $(this).parents(".cart-item").remove();
+            checkCart();
+            updateTotalPrice();
+            if (cart.length == 0) {
+                $(".cart-container").find(".cart-items").append(`
+                <div class="cart-item">
+                    <div class="row align-items-center">
+                        <div class="col-12 text-center">
+                            <span class="fw-bold">Produk masih kosong</span>
+                        </div>
+                    </div>
+                </div>
+                `);
+            }
+        }
+    });
+
+    $(document).on("click", "[data-type=plus]", function() {
+        const cart = JSON.parse(localStorage.getItem("cart"));
+        const qty = $(this).parents(".qty-wrapper").find(".quantity");
+        const itemId = qty.data("id");
+        const findProduct = cart.find(item => item.id == itemId);
+        if (findProduct) {
+            findProduct.qty = parseInt(findProduct.qty) + 1;
+            $(this).parents(".qty-wrapper").find(".quantity").val(findProduct.qty);
         }
         localStorage.setItem("cart", JSON.stringify(cart));
         checkCart();
-        checkItemInCart();
+        updateTotalPrice();
     });
 
-    $("[data-type=plus]").on("click", function() {
-        const qty = $(this).parents(".product").find(".input-number").val();
-        $(this).parents(".product").find(".input-number").val(parseInt(qty) + 1);
-    });
-
-    $("[data-type=minus]").on("click", function() {
-        const qty = $(this).parents(".product").find(".input-number").val();
-        if (parseInt(qty) > 1) {
-            $(this).parents(".product").find(".input-number").val(parseInt(qty) - 1);
+    $(document).on("click", "[data-type=minus]", function() {
+        const cart = JSON.parse(localStorage.getItem("cart"));
+        const qty = $(this).parents(".qty-wrapper").find(".quantity");
+        if (parseInt(qty.val()) > 1) {
+            const itemId = qty.data("id");
+            const findProduct = cart.find(item => item.id == itemId);
+            if (findProduct) {
+                findProduct.qty = parseInt(findProduct.qty) - 1;
+                $(this).parents(".qty-wrapper").find(".quantity").val(parseInt(qty.val()) - 1);
+            }
+            localStorage.setItem("cart", JSON.stringify(cart));
+            checkCart();
+            updateTotalPrice();
         }
     });
 

@@ -8,6 +8,7 @@
 
     <link rel="icon" type="image/png" href="<?= base_url("assets/frontend/images/favicon/favicon.png") ?>" />
 
+    <link href="<?= base_url("assets/frontend/css/jquery-ui.min.css") ?>" rel="stylesheet" type="text/css" />
     <link href="<?= base_url("assets/frontend/css/bootstrap.min.css") ?>" rel="stylesheet" type="text/css" />
     <link href="<?= base_url("assets/frontend/vendor/fontawesome6/css/all.min.css") ?>" rel="stylesheet" type="text/css" />
     <link href="<?= base_url("assets/frontend/css/magnific-popup.css") ?>" rel="stylesheet" type="text/css" />
