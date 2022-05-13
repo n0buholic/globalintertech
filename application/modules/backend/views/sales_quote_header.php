@@ -15,7 +15,7 @@
             <h3 class="text-right" style="margin-bottom: 2px;">Sales Quote</h3>
             <div style="border: 1px solid black; padding: 5px; font-size: 12px">
                 <div class="col-xs-6 text-left">Quote # </div>
-                <div class="col-xs-6 text-right">SQ-<?= sprintf('%06d', $sales_quote->id) ?></div>
+                <div class="col-xs-6 text-right">SQ-<?= date("m", strtotime($sales_quote->generate_date)) . date("y", strtotime($sales_quote->generate_date)) . sprintf('%03d', $counter) ?></div>
                 <div class="col-xs-6 text-left">Date </div>
                 <div class="col-xs-6 text-right"><?= date("d/m/Y", strtotime($sales_quote->generate_date)) ?></div>
             </div>

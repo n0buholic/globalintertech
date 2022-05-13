@@ -83,6 +83,17 @@ class Backend extends MX_Controller
 	{
 		$this->data["title"] = "Quote-SQ-00000";
 		$this->data["sales_quote"] = $this->db->select("a.*, b.name")->from("sales_quote a")->join("admin b", "b.id = a.taken_by", "left")->where("a.id", $this->input->get("id"))->get()->row();
+		$sq_month = date("m", strtotime($this->data["sales_quote"]->generate_date));
+		$sq_year = date("Y", strtotime($this->data["sales_quote"]->generate_date));
+		$sq_id = $this->data["sales_quote"]->id;
+
+		// check sales_quote on this month and year
+		$sales_quote_this_month = $this->db->select("a.*, b.name")->join("admin b", "b.id = a.taken_by", "left")->where("a.taken_by", $this->session->userdata("id"))->where("a.id < $sq_id")->where("MONTH(a.generate_date)", $sq_month)->where("YEAR(a.generate_date)", $sq_year)->count_all_results("sales_quote a");
+		$this->data["counter"] = 1;
+		if ($sales_quote_this_month > 0) {
+			$this->data["counter"] = $sales_quote_this_month + 1;
+		}
+
 		$header = $this->load->view("sales_quote_header", $this->data, true);
 		$footer = $this->load->view("sales_quote_footer", $this->data, true);
 		$html = $this->load->view("sales_quote_view", $this->data, true);
@@ -96,7 +107,7 @@ class Backend extends MX_Controller
 		$mpdf->SetHTMLHeader($header);
 		$mpdf->SetHTMLFooter($footer);
 		$mpdf->WriteHTML($html);
-		$mpdf->Output("Quote-SQ-" . sprintf('%06d', $this->data["sales_quote"]->id) . ".pdf", "I");
+		$mpdf->Output("Quote-SQ-" . date("m", strtotime($this->data["sales_quote"]->generate_date)) . date("y", strtotime($this->data["sales_quote"]->generate_date)) . sprintf('%03d', $this->data["counter"]) . ".pdf", "I");
 	}
 
 	public function sales_quote_generate()

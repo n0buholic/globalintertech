@@ -55,7 +55,7 @@
                                                     <a href="<?= base_url("backend/sales-quote/generate?id=$or->id") ?>" class="btn btn-primary btn-sm"><i class="fa fa-fw fa-edit"></i> Buat</a>
                                                 <?php } else if ($or->status == 2) { ?>
                                                     <a href="<?= base_url("backend/sales-quote/generate?id=$or->id") ?>" class="btn btn-primary btn-sm"><i class="fa fa-fw fa-edit"></i> Ubah</a>
-                                                    <a target="_blank" href="<?= base_url("backend/sales-quote/view?id=$or->id") ?>" class="btn btn-success btn-sm"><i class="fa fa-fw fa-eye"></i> Lihat</a>
+                                                    <a target="_blank" href="<?= base_url("sales-quote/view?id=$or->id") ?>" class="btn btn-success btn-sm"><i class="fa fa-fw fa-eye"></i> Lihat</a>
                                                 <?php } ?>
                                             </div>
                                         </td>
