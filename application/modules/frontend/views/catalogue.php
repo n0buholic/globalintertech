@@ -279,7 +279,7 @@
         ?>
         <section class="products">
             <div class="container py-4">
-                <div class="row">
+                <div class="row g-3">
                     <?php foreach ($cat->items as $item) {
                         $specification = @explode("<br />", nl2br($item->specification));
                     ?>
