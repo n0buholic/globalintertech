@@ -141,12 +141,12 @@ $data = json_decode($sales_quote->data);
                 <table style="width: 100%; padding: 0;" cellspacing="0" cellpadding="0">>
                     <thead>
                         <tr>
-                            <th width="150">ITEM</th>
-                            <th width="200">DESCRIPTION</th>
+                            <th width="120">ITEM</th>
+                            <th width="150">DESCRIPTION</th>
                             <th width="50" class="text-right">QUANTITY</th>
-                            <th width="50" class="text-right">UNIT PRICE</th>
+                            <th width="90" class="text-right">UNIT PRICE</th>
                             <th width="50" class="text-right">DISCOUNT</th>
-                            <th width="50" class="text-right">SUB-TOTAL</th>
+                            <th width="90" class="text-right">SUB-TOTAL</th>
                         </tr>
                     </thead>
                     <tbody>
