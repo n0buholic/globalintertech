@@ -63,11 +63,9 @@
                                         <td>
                                             <div class="float-end">
                                                 <?php if ($or->status == 0) : ?>
-                                                    <button class="btn btn-success btn-sm take-order" data-id="<?= $or->id ?>"><i class="fa fa-fw fa-check"></i> Buat Sales Quote</button>
+                                                    <button class="btn btn-success btn-sm take-order" data-id="<?= $or->id ?>"><i class="fa fa-fw fa-check"></i> Ambil Pesanan</button>
                                                 <?php elseif ($or->status == 1 && $or->taken_by == $this->session->userdata("id")) : ?>
                                                     <a href="<?= base_url("backend/sales-quote/generate?id=$or->id") ?>" class="btn btn-primary btn-sm"><i class="fa fa-fw fa-edit"></i> Buat</a>
-                                                    <a target="_blank" href="<?= base_url("sales-quote/view?id=$or->id") ?>" class="btn btn-info btn-sm"><i class="fa fa-fw fa-eye"></i> Lihat</a>
-                                                    <a target="_blank" href="<?= base_url("sales-quote/download?id=$or->id") ?>" class="btn btn-success btn-sm"><i class="fa fa-fw fa-download"></i> Unduh</a>
                                                 <?php elseif ($or->status == 2 && $or->taken_by == $this->session->userdata("id")) : ?>
                                                     <a href="<?= base_url("backend/sales-quote/generate?id=$or->id") ?>" class="btn btn-primary btn-sm"><i class="fa fa-fw fa-edit"></i> Ubah</a>
                                                     <a target="_blank" href="<?= base_url("sales-quote/view?id=$or->id") ?>" class="btn btn-info btn-sm"><i class="fa fa-fw fa-eye"></i> Lihat</a>
