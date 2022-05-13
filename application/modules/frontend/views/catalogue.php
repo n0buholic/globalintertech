@@ -432,7 +432,7 @@
                     </div>
                     <div class="col-12">
                         <div>
-                            <a class="product-datasheet d-block text-dark"></a>
+                            <a class="product-datasheet d-block text-secondary"></a>
                         </div>
                     </div>
                 </div>
