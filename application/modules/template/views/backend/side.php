@@ -23,7 +23,7 @@
 			<li class="sidebar-item">
 				<a class="sidebar-link" href="<?= base_url("backend/order") ?>">
 					<i class="align-middle me-2 fas fa-fw fa-shopping-bag"></i> <span class="align-middle">Pesanan</span>
-					<span class="sidebar-badge badge rounded-pill bg-danger"><?=$available_order?></span>
+					<span class="sidebar-badge badge rounded-pill bg-danger"><?= $available_order ?></span>
 				</a>
 			</li>
 			<li class="sidebar-item">

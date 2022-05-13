@@ -408,7 +408,7 @@ class Api extends MX_Controller
 		];
 
 		if ($this->DB_Update($q)) {
-			$this->JSON_Output(true, "Pesanan berhasil diambil, klik OK untuk lanjut ke halaman Sales Quote", ["redirect" => base_url("backend/sales-quote/view?id=$data[id]")]);
+			$this->JSON_Output(true, "Pesanan berhasil diambil, klik OK untuk lanjut ke halaman Sales Quote", ["redirect" => base_url("backend/sales-quote/generate?id=$data[id]")]);
 		} else {
 			$this->JSON_Output(true, "Pesanan gagal diambil");
 		}
