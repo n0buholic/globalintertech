@@ -96,6 +96,7 @@
 
     .header-area .main-nav .nav {
         margin-left: 0px;
+        background: #ffffff;
     }
 
     .back-to-top {
