@@ -514,9 +514,9 @@
         }).hide();
         $(".products").each(function() {
             if ($(this).find(".product-col:visible").length == 0) {
-                $(this).prev().hide();
+                $(this).hide().prev().hide();
             } else {
-                $(this).prev().show();
+                $(this).show().prev().show();
             }
         });
 
