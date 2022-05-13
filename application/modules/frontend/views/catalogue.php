@@ -16,8 +16,18 @@
         box-shadow: none !important;
     }
 
+    .product-name {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
     .input-group-btn {
         z-index: 0;
+    }
+
+    .badge.outline {
+        border: 1px solid var(--bs-danger);
     }
 
     .qty-wrapper {
@@ -269,37 +279,46 @@
         ?>
         <section class="products">
             <div class="container">
-                <?php foreach ($cat->items as $item) {
-                    $specification = @explode("<br />", nl2br($item->specification));
-                ?>
-                    <div class="row product py-5 g-4" data-product='<?= json_encode($item) ?>'>
-                        <div class="col-12 col-lg-4">
-                            <img src="<?= base_url("assets/frontend/images/uploads/catalogue/" . $item->image) ?>" class="img-fluid">
-                        </div>
-                        <div class="col-12 col-lg-8">
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <h3 class="fw-bold mb-1 product-name"><?= $item->brand_name ?> | <?= $item->name ?></h3>
-                                    <h5 class="product-price"><?= $ctr->toRupiah($item->price) ?></h5>
-                                </div>
-                                <div class="col-12 action">
-                                    <button class="btn-primary-line mt-3 add-to-cart" data-product='<?= json_encode($item) ?>'>Tambah</button>
-                                </div>
-                                <div class="col-12">
-                                    <p class="fw-bold mb-2">Spesifikasi:</p>
-                                    <small class="product-description">
-                                        <?= implode("&nbsp;&nbsp;|&nbsp;&nbsp;", $specification) ?>
-                                    </small>
-                                </div>
-                                <?php if ($item->datasheet) { ?>
-                                    <div class="col-12">
-                                        <a target="_blank" href="<?= $item->datasheet ?>" class="btn-primary-line mt-3">Datasheet</a>
+                <div class="row">
+                    <?php foreach ($cat->items as $item) {
+                        $specification = @explode("<br />", nl2br($item->specification));
+                    ?>
+                        <div class="col-lg-4 col-6">
+                            <div class="product py-4" data-product='<?= json_encode($item) ?>'>
+                                <div class="card" style="border: 1px solid var(--bs-gray-300); box-shadow: 0 2px 10px 0 rgb(0 0 0 / 10%);">
+                                    <div class="card-body p-3 row g-3">
+                                        <div class="col-12 col-lg-4">
+                                            <img src="<?= base_url("assets/frontend/images/uploads/catalogue/" . $item->image) ?>" class="img-fluid">
+                                        </div>
+                                        <div class="col-12 col-lg-8">
+                                            <div class="row g-3">
+                                                <div class="col-12">
+                                                    <span class="badge bg-light text-danger mb-1 outline" style="font-size: 10px;"><?= $item->brand_name ?></span>
+                                                    <p class="fw-bold mb-1 product-name"><?= $item->name ?></p>
+                                                    <p class="product-price"><?= $ctr->toRupiah($item->price) ?></p>
+                                                </div>
+                                                <div class="col-12 action mt-0">
+                                                    <button class="btn-primary-line mt-3 add-to-cart" style="padding: 18px; width: 100% !important;" data-product='<?= json_encode($item) ?>'>Tambah</button>
+                                                </div>
+                                                <div class="col-12 d-none">
+                                                    <p class="fw-bold mb-2">Spesifikasi:</p>
+                                                    <small class="product-description">
+                                                        <?= implode("&nbsp;&nbsp;|&nbsp;&nbsp;", $specification) ?>
+                                                    </small>
+                                                </div>
+                                                <?php if ($item->datasheet) { ?>
+                                                    <div class="col-12">
+                                                        <a target="_blank" href="<?= $item->datasheet ?>" class="btn-primary-line mt-3">Datasheet</a>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                        </div>
                                     </div>
-                                <?php } ?>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                <?php } ?>
+                    <?php } ?>
+                </div>
             </div>
         </section>
 <?php }
