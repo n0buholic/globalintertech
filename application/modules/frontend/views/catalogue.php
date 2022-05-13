@@ -283,7 +283,7 @@
                     <?php foreach ($cat->items as $item) {
                         $specification = @explode("<br />", nl2br($item->specification));
                     ?>
-                        <div class="col-lg-4 col-6">
+                        <div class="col-lg-4 col-6 product-col">
                             <div class="product" data-product='<?= json_encode($item) ?>'>
                                 <div class="card" style="border: 1px solid var(--bs-gray-300); box-shadow: 0 2px 10px 0 rgb(0 0 0 / 10%);">
                                     <div class="card-body p-3 row g-3">
@@ -509,11 +509,11 @@
 
     $(".search-product input").on("keyup change", function() {
         const matcher = $(this).val();
-        $('.product').parent().show().not(function() {
+        $('.product-col').show().not(function() {
             return $(this).find(".product-name, .product-price, .product-description").text().toLocaleLowerCase().includes(matcher.toLowerCase())
         }).hide();
         $(".products").each(function() {
-            if ($(this).find(".product").parent().is(":visible").length == 0) {
+            if ($(this).find(".product-col:visible").length == 0) {
                 $(this).prev().hide();
             } else {
                 $(this).prev().show();
