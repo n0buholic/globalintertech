@@ -150,13 +150,15 @@ $data = json_decode($sales_quote->data);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($products as $product) { ?>
+                        <?php foreach ($products as $product) {
+                            $specification = @explode("<br />", nl2br($product->specification));
+                        ?>
                             <tr>
                                 <td>
                                     <?= $product->name ?>
                                 </td>
                                 <td>
-                                    <?= $product->description ?>
+                                    <?= implode("&nbsp;&nbsp;|&nbsp;&nbsp;", $specification) ?>
                                 </td>
                                 <td class="text-right">
                                     <?= $product->qty ?>
