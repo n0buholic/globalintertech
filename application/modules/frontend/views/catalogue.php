@@ -458,7 +458,7 @@
         modal.find(".product-price").text(`Rp ${formatRupiah(product_price)}`);
         modal.find(".product-description").text(product_description);
         if (product_datasheet) {
-            modal.find(".product-datasheet").html(`<i class="fa-solid fa-file-lines me-1"></i> Datasheet`).attr("src", product_datasheet).attr("target", "_blank").attr("style", "margin-top: 1rem;");
+            modal.find(".product-datasheet").html(`<i class="fa-solid fa-file-lines me-1"></i> Datasheet`).attr("href", product_datasheet).attr("target", "_blank").attr("style", "margin-top: 1rem;");
         } else {
             modal.find(".product-datasheet").html("").attr("src", "#").removeAttr("target").removeAttr("style");
         }
