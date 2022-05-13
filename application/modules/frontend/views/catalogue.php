@@ -306,11 +306,6 @@
                                                         <?= implode("&nbsp;&nbsp;|&nbsp;&nbsp;", $specification) ?>
                                                     </small>
                                                 </div>
-                                                <?php if ($item->datasheet) { ?>
-                                                    <div class="col-12">
-                                                        <a target="_blank" href="<?= $item->datasheet ?>" class="fw-bold">Datasheet</a>
-                                                    </div>
-                                                <?php } ?>
                                             </div>
                                         </div>
                                     </div>
@@ -437,7 +432,7 @@
                     </div>
                     <div class="col-12">
                         <div>
-                            <a class="product-datasheet"></a>
+                            <a class="product-datasheet d-block text-dark"></a>
                         </div>
                     </div>
                 </div>
