@@ -1,13 +1,13 @@
 <div style="margin-bottom: -26rem;">
     <div class="row align-items-center" style="font-size: 10px;">
         <div class="col-xs-3">
-            <img src="<?= base_url("assets/backend/images/sq_logo.png") ?>">
+            <img src="<?= base_url("assets/backend/images/sq_logo.png") ?>" style="margin-right: 15px; margin-top: 8px;">
         </div>
         <div class="col-xs-6" style="font-size: 11px;">
             <p>JL.Kolonel Sugiono No.78.Banjarmasin
                 <br>Indonesia 14462
                 <br>www.globalintertech.co.id
-                <br>Email &nbsp; &nbsp; &nbsp; glosindotech@gmail.com
+                <br><i class="fa fas fa-envelope"></i> glosindotech@gmail.com
                 <br>Office 0511 3272707 / +62 821 530 50 685
             </p>
         </div>

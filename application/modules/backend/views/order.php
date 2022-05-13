@@ -15,15 +15,16 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="catalogue-table" class="table table-striped w-100">
+                        <table id="catalogue-table" class="table border table-striped w-100">
                             <thead>
                                 <tr>
-                                    <th>No</th>
                                     <th>Customer</th>
                                     <th>Total Item</th>
                                     <th>Sub-Total</th>
                                     <th>Tanggal</th>
-                                    <th width="180"></th>
+                                    <th>Status</th>
+                                    <th>Sales</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -33,7 +34,6 @@
                                     $prod = json_decode($or->products);
                                 ?>
                                     <tr>
-                                        <td><?= $i ?></td>
                                         <td>
                                             <p class="my-0"><?= $cust->name ?></p>
                                             <p class="my-0"><a href="tel:<?= $cust->phone ?>"><?= $cust->phone ?></a></p>
@@ -45,8 +45,34 @@
                                         </td>
                                         <td><?= date("Y-m-d", strtotime($or->created_at)) ?></td>
                                         <td>
+                                            <?php if ($or->status == 0) : ?>
+                                                <span class="badge bg-warning">Baru</span>
+                                            <?php elseif ($or->status == 1) : ?>
+                                                <span class="badge bg-info">Proses</span>
+                                            <?php elseif ($or->status == 2) : ?>
+                                                <span class="badge bg-success">Selesai</span>
+                                            <?php endif ?>
+                                        </td>
+                                        <td>
+                                            <?php if ($or->name) : ?>
+                                                <?= $or->name ?>
+                                            <?php else : ?>
+                                                -
+                                            <?php endif ?>
+                                        </td>
+                                        <td>
                                             <div class="float-end">
-                                                <button class="btn btn-success btn-sm take-order" data-id="<?=$or->id?>"><i class="fa fa-fw fa-check"></i> Buat Sales Quote</button>
+                                                <?php if ($or->status == 0) : ?>
+                                                    <button class="btn btn-success btn-sm take-order" data-id="<?= $or->id ?>"><i class="fa fa-fw fa-check"></i> Buat Sales Quote</button>
+                                                <?php elseif ($or->status == 1 && $or->taken_by == $this->session->userdata("id")) : ?>
+                                                    <a href="<?= base_url("backend/sales-quote/generate?id=$or->id") ?>" class="btn btn-primary btn-sm"><i class="fa fa-fw fa-edit"></i> Buat</a>
+                                                    <a target="_blank" href="<?= base_url("sales-quote/view?id=$or->id") ?>" class="btn btn-info btn-sm"><i class="fa fa-fw fa-eye"></i> Lihat</a>
+                                                    <a target="_blank" href="<?= base_url("sales-quote/download?id=$or->id") ?>" class="btn btn-success btn-sm"><i class="fa fa-fw fa-download"></i> Unduh</a>
+                                                <?php elseif ($or->status == 2 && $or->taken_by == $this->session->userdata("id")) : ?>
+                                                    <a href="<?= base_url("backend/sales-quote/generate?id=$or->id") ?>" class="btn btn-primary btn-sm"><i class="fa fa-fw fa-edit"></i> Ubah</a>
+                                                    <a target="_blank" href="<?= base_url("sales-quote/view?id=$or->id") ?>" class="btn btn-info btn-sm"><i class="fa fa-fw fa-eye"></i> Lihat</a>
+                                                    <a target="_blank" href="<?= base_url("sales-quote/download?id=$or->id") ?>" class="btn btn-success btn-sm"><i class="fa fa-fw fa-download"></i> Unduh</a>
+                                                <?php endif; ?>
                                             </div>
                                         </td>
                                     </tr>
@@ -62,7 +88,7 @@
 </div>
 
 <script>
-    $(".take-order").click(function(){
+    $(".take-order").click(function() {
         const id = $(this).data("id");
         const url = "<?= base_url("api/take_order") ?>";
         const data = new FormData();
@@ -76,7 +102,7 @@
             complete: () => $.LoadingOverlay("hide"),
             contentType: false,
             processData: false,
-            success: function(data) { 
+            success: function(data) {
                 if (data.success) {
                     Swal.fire({
                         title: "Berhasil",
@@ -101,7 +127,7 @@
     $(document).ready(function() {
         $("#catalogue-table").DataTable({
             columnDefs: [{
-                targets: [5],
+                targets: [6],
                 sortable: false
             }]
         });

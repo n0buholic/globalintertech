@@ -70,6 +70,20 @@ class MX_Controller
 		return "Rp " . number_format($num, 0, '.', '.');
 	}
 
+	public function CounterSQ($id) {
+		$sq = $this->db->from("sales_quote")->where("id", $id)->get()->row();
+		$sq_month = date("m", strtotime($sq->generate_date));
+		$sq_year = date("Y", strtotime($sq->generate_date));
+		$sq_id = $sq->id;
+		
+		$sales_quote_this_month = $this->db->where("id < $sq_id")->where("MONTH(generate_date)", $sq_month)->where("YEAR(generate_date)", $sq_year)->count_all_results("sales_quote");
+		$counter = 1;
+		if ($sales_quote_this_month > 0) {
+			$counter = $sales_quote_this_month + 1;
+		}
+		return $counter;
+	}
+
 	public function Make_Dir($dir)
 	{
 		if (!file_exists($dir)) {

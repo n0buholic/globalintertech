@@ -67,5 +67,7 @@ $route['catalogue'] = 'frontend/catalogue';
 $route['backend/sort-catalogue'] = 'backend/sortCatalogue';
 
 $route['backend/sales-quote'] = 'backend/sales_quote';
-$route['sales-quote/view'] = 'backend/sales_quote_view';
 $route['backend/sales-quote/generate'] = 'backend/sales_quote_generate';
+
+$route['sales-quote/view'] = 'api/sales_quote_view/view';
+$route['sales-quote/download'] = 'api/sales_quote_view/download';

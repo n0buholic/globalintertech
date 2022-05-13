@@ -1,8 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-use \Mpdf\Mpdf;
-
 class Backend extends MX_Controller
 {
 
@@ -68,52 +66,24 @@ class Backend extends MX_Controller
 	public function order()
 	{
 		$this->data["title"] = "Pesanan";
-		$this->data["orders"] = $this->db->from("sales_quote")->where("status", 0)->get()->result();
+		$this->data["orders"] = $this->db->select("a.*, b.name")->from("sales_quote a")->join("admin b", "b.id = a.taken_by", "left")->order_by("a.created_at DESC")->get()->result();
 		viewPage("base/backend", "order", $this->data);
 	}
 
 	public function sales_quote()
 	{
 		$this->data["title"] = "Pesanan";
-		$this->data["orders"] = $this->db->from("sales_quote")->where("taken_by", $this->session->userdata("id"))->get()->result();
+		$this->data["orders"] = $this->db->from("sales_quote")->where("taken_by", $this->session->userdata("id"))->order_by("created_at DESC")->get()->result();
 		viewPage("base/backend", "sales_quote", $this->data);
-	}
-
-	public function sales_quote_view()
-	{
-		$this->data["title"] = "Quote-SQ-00000";
-		$this->data["sales_quote"] = $this->db->select("a.*, b.name")->from("sales_quote a")->join("admin b", "b.id = a.taken_by", "left")->where("a.id", $this->input->get("id"))->get()->row();
-		$sq_month = date("m", strtotime($this->data["sales_quote"]->generate_date));
-		$sq_year = date("Y", strtotime($this->data["sales_quote"]->generate_date));
-		$sq_id = $this->data["sales_quote"]->id;
-
-		// check sales_quote on this month and year
-		$sales_quote_this_month = $this->db->select("a.*, b.name")->join("admin b", "b.id = a.taken_by", "left")->where("a.taken_by", $this->session->userdata("id"))->where("a.id < $sq_id")->where("MONTH(a.generate_date)", $sq_month)->where("YEAR(a.generate_date)", $sq_year)->count_all_results("sales_quote a");
-		$this->data["counter"] = 1;
-		if ($sales_quote_this_month > 0) {
-			$this->data["counter"] = $sales_quote_this_month + 1;
-		}
-
-		$header = $this->load->view("sales_quote_header", $this->data, true);
-		$footer = $this->load->view("sales_quote_footer", $this->data, true);
-		$html = $this->load->view("sales_quote_view", $this->data, true);
-		//echo $html;exit;
-
-		$mpdf = new Mpdf();
-		$mpdf->setAutoBottomMargin = 'stretch';
-		$mpdf->setAutoTopMargin = 'stretch';
-		$mpdf->showImageErrors = true;
-		$mpdf->curlAllowUnsafeSslRequests = true;
-		$mpdf->SetHTMLHeader($header);
-		$mpdf->SetHTMLFooter($footer);
-		$mpdf->WriteHTML($html);
-		$mpdf->Output("Quote-SQ-" . date("m", strtotime($this->data["sales_quote"]->generate_date)) . date("y", strtotime($this->data["sales_quote"]->generate_date)) . sprintf('%03d', $this->data["counter"]) . ".pdf", "I");
 	}
 
 	public function sales_quote_generate()
 	{
 		$this->data["title"] = "Pesanan";
 		$this->data["sales_quote"] = $this->db->from("sales_quote")->where("id", $this->input->get("id"))->get()->row();
+		if (!$this->data["sales_quote"]) {
+			redirect("backend/sales-quote");
+		}
 		viewPage("base/backend", "sales_quote_generate", $this->data);
 	}
 

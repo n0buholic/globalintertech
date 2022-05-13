@@ -1,6 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use \Mpdf\Mpdf;
+
 class Api extends MX_Controller
 {
 
@@ -409,6 +411,34 @@ class Api extends MX_Controller
 			$this->JSON_Output(true, "Pesanan berhasil diambil", ["redirect" => base_url("backend/sales-quote/view?id=$data[id]")]);
 		} else {
 			$this->JSON_Output(true, "Pesanan gagal diambil");
+		}
+	}
+
+	public function sales_quote_view($type)
+	{
+		$this->data["sales_quote"] = $this->db->select("a.*, b.name")->from("sales_quote a")->join("admin b", "b.id = a.taken_by", "left")->where("a.id", $this->input->get("id"))->get()->row();
+		if (!$this->data["sales_quote"]) {
+			show_404();
+		}
+		$this->data["counter"] = $this->CounterSQ($this->data["sales_quote"]->id);
+
+		$header = $this->load->view("backend/sales_quote_header", $this->data, true);
+		$footer = $this->load->view("backend/sales_quote_footer", $this->data, true);
+		$html = $this->load->view("sales_quote_view", $this->data, true);
+		//echo $html;exit;
+
+		$mpdf = new Mpdf();
+		$mpdf->setAutoBottomMargin = 'stretch';
+		$mpdf->setAutoTopMargin = 'stretch';
+		$mpdf->showImageErrors = true;
+		$mpdf->curlAllowUnsafeSslRequests = true;
+		$mpdf->SetHTMLHeader($header);
+		$mpdf->SetHTMLFooter($footer);
+		$mpdf->WriteHTML($html);
+		if ($type == "download") {
+			$mpdf->Output("Quote-SQ-" . date("m", strtotime($this->data["sales_quote"]->generate_date)) . date("y", strtotime($this->data["sales_quote"]->generate_date)) . sprintf('%03d', $this->data["counter"]) . ".pdf", "D");
+		} else {
+			$mpdf->Output();$mpdf->Output("Quote-SQ-" . date("m", strtotime($this->data["sales_quote"]->generate_date)) . date("y", strtotime($this->data["sales_quote"]->generate_date)) . sprintf('%03d', $this->data["counter"]) . ".pdf", "I");
 		}
 	}
 }

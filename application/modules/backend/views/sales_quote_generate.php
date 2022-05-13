@@ -6,7 +6,7 @@ $data = json_decode($sales_quote->data);
 <div class="container-fluid">
     <div class="header">
         <h1 class="header-title">
-            Buat Sales Quote
+            Sales Quote
         </h1>
     </div>
     <div class="row">
@@ -18,19 +18,19 @@ $data = json_decode($sales_quote->data);
                 <div class="card-body">
 
                     <div class="row">
-                        <div class="col-12">
+                        <div class="col-lg-4">
                             <div class="form-group mb-3">
                                 <label for="">Nama</label>
                                 <input type="text" class="form-control customer-input-editable" value="<?= $customer->name ?>" name="name">
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-lg-4">
                             <div class="form-group mb-3">
                                 <label for="">Telepon</label>
                                 <input type="text" class="form-control customer-input-editable" value="<?= $customer->phone ?>" name="phone">
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-lg-4">
                             <div class="form-group mb-3">
                                 <label for="">Email</label>
                                 <input type="text" class="form-control customer-input-editable" value="<?= $customer->email ?>" name="email">
@@ -50,7 +50,7 @@ $data = json_decode($sales_quote->data);
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title">Item</h5>
+                    <h5 class="card-title">Products</h5>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -79,7 +79,7 @@ $data = json_decode($sales_quote->data);
         </div>
 
         <div class="col-12">
-            <button class="btn btn-primary  mb-3 save-generate-sales-quote float-end"> <i class="fa fa-save me-1"></i> Buat dan Simpan Sales Quote</button>
+            <button class="btn btn-primary  mb-3 save-generate-sales-quote float-end"> <i class="fa fa-save me-1"></i> Simpan Sales Quote</button>
         </div>
     </div>
 </div>
@@ -202,6 +202,8 @@ $data = json_decode($sales_quote->data);
 
     $(document).on("change", ".discount-type", function() {
         discountType = $(this).val();
+        $(".discount-sales-quote").val("0").trigger("change");
+        updateDiscountType();
         updateTotal();
     });
 
@@ -310,6 +312,7 @@ $data = json_decode($sales_quote->data);
         }
 
         updateTotal();
+        updateDiscountType();
 
         $(".mask-rupiah").mask("000.000.000.000.000", {
             reverse: true
@@ -317,5 +320,17 @@ $data = json_decode($sales_quote->data);
         $("[data-key=qty], [data-key=discount]").mask("000", {
             reverse: true
         });
+    }
+
+    function updateDiscountType() {
+        if (discountType == 1) {
+            $(".discount-sales-quote").mask("000", {
+                reverse: true
+            });
+        } else {
+            $(".discount-sales-quote").mask("000.000.000.000.000", {
+                reverse: true
+            });
+        }
     }
 </script>

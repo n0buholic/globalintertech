@@ -12,7 +12,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="catalogue-table" class="table table-striped w-100">
+                        <table id="catalogue-table" class="table border table-striped w-100">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -21,7 +21,7 @@
                                     <th>Sub-Total</th>
                                     <th>Tanggal</th>
                                     <th>Status</th>
-                                    <th width="180"></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -29,9 +29,16 @@
                                 foreach ($orders as $or) {
                                     $cust = json_decode($or->customer);
                                     $prod = json_decode($or->products);
+                                    $counter = $ctr->CounterSQ($or->id);
                                 ?>
                                     <tr>
-                                        <td><?= $i ?></td>
+                                        <td>
+                                            <?php if ($or->status == 2) : ?>
+                                                SQ-<?= date("m", strtotime($or->generate_date)) . date("y", strtotime($or->generate_date)) . sprintf('%03d', $counter) ?>
+                                            <?php else : ?>
+                                                - 
+                                            <?php endif ?>
+                                        </td>
                                         <td>
                                             <p class="my-0"><?= $cust->name ?></p>
                                             <p class="my-0"><a href="tel:<?= $cust->phone ?>"><?= $cust->phone ?></a></p>
@@ -44,9 +51,9 @@
                                         <td><?= date("Y-m-d", strtotime($or->created_at)) ?></td>
                                         <td>
                                             <?php if ($or->status == 1) { ?>
-                                                <span class="badge rounded-pill bg-warning">Menunggu</span>
+                                                <span class="badge bg-warning">Proses</span>
                                             <?php } else if ($or->status == 2) { ?>
-                                                <span class="badge rounded-pill bg-success">Dibuat</span>
+                                                <span class="badge bg-success">Selesai</span>
                                             <?php } ?>
                                         </td>
                                         <td>
@@ -55,7 +62,8 @@
                                                     <a href="<?= base_url("backend/sales-quote/generate?id=$or->id") ?>" class="btn btn-primary btn-sm"><i class="fa fa-fw fa-edit"></i> Buat</a>
                                                 <?php } else if ($or->status == 2) { ?>
                                                     <a href="<?= base_url("backend/sales-quote/generate?id=$or->id") ?>" class="btn btn-primary btn-sm"><i class="fa fa-fw fa-edit"></i> Ubah</a>
-                                                    <a target="_blank" href="<?= base_url("sales-quote/view?id=$or->id") ?>" class="btn btn-success btn-sm"><i class="fa fa-fw fa-eye"></i> Lihat</a>
+                                                    <a target="_blank" href="<?= base_url("sales-quote/view?id=$or->id") ?>" class="btn btn-info btn-sm"><i class="fa fa-fw fa-eye"></i> Lihat</a>
+                                                    <a target="_blank" href="<?= base_url("sales-quote/download?id=$or->id") ?>" class="btn btn-success btn-sm"><i class="fa fa-fw fa-download"></i> Unduh</a>
                                                 <?php } ?>
                                             </div>
                                         </td>
@@ -74,6 +82,9 @@
 <script>
     $(document).ready(function() {
         $("#catalogue-table").DataTable({
+            order: [
+                [1, "desc"],
+            ],
             columnDefs: [{
                 targets: [6],
                 sortable: false

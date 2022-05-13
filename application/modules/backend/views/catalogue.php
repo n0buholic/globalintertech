@@ -15,7 +15,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="catalogue-table" class="table table-striped w-100">
+                        <table id="catalogue-table" class="table border table-striped w-100">
                             <thead>
                                 <tr>
                                     <th>Nama</th>
