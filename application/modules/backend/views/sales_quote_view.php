@@ -151,7 +151,7 @@ $data = json_decode($sales_quote->data);
                     </thead>
                     <tbody>
                         <?php foreach ($products as $product) {
-                            $specification = @explode("<br />", nl2br($product->specification));
+                            $specification = @explode("<br>", nl2br($product->specification));
                         ?>
                             <tr>
                                 <td>
