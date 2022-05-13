@@ -44,7 +44,8 @@
         height: 360px;
     }
 
-    .close-cart, .close-customer-data {
+    .close-cart,
+    .close-customer-data {
         cursor: pointer;
     }
 
@@ -478,6 +479,14 @@
             $(".cart-container").find(".total-price").text(`Rp0`);
         }
     }
+
+    $(".search-product input").keydown(function(e) {
+        if (event.keyCode == 13) {
+            $(this).trigger('blur');
+            e.preventDefault();
+            return false;
+        }
+    });
 
     $(".search-product input").on("keyup change", function() {
         const matcher = $(this).val();
