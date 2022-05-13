@@ -13,11 +13,22 @@
 				</a>
 			</li>
 			<li class="sidebar-header">
-				Katalog
+				Katalog & Pesanan
 			</li>
 			<li class="sidebar-item">
 				<a class="sidebar-link" href="<?= base_url("backend/catalogue") ?>">
-					<i class="align-middle me-2 fas fa-fw fa-box"></i> <span class="align-middle">List Katalog</span>
+					<i class="align-middle me-2 fas fa-fw fa-box"></i> <span class="align-middle">Katalog</span>
+				</a>
+			</li>
+			<li class="sidebar-item">
+				<a class="sidebar-link" href="<?= base_url("backend/order") ?>">
+					<i class="align-middle me-2 fas fa-fw fa-shopping-bag"></i> <span class="align-middle">Pesanan</span>
+					<span class="sidebar-badge badge rounded-pill bg-danger"><?=$available_order?></span>
+				</a>
+			</li>
+			<li class="sidebar-item">
+				<a class="sidebar-link" href="<?= base_url("backend/sales-quote") ?>">
+					<i class="align-middle me-2 fas fa-fw fa-scroll"></i> <span class="align-middle">Sales Quote</span>
 				</a>
 			</li>
 			<!--

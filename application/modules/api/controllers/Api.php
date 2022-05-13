@@ -351,6 +351,8 @@ class Api extends MX_Controller
 			$data[$name] = $value;
 		}
 
+		$data["status"] = 0;
+
 		$q = [
 			"table" => "sales_quote",
 			"data" => $data
@@ -360,6 +362,53 @@ class Api extends MX_Controller
 			$this->JSON_Output(true, "Berhasil mengirimkan permintaan penawaran");
 		} else {
 			$this->JSON_Output(true, "Gagal mengirimkan permintaan penawaran");
+		}
+	}
+
+	public function generate_sales_quote() {
+		$data = [];
+
+		foreach ($this->input->post() as $name => $value) {
+			$data[$name] = $value;
+		}
+
+		$data["status"] = 2;
+		$data["generate_date"] = date("Y-m-d H:i:s");
+
+		$q = [
+			"table" => "sales_quote",
+			"data" => $data,
+			"where" => "id = $data[id]"
+		];
+
+		if ($this->DB_Update($q)) {
+			$this->JSON_Output(true, "Sales Quote berhasil dibuat", ["redirect" => base_url("backend/sales-quote")]);
+		} else {
+			$this->JSON_Output(true, "Sales Quote gagal dibuat");
+		}
+	}
+
+	public function take_order() {
+		$data = [];
+
+		foreach ($this->input->post() as $name => $value) {
+			$data[$name] = $value;
+		}
+
+		$data["status"] = 1;
+		$data["taken_by"] = $this->session->userdata("id");
+		$data["taken_date"] = date("Y-m-d H:i:s");
+
+		$q = [
+			"table" => "sales_quote",
+			"data" => $data,
+			"where" => "id = $data[id]"
+		];
+
+		if ($this->DB_Update($q)) {
+			$this->JSON_Output(true, "Pesanan berhasil diambil", ["redirect" => base_url("backend/sales-quote/view?id=$data[id]")]);
+		} else {
+			$this->JSON_Output(true, "Pesanan gagal diambil");
 		}
 	}
 }

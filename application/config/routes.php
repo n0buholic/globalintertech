@@ -65,3 +65,7 @@ $route['promo-2022-proview'] = 'frontend/promo_2022_proview';
 $route['catalogue'] = 'frontend/catalogue';
 
 $route['backend/sort-catalogue'] = 'backend/sortCatalogue';
+
+$route['backend/sales-quote'] = 'backend/sales_quote';
+$route['backend/sales-quote/view'] = 'backend/sales_quote_view';
+$route['backend/sales-quote/generate'] = 'backend/sales_quote_generate';

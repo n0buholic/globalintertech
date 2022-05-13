@@ -688,7 +688,9 @@
         data.append("products", JSON.stringify(
             cart.map(item => {
                 return {
+                    id: item.id,
                     name: `${item.brand_name} | ${item.name}`,
+                    description: item.specification,
                     qty: item.qty,
                     price: parseInt(item.price),
                     discount: 0
