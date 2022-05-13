@@ -298,7 +298,7 @@
                                                     <p class="product-price"><?= $ctr->toRupiah($item->price) ?></p>
                                                 </div>
                                                 <div class="col-12 action mt-0">
-                                                    <button class="btn-primary-line mt-3 add-to-cart" style="padding: 18px; width: 100% !important;" data-product='<?= json_encode($item) ?>'>Tambah</button>
+                                                    <button class="btn-primary-line mt-3 add-to-cart" style="padding: 16px;font-size: 10px;padding: 18px; width: 100% !important;" data-product='<?= json_encode($item) ?>'>Tambah</button>
                                                 </div>
                                                 <div class="col-12 d-none">
                                                     <p class="fw-bold mb-2">Spesifikasi:</p>
@@ -509,11 +509,11 @@
 
     $(".search-product input").on("keyup change", function() {
         const matcher = $(this).val();
-        $('.product').show().not(function() {
+        $('.product').parent().show().not(function() {
             return $(this).find(".product-name, .product-price, .product-description").text().toLocaleLowerCase().includes(matcher.toLowerCase())
         }).hide();
         $(".products").each(function() {
-            if ($(this).find(".product:visible").length == 0) {
+            if ($(this).find(".product").parent().is(":visible").length == 0) {
                 $(this).prev().hide();
             } else {
                 $(this).prev().show();
