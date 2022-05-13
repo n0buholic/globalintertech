@@ -44,6 +44,10 @@
         height: 360px;
     }
 
+    .close-cart, .close-customer-data {
+        cursor: pointer;
+    }
+
     .header-area {
         background: #fff;
         position: relative;
@@ -378,7 +382,7 @@
     <div class="customer-data-footer">
         <div class="row">
             <div class="col-12">
-                <button class="btn-primary-line mt-4 request-quotation-2 float-end">Kirim</button>
+                <button class="btn-primary-line mt-4 request-quotation-2 float-end">Minta Penawaran</button>
             </div>
         </div>
     </div>
@@ -496,17 +500,26 @@
     });
 
     $(".fixed-cart").on("click", function() {
-        $(".cart-container").fadeIn(200);
-        $("body").addClass("overflow-hidden");
+        $(".cart-container").effect("slide", {
+            direction: "right",
+            mode: "show"
+        });
+        //$("body").addClass("overflow-hidden");
     });
 
     $(".close-cart").on("click", function() {
-        $(".cart-container").fadeOut(200);
-        $("body").removeClass("overflow-hidden");
+        $(".cart-container").effect("slide", {
+            direction: "right",
+            mode: "hide"
+        });
+        // $("body").removeClass("overflow-hidden");
     });
 
     $(".close-customer-data").on("click", function() {
-        $(".customer-data-container").fadeOut(200);
+        $(".customer-data-container").effect("slide", {
+            direction: "right",
+            mode: "hide"
+        });
     });
 
     $(document).on("click", ".add-to-cart", function() {
@@ -634,8 +647,11 @@
                 text: 'Produk masih kosong',
                 icon: 'warning'
             }).then(() => {
-                $(".cart-container").fadeOut(200);
-                $("body").removeClass("overflow-hidden");
+                $(".cart-container").effect("slide", {
+                    direction: "left",
+                    mode: "hide"
+                });
+                // $("body").removeClass("overflow-hidden");
             })
         }
 
@@ -645,8 +661,11 @@
                 text: 'Produk masih kosong',
                 icon: 'warning'
             }).then(() => {
-                $(".cart-container").fadeOut(200);
-                $("body").removeClass("overflow-hidden");
+                $(".cart-container").effect("slide", {
+                    direction: "left",
+                    mode: "hide"
+                });
+                // $("body").removeClass("overflow-hidden");
             })
         }
 
@@ -657,7 +676,10 @@
             $(".customer-data-container").find("[name=phone]").val(customer.phone);
             $(".customer-data-container").find("[name=address]").val(customer.address);
         }
-        $(".customer-data-container").fadeIn(200);
+        $(".customer-data-container").effect("slide", {
+            direction: "right",
+            mode: "show"
+        });
     });
 
     $(".request-quotation-2").on("click", function() {
@@ -669,6 +691,43 @@
             phone: $("[name=phone]").val(),
             address: $("[name=address]").val(),
         }
+
+        if (!localStorage.getItem("cart")) {
+            return CustomAlert.fire({
+                title: 'Peringatan',
+                text: 'Produk masih kosong',
+                icon: 'warning'
+            }).then(() => {
+                $(".customer-data-container").effect("slide", {
+                    direction: "left",
+                    mode: "hide"
+                });
+                $(".cart-container").effect("slide", {
+                    direction: "left",
+                    mode: "hide"
+                });
+                // $("body").removeClass("overflow-hidden");
+            })
+        }
+
+        if (JSON.parse(localStorage.getItem("cart")).length == 0) {
+            return CustomAlert.fire({
+                title: 'Peringatan',
+                text: 'Produk masih kosong',
+                icon: 'warning'
+            }).then(() => {
+                $(".customer-data-container").effect("slide", {
+                    direction: "left",
+                    mode: "hide"
+                });
+                $(".cart-container").effect("slide", {
+                    direction: "left",
+                    mode: "hide"
+                });
+                // $("body").removeClass("overflow-hidden");
+            })
+        }
+
 
         if (custData.name == "" || custData.email == "" || custData.phone == "" || custData.address == "") {
             // tampilkan error
@@ -710,7 +769,7 @@
                     // tampilkan swal2 success
                     CustomAlert.fire({
                         title: "Berhasil",
-                        text: "Pesanan Anda berhasil dikirim",
+                        text: response.message,
                         icon: "success",
                     }).then(function() {
                         window.location.reload();
@@ -719,7 +778,7 @@
                     // tampilkan swal2 error
                     CustomAlert.fire({
                         title: "Gagal",
-                        text: "Pesanan Anda gagal dikirim",
+                        text: response.message,
                         icon: "error",
                     })
                 }
@@ -730,6 +789,7 @@
 
 
     $(function() {
+        updateCart();
         checkCart();
         checkItemInCart();
         // Header Scrolling Set White Background
