@@ -308,7 +308,7 @@
                                                 </div>
                                                 <?php if ($item->datasheet) { ?>
                                                     <div class="col-12">
-                                                        <a target="_blank" href="<?= $item->datasheet ?>" class="btn-primary-line mt-3">Datasheet</a>
+                                                        <a target="_blank" href="<?= $item->datasheet ?>" class="fw-bold">Datasheet</a>
                                                     </div>
                                                 <?php } ?>
                                             </div>
