@@ -144,9 +144,9 @@ $data = json_decode($sales_quote->data);
                             <th width="120">ITEM</th>
                             <th width="150">DESCRIPTION</th>
                             <th width="50" class="text-right">QUANTITY</th>
-                            <th width="90" class="text-right">UNIT PRICE</th>
+                            <th width="120" class="text-right">UNIT PRICE</th>
                             <th width="50" class="text-right">DISCOUNT</th>
-                            <th width="90" class="text-right">SUB-TOTAL</th>
+                            <th width="120" class="text-right">SUB-TOTAL</th>
                         </tr>
                     </thead>
                     <tbody>
