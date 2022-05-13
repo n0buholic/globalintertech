@@ -509,14 +509,14 @@
 
     $(".search-product input").on("keyup change", function() {
         const matcher = $(this).val();
-        $('.product-col').show().not(function() {
+        $('.product-col, .products').show().not(function() {
             return $(this).find(".product-name, .product-price, .product-description").text().toLocaleLowerCase().includes(matcher.toLowerCase())
         }).hide();
         $(".products").each(function() {
             if ($(this).find(".product-col:visible").length == 0) {
-                $(this).hide().prev().hide();
+                $(this).prev().hide();
             } else {
-                $(this).show().prev().show();
+                $(this).prev().show();
             }
         });
 
