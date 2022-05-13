@@ -416,7 +416,7 @@
         return false;
     }
 
-    function openCart() {
+    function updateCart() {
         $(".cart-container").find(".cart-items").html("");
         const cart = JSON.parse(localStorage.getItem("cart"));
         if (cart && cart.length > 0) {
@@ -497,7 +497,6 @@
     $(".fixed-cart").on("click", function() {
         $(".cart-container").fadeIn(200);
         $("body").addClass("overflow-hidden");
-        openCart();
     });
 
     $(".close-cart").on("click", function() {
@@ -559,6 +558,7 @@
                 localStorage.setItem("cart", JSON.stringify(cart));
                 checkCart();
                 checkItemInCart();
+                updateCart();
             }, 1000);
 
             imgclone.animate({
