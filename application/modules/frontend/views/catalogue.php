@@ -436,8 +436,8 @@
                         </div>
                     </div>
                     <div class="col-12">
-                        <div class="product-datasheet">
-
+                        <div>
+                            <a class="product-datasheet"></a>
                         </div>
                     </div>
                 </div>
@@ -463,9 +463,9 @@
         modal.find(".product-price").text(`Rp ${formatRupiah(product_price)}`);
         modal.find(".product-description").text(product_description);
         if (product_datasheet) {
-            modal.find(".product-datasheet").html(`<i class="fa-solid fa-file-lines"></i> Datasheet`).attr("src", product_datasheet);
+            modal.find(".product-datasheet").html(`<i class="fa-solid fa-file-lines me-1"></i> Datasheet`).attr("src", product_datasheet).attr("target", "_blank").attr("style", "margin-top: 1rem;");
         } else {
-            modal.find(".product-datasheet").html("").attr("src", "#");
+            modal.find(".product-datasheet").html("").attr("src", "#").removeAttr("target").removeAttr("style");
         }
         modal.find(".product-brand").text(product_brand);
 
