@@ -408,7 +408,70 @@
     </div>
 </div>
 
+<div class="modal fade" id="modal-product" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detail Produk</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div>
+                            <img src="" alt="" class="img-fluid product-image">
+                        </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <p>
+                            <span class="badge text-danger outline product-brand mb-1"></span>
+                            <span class="product-name"></span>
+                        </p>
+                        <p class="product-price"></p>
+                    </div>
+                    <div class="col-12">
+                        <div>
+                            <p class="fw-bold">Deskripsi: </p>
+                            <small class="product-description"></small>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="product-datasheet">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+    $(document).on("click", ".product", function() {
+        const product = $(this).data("product");
+        const product_image = product.image;
+        const product_name = product.name;
+        const product_price = product.price;
+        const product_description = product.specification;
+        const product_datasheet = product.datasheet;
+        const product_brand = product.brand_name;
+
+        const modal = $("#modal-product");
+
+        modal.find(".product-image").attr("src", "<?= base_url("assets/frontend/images/uploads/catalogue/") ?>" + product_image);
+        modal.find(".product-name").text(product_name);
+        modal.find(".product-price").text(`Rp ${formatRupiah(product_price)}`);
+        modal.find(".product-description").text(product_description);
+        if (product_datasheet) {
+            modal.find(".product-datasheet").html(`<i class="fa-solid fa-file-lines"></i> Datasheet`).attr("src", product_datasheet);
+        } else {
+            modal.find(".product-datasheet").html("").attr("src", "#");
+        }
+        modal.find(".product-brand").text(product_brand);
+
+        modal.modal("show");
+    });
+
     function formatRupiah(angka, prefix) {
         var number_string = angka.toString().replace(/[^,\d]/g, '').toString(),
             split = number_string.split(','),
