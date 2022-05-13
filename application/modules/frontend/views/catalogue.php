@@ -278,13 +278,13 @@
         $items = $this->db->from("catalogue_item")->where("category_id", $cat->id)->get()->result();
         ?>
         <section class="products">
-            <div class="container">
+            <div class="container py-4">
                 <div class="row">
                     <?php foreach ($cat->items as $item) {
                         $specification = @explode("<br />", nl2br($item->specification));
                     ?>
                         <div class="col-lg-4 col-6">
-                            <div class="product py-4" data-product='<?= json_encode($item) ?>'>
+                            <div class="product" data-product='<?= json_encode($item) ?>'>
                                 <div class="card" style="border: 1px solid var(--bs-gray-300); box-shadow: 0 2px 10px 0 rgb(0 0 0 / 10%);">
                                     <div class="card-body p-3 row g-3">
                                         <div class="col-12 col-lg-4">
