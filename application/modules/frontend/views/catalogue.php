@@ -742,7 +742,7 @@
                 if (response.success) {
                     CustomAlert.fire({
                         title: "Berhasil",
-                        text: "response.message",
+                        text: response.message,
                         icon: "success",
                         showCancelButton: false,
                     })
