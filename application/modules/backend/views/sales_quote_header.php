@@ -7,7 +7,7 @@
             <p>JL.Kolonel Sugiono No.78.Banjarmasin
                 <br>Indonesia 14462
                 <br>www.globalintertech.co.id
-                <br><i class="fa fas fa-envelope"></i> glosindotech@gmail.com
+                <br>Email glosindotech@gmail.com
                 <br>Office 0511 3272707 / +62 821 530 50 685
             </p>
         </div>
@@ -15,9 +15,9 @@
             <h3 class="text-right" style="margin-bottom: 2px;">Sales Quote</h3>
             <div style="border: 1px solid black; padding: 5px; font-size: 12px">
                 <div class="col-xs-6 text-left">Quote # </div>
-                <div class="col-xs-6 text-right">SQ-<?= date("m", strtotime($sales_quote->generate_date)) . date("y", strtotime($sales_quote->generate_date)) . sprintf('%03d', $counter) ?></div>
+                <div class="col-xs-6 text-right">SQ-<?= date("m", strtotime($sales_quote->created_at)) . date("y", strtotime($sales_quote->created_at)) . sprintf('%03d', $counter) ?></div>
                 <div class="col-xs-6 text-left">Date </div>
-                <div class="col-xs-6 text-right"><?= date("d/m/Y", strtotime($sales_quote->generate_date)) ?></div>
+                <div class="col-xs-6 text-right"><?= date("d/m/Y", strtotime($sales_quote->created_at)) ?></div>
             </div>
         </div>
     </div>

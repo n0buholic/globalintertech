@@ -2,6 +2,8 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 use \Mpdf\Mpdf;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 class Api extends MX_Controller
 {
@@ -14,31 +16,31 @@ class Api extends MX_Controller
 	}
 
 	public function login()
-    {
-        $username = $this->input->post('username', TRUE);
-        $password = $this->input->post('password', TRUE);
-        $hasil = $this->db->select("*")->from("admin")->where("username", $username)->get()->row();
-        if ($hasil) {
-            if (password_verify($password, $hasil->password) === true) {
-                $session = array(
-                    "logged_in" => true,
-                    "id" => $hasil->id
-                );
-                $this->session->set_userdata($session);
-                $this->JSON_Output(true, "Berhasil masuk, mengarahkan ke Dashboard...", ["redirect" => base_url("backend/dashboard")]);
-            } else {
-                $this->JSON_Output(false, "Password yang Anda masukkan salah");
-            }
-        } else {
-            $this->JSON_Output(false, "Username tidak ditemukan");
-        }
-    }
+	{
+		$username = $this->input->post('username', TRUE);
+		$password = $this->input->post('password', TRUE);
+		$hasil = $this->db->select("*")->from("admin")->where("username", $username)->get()->row();
+		if ($hasil) {
+			if (password_verify($password, $hasil->password) === true) {
+				$session = array(
+					"logged_in" => true,
+					"id" => $hasil->id
+				);
+				$this->session->set_userdata($session);
+				$this->JSON_Output(true, "Berhasil masuk, mengarahkan ke Dashboard...", ["redirect" => base_url("backend/dashboard")]);
+			} else {
+				$this->JSON_Output(false, "Password yang Anda masukkan salah");
+			}
+		} else {
+			$this->JSON_Output(false, "Username tidak ditemukan");
+		}
+	}
 
 	public function logout()
-    {
-        $this->session->sess_destroy();
-        $this->JSON_Output(true, "Berhasil keluar Aplikasi", ["redirect" => base_url("backend/login")]);
-    }
+	{
+		$this->session->sess_destroy();
+		$this->JSON_Output(true, "Berhasil keluar Aplikasi", ["redirect" => base_url("backend/login")]);
+	}
 
 	public function add_catalogue()
 	{
@@ -346,7 +348,8 @@ class Api extends MX_Controller
 		redirect("backend/promo");
 	}
 
-	public function request_quotation() {
+	public function request_quotation()
+	{
 		$data = [];
 
 		foreach ($this->input->post() as $name => $value) {
@@ -361,13 +364,99 @@ class Api extends MX_Controller
 		];
 
 		if ($this->DB_Insert($q)) {
-			$this->JSON_Output(true, "Berhasil mengirimkan permintaan penawaran, silahkan tunggu konfirmasi dari kami");
+
+			$sq = $this->db->select("id")->from("sales_quote")->where("id", $this->db->insert_id())->get()->row();
+
+			$this->JSON_Output(true, "Pratinjau penawaran berhasil dibuat", ["sales_quote" => $sq]);
 		} else {
-			$this->JSON_Output(true, "Gagal mengirimkan permintaan penawaran");
+			$this->JSON_Output(true, "Gagal membuat pratinjau penawaran");
 		}
 	}
 
-	public function generate_sales_quote() {
+	public function update_quotation()
+	{
+		$data = [];
+
+		foreach ($this->input->post() as $name => $value) {
+			$data[$name] = $value;
+		}
+
+		$data["status"] = 0;
+
+		$q = [
+			"table" => "sales_quote",
+			"data" => $data,
+			"where" => "id = $data[id]"
+		];
+
+		if ($this->DB_Update($q)) {
+
+			$sq = $this->db->select("id")->from("sales_quote")->where("id", $data["id"])->get()->row();
+
+			$this->JSON_Output(true, "Pratinjau penawaran berhasil diperbarui", ["sales_quote" => $sq]);
+		} else {
+			$this->JSON_Output(true, "Gagal memperbarui pratinjau penawaran");
+		}
+	}
+
+	public function email_preview_sales_quote()
+	{
+		$data = [];
+
+		foreach ($this->input->post() as $name => $value) {
+			$data[$name] = $value;
+		}
+
+		$sq = $this->db->from("sales_quote")->where("id", $data["id"])->get()->row();
+		$sq_no = date("m", strtotime($sq->created_at)) . date("y", strtotime($sq->created_at)) . sprintf('%03d', $this->CounterSQ($sq->id));
+		$customer = json_decode($sq->customer);
+
+		// config
+		$receipent = getReceipent();
+		$to = $data["email"];
+		$bcc = $receipent["bcc"];
+
+		$account = getSMTPAccount();
+
+		try {
+			$mail = new PHPMailer(true);
+			$mail->isSMTP();
+			$mail->Host       = 'smtp.gmail.com';
+			$mail->SMTPAuth   = true;
+			$mail->Username   = $account["email"];
+			$mail->Password   = $account["password"];
+			$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+			$mail->Port       = 465;
+
+			$mail->setFrom("dev@glosindotech.com", "Global Integra Technology");
+			$mail->addAddress($to);
+
+			foreach ($bcc as $e) {
+				$mail->addBCC($e);
+			}
+
+			$mail->isHTML(true);
+			$mail->Subject = "Pratinjau Penawaran #SQ-$sq_no";
+			$mail->Body    = "Hai, $customer->name<br>Berikut adalah pratinjau penawaran untuk produk yang Anda inginkan:<br><br>";
+
+			$arrContextOptions = array(
+				"ssl" => array(
+					"verify_peer" => false,
+					"verify_peer_name" => false,
+				),
+			);
+
+			$mail->addStringAttachment(file_get_contents(base_url("sales-quote-preview/view?id=" . $sq->id), false, stream_context_create($arrContextOptions)), "#SQ-" . $sq_no . ".pdf");
+
+			$mail->send();
+			$this->JSON_Output(true, "Email telah berhasil dikirim");
+		} catch (Exception $e) {
+			$this->JSON_Output(false, "Gagal mengirim email. Error: {$mail->ErrorInfo}");
+		}
+	}
+
+	public function generate_sales_quote()
+	{
 		$data = [];
 
 		foreach ($this->input->post() as $name => $value) {
@@ -390,7 +479,8 @@ class Api extends MX_Controller
 		}
 	}
 
-	public function take_order() {
+	public function take_order()
+	{
 		$data = [];
 
 		foreach ($this->input->post() as $name => $value) {
@@ -414,7 +504,7 @@ class Api extends MX_Controller
 		}
 	}
 
-	public function sales_quote_view($type)
+	public function sales_quote_view($type, $mode = "view")
 	{
 		$this->data["sales_quote"] = $this->db->select("a.*, b.name")->from("sales_quote a")->join("admin b", "b.id = a.taken_by", "left")->where("a.id", $this->input->get("id"))->get()->row();
 		if (!$this->data["sales_quote"]) {
@@ -424,7 +514,7 @@ class Api extends MX_Controller
 
 		$header = $this->load->view("backend/sales_quote_header", $this->data, true);
 		$footer = $this->load->view("backend/sales_quote_footer", $this->data, true);
-		$html = $this->load->view("sales_quote_view", $this->data, true);
+		$html = $this->load->view($mode == "view" ? "sales_quote_view" : "sales_quote_preview", $this->data, true);
 		//echo $html;exit;
 
 		$mpdf = new Mpdf();
@@ -436,9 +526,9 @@ class Api extends MX_Controller
 		$mpdf->SetHTMLFooter($footer);
 		$mpdf->WriteHTML($html);
 		if ($type == "download") {
-			$mpdf->Output("Quote-SQ-" . date("m", strtotime($this->data["sales_quote"]->generate_date)) . date("y", strtotime($this->data["sales_quote"]->generate_date)) . sprintf('%03d', $this->data["counter"]) . ".pdf", "D");
+			$mpdf->Output("Quote-SQ-" . date("m", strtotime($this->data["sales_quote"]->created_at)) . date("y", strtotime($this->data["sales_quote"]->created_at)) . sprintf('%03d', $this->data["counter"]) . ".pdf", "D");
 		} else {
-			$mpdf->Output();$mpdf->Output("Quote-SQ-" . date("m", strtotime($this->data["sales_quote"]->generate_date)) . date("y", strtotime($this->data["sales_quote"]->generate_date)) . sprintf('%03d', $this->data["counter"]) . ".pdf", "I");
+			$mpdf->Output("Quote-SQ-" . date("m", strtotime($this->data["sales_quote"]->created_at)) . date("y", strtotime($this->data["sales_quote"]->created_at)) . sprintf('%03d', $this->data["counter"]) . ".pdf", "I");
 		}
 	}
 }

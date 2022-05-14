@@ -69,5 +69,8 @@ $route['backend/sort-catalogue'] = 'backend/sortCatalogue';
 $route['backend/sales-quote'] = 'backend/sales_quote';
 $route['backend/sales-quote/generate'] = 'backend/sales_quote_generate';
 
-$route['sales-quote/view'] = 'api/sales_quote_view/view';
-$route['sales-quote/download'] = 'api/sales_quote_view/download';
+$route['sales-quote/view'] = 'api/sales_quote_view/view/view';
+$route['sales-quote/download'] = 'api/sales_quote_view/download/view';
+
+$route['sales-quote-preview/view'] = 'api/sales_quote_view/view/preview';
+$route['sales-quote-preview/download'] = 'api/sales_quote_view/download/preview';

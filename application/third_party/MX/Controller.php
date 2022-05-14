@@ -72,11 +72,11 @@ class MX_Controller
 
 	public function CounterSQ($id) {
 		$sq = $this->db->from("sales_quote")->where("id", $id)->get()->row();
-		$sq_month = date("m", strtotime($sq->generate_date));
-		$sq_year = date("Y", strtotime($sq->generate_date));
+		$sq_month = date("m", strtotime($sq->created_at));
+		$sq_year = date("Y", strtotime($sq->created_at));
 		$sq_id = $sq->id;
 		
-		$sales_quote_this_month = $this->db->where("id < $sq_id")->where("MONTH(generate_date)", $sq_month)->where("YEAR(generate_date)", $sq_year)->count_all_results("sales_quote");
+		$sales_quote_this_month = $this->db->where("id < $sq_id")->where("MONTH(created_at)", $sq_month)->where("YEAR(created_at)", $sq_year)->count_all_results("sales_quote");
 		$counter = 1;
 		if ($sales_quote_this_month > 0) {
 			$counter = $sales_quote_this_month + 1;

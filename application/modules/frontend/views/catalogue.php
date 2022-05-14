@@ -55,7 +55,8 @@
     }
 
     .close-cart,
-    .close-customer-data {
+    .close-customer-data,
+    .close-preview-sales-quote {
         cursor: pointer;
     }
 
@@ -155,7 +156,8 @@
     }
 
     .cart-container,
-    .customer-data-container {
+    .customer-data-container,
+    .preview-sales-quote-container {
         position: fixed;
         z-index: 999;
         width: 100%;
@@ -164,6 +166,13 @@
         top: 0;
         left: 0;
         overflow-y: auto;
+    }
+
+    .cart-header,
+    .customer-data-header,
+    .preview-sales-quote-header {
+        border-bottom: 1px solid #dddddd;
+        box-shadow: 0px 0px 10px rgb(0 0 0 / 25%);
     }
 
     .search-product.desktop {
@@ -338,15 +347,15 @@
     <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger">0</span>
 </div>
 
-<div class="cart-container p-3" style="display: none;">
-    <div class="cart-header">
+<div class="cart-container" style="display: none;">
+    <div class="cart-header p-3">
         <h3 class="fw-bold d-flex align-items-center"><i style="font-size: 18px;" class="fa fa-chevron-left close-cart me-3"></i> Produk</h3>
     </div>
-    <div class="cart-body py-3">
+    <div class="cart-body p-3">
         <div class="cart-items">
         </div>
     </div>
-    <div class="cart-footer border-top pt-4">
+    <div class="cart-footer border-top p-3">
         <div class="row">
             <div class="col-8 text-end">
                 <p class="fw-bold">Total</p>
@@ -355,17 +364,17 @@
                 <p class="fw-bold total-price"></p>
             </div>
             <div class="col-12">
-                <button class="btn-primary-line mt-4 request-quotation-1 float-end">Lanjut</button>
+                <button class="btn-primary-line mt-4 request-quotation-1 float-end">Selanjutnya</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="customer-data-container p-3" style="display: none;">
-    <div class="customer-data-header">
+<div class="customer-data-container" style="display: none;">
+    <div class="customer-data-header p-3">
         <h3 class="fw-bold d-flex align-items-center"><i style="font-size: 18px;" class="fa fa-chevron-left close-customer-data me-3"></i> Data Customer</h3>
     </div>
-    <div class="customer-data-body py-3 mt-3">
+    <div class="customer-data-body p-3 mt-3">
         <div class="row">
             <div class="col-12 mb-3">
                 <div class="form-group">
@@ -394,10 +403,35 @@
             </div>
         </div>
     </div>
-    <div class="customer-data-footer">
+    <div class="customer-data-footer p-3">
         <div class="row">
             <div class="col-12">
-                <button class="btn-primary-line mt-4 request-quotation-2 float-end">Minta Penawaran</button>
+                <button class="btn-primary-line request-quotation-2 float-end">Buat Penawaran</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="preview-sales-quote-container" style="display: none;">
+    <div class="preview-sales-quote-header p-3">
+        <h3 class="fw-bold d-flex align-items-center"><i style="font-size: 18px;" class="fa fa-chevron-left close-preview-sales-quote me-3"></i> Pratinjau Penawaran</h3>
+    </div>
+    <div class="preview-sales-quote-body p-3 mt-3">
+        <div class="row">
+            <div class="col-12 mb-3 text-center ">
+                <h1 class="text-success display-4 fw-bold mb-4"><i class="fa-solid fa-check-circle"></i> BERHASIL!</h1>
+                <p class="mb-4">Pratinjau penawaran berhasil dibuat, silahkan klik tombol <strong>print</strong> untuk mencetak pratinjau penawaran yang sudah dibuat.</p>
+                <p class="text-danger"><strong>Note</strong>: <br>Harga di dalam pratinjau penawaran belum termasuk biaya pemasangan dan lain-lain.</p>
+            </div>
+        </div>
+    </div>
+    <div class="customer-data-footer p-3">
+        <div class="row g-2">
+            <div class="col-lg-6 d-grid">
+                <button class="btn-primary-line email-preview-sales-quote" style="width: 100% !important;">Kirim ke Email</button>
+            </div>
+            <div class="col-lg-6 d-grid">
+                <button class="btn-primary-line print-preview-sales-quote" style="width: 100% !important;">Print</button>
             </div>
         </div>
     </div>
@@ -441,8 +475,11 @@
     </div>
 </div>
 
+<script src="<?=base_url("assets/frontend/vendor/print-js/dist/print.js")?>"></script>
+
 <script>
-    $(document).on("click", ".product", function() {
+    $(document).on("click", ".product", function(e) {
+        if (e.target.className.includes("add-to-cart")) return;
         const product = $(this).data("product");
         const product_image = product.image;
         const product_name = product.name;
@@ -608,7 +645,14 @@
         });
     });
 
-    $(document).on("click", ".add-to-cart", function() {
+    $(".close-preview-sales-quote").on("click", function() {
+        $(".preview-sales-quote-container").effect("slide", {
+            direction: "right",
+            mode: "hide"
+        });
+    });
+
+    $(document).on("click", ".add-to-cart", function(e) {
         const fixedCart = $(".fixed-cart");
         const button = $(this);
         const productImage = button.parents(".product").find("img");
@@ -668,6 +712,50 @@
                 $(this).detach()
             });
         }
+    });
+
+    $(document).on("click", ".print-preview-sales-quote", function() {
+        const sq = JSON.parse(localStorage.getItem("sales_quote"));
+        if (sq != null) {
+            printJS({
+                printable: "<?=base_url("sales-quote-preview/view?id=")?>" + sq.id,
+                showModal: true,
+                modalMessage: "Mengambil File..."
+            });
+        }
+    });
+
+    $(document).on("click", ".email-preview-sales-quote", function() {
+        CustomAlert.showLoading();
+        const email = JSON.parse(localStorage.getItem("customer")).email;
+        const id = JSON.parse(localStorage.getItem("sales_quote")).id;
+        const data = new FormData();
+        data.append("email", email);
+        data.append("id", id);
+        $.ajax({
+            url: "<?= base_url("api/email_preview_sales_quote") ?>",
+            type: "POST",
+            data: data,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                if (response.success) {
+                    CustomAlert.fire({
+                        title: "Berhasil",
+                        text: "response.message",
+                        icon: "success",
+                        showCancelButton: false,
+                    })
+                } else {
+                    CustomAlert.fire({
+                        title: "Gagal",
+                        text: response.message,
+                        icon: "error",
+                        showCancelButton: false,
+                    })
+                }
+            }
+        });
     });
 
     $(document).on("click", ".remove-from-cart", function() {
@@ -843,22 +931,30 @@
                 }
             })
         ));
+
+        let url;
+        const sq = JSON.parse(localStorage.getItem("sales_quote"));
+
+        if (sq == null) {
+            url = "<?= base_url("api/request_quotation") ?>"
+        } else {
+            url = "<?= base_url("api/update_quotation") ?>";
+            data.append("id", sq.id);
+        }
+
         $.ajax({
-            url: "<?= base_url("api/request_quotation") ?>",
+            url: url,
             type: "POST",
             data: data,
             processData: false,
             contentType: false,
             success: function(response) {
                 if (response.success) {
-                    localStorage.removeItem("cart");
-                    // tampilkan swal2 success
-                    CustomAlert.fire({
-                        title: "Berhasil",
-                        text: response.message,
-                        icon: "success",
-                    }).then(function() {
-                        window.location.reload();
+                    CustomAlert.close();
+                    localStorage.setItem("sales_quote", JSON.stringify(response.data.sales_quote));
+                    $(".preview-sales-quote-container").effect("slide", {
+                        direction: "right",
+                        mode: "show",
                     });
                 } else {
                     // tampilkan swal2 error

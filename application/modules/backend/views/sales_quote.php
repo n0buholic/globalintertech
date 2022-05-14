@@ -15,7 +15,7 @@
                         <table id="catalogue-table" class="table border table-striped w-100">
                             <thead>
                                 <tr>
-                                    <th>No</th>
+                                    <th>No. SQ</th>
                                     <th>Customer</th>
                                     <th>Total Item</th>
                                     <th>Sub-Total</th>
@@ -33,11 +33,7 @@
                                 ?>
                                     <tr>
                                         <td>
-                                            <?php if ($or->status == 2) : ?>
-                                                SQ-<?= date("m", strtotime($or->generate_date)) . date("y", strtotime($or->generate_date)) . sprintf('%03d', $counter) ?>
-                                            <?php else : ?>
-                                                - 
-                                            <?php endif ?>
+                                            SQ-<?= date("m", strtotime($or->generate_date)) . date("y", strtotime($or->generate_date)) . sprintf('%03d', $counter) ?>
                                         </td>
                                         <td>
                                             <p class="my-0"><?= $cust->name ?></p>

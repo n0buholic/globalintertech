@@ -122,30 +122,10 @@ $data = json_decode($sales_quote->data);
                 <table style="width: 100%; padding: 0;" cellspacing="0" cellpadding="0">>
                     <thead>
                         <tr>
-                            <th>Sales Rep</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <?= @$sales_quote->name ?>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="divider"></div>
-        <div class="row">
-            <div class="col-12">
-                <table style="width: 100%; padding: 0;" cellspacing="0" cellpadding="0">>
-                    <thead>
-                        <tr>
                             <th width="120">ITEM</th>
                             <th width="150">DESCRIPTION</th>
                             <th width="50" class="text-right">QUANTITY</th>
                             <th width="120" class="text-right">UNIT PRICE</th>
-                            <th width="50" class="text-right">DISCOUNT</th>
                             <th width="120" class="text-right">SUB-TOTAL</th>
                         </tr>
                     </thead>
@@ -167,20 +147,17 @@ $data = json_decode($sales_quote->data);
                                     <?= $ctr->toRupiah($product->price) ?>
                                 </td>
                                 <td class="text-right">
-                                    <?= $product->discount ?>%
-                                </td>
-                                <td class="text-right">
-                                    <?= $ctr->toRupiah(($product->price * $product->qty) - (($product->price * $product->qty) * $product->discount / 100)) ?>
+                                    <?= $ctr->toRupiah(($product->price * $product->qty)) ?>
                                 </td>
                             </tr>
                         <?php } ?>
                     </tbody>
                     <?php
+                    $subTotal = array_sum(array_map(function ($item) {
+                        return $item->price * $item->qty;
+                    }, $products));
+                    
                     if (@$data) {
-                        $subTotal = array_sum(array_map(function ($item) {
-                            return $item->price * $item->qty;
-                        }, $products));
-
                         $discountValue = 0;
                         if ($data->discountType == 1) {
                             $discountValue = $subTotal * $data->discount / 100;
@@ -191,25 +168,21 @@ $data = json_decode($sales_quote->data);
                     ?>
                     <tfoot>
                         <tr>
-                            <td colspan="5" class="text-right"><strong>SUB-TOTAL</strong></td>
+                            <td colspan="4" class="text-right"><strong>SUB-TOTAL</strong></td>
                             <td class="text-right"><strong><?= $ctr->toRupiah($subTotal) ?></strong></td>
                         </tr>
                         <tr>
-                            <td colspan="5" class="text-right"><strong>DISCOUNT (<?= $data->discountType == 1 ? "%" : "Rp" ?>)</strong></td>
-                            <td class="text-right"><strong><?= $data->discountType == 1 ? "$data->discount%" : $ctr->toRupiah($data->discount) ?></strong></td>
-                        </tr>
-                        <tr>
-                            <td colspan="5" class="text-right"><strong>TAX <?= $data->tax ?>%</strong></td>
-                            <td class="text-right"><strong><?= $ctr->toRupiah($subTotal * ($data->tax / 100)) ?></strong></td>
-                        </tr>
-                        <tr>
-                            <td colspan="5" class="text-right"><strong style="font-size: 12px;">TOTAL</strong></td>
-                            <td class="text-right"><strong style="font-size: 12px;"><?= $ctr->toRupiah($subTotal - $discountValue) ?></strong></td>
+                            <td colspan="4" class="text-right"><strong style="font-size: 12px;">TOTAL</strong></td>
+                            <td class="text-right"><strong style="font-size: 12px;"><?= $ctr->toRupiah($subTotal) ?></strong></td>
                         </tr>
                     </tfoot>
                 </table>
             </div>
             <div class="divider"></div>
+            <div class="col-xs-12" style="font-size: 11px">
+                <strong class="text-danger">* Harga diatas hanya estimasi, belum termasuk biaya pemasangan dan lain-lain.</strong>
+            </div>
+            <!-- <div class="divider"></div>
             <div class="col-xs-1">
                 <strong>Remarks</strong>
             </div>
@@ -235,7 +208,7 @@ $data = json_decode($sales_quote->data);
             </div>
             <div class="col-xs-11">
                 <p>BCA 7820306362 - Mandiri 0310088000800 - Bri 218201000573508 - Bni 8855588852 A.N Ronald Gunawan</p>
-            </div>
+            </div> -->
         </div>
     </div>
 
