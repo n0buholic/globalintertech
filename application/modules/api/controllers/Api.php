@@ -441,7 +441,7 @@ class Api extends MX_Controller
 
 			$mail->isHTML(true);
 			$mail->Subject = "Pratinjau Penawaran #SQ-$sq_no";
-			$mail->Body    = "Hai, $customer->name<br>Berikut adalah pratinjau penawaran untuk produk yang Anda inginkan:<br><br>";
+			$mail->Body    = "Hai, $customer->name<br>Berikut adalah pratinjau penawaran untuk produk yang Anda inginkan:";
 
 			// get file
 			$url = base_url("sales-quote-preview/view?id=" . $sq->id);
@@ -473,8 +473,7 @@ class Api extends MX_Controller
 			$data[$name] = $value;
 		}
 
-		$data["status"] = 2;
-		$data["generate_date"] = date("Y-m-d H:i:s");
+		$data["is_generated"] = 1;
 
 		$q = [
 			"table" => "sales_quote",
@@ -486,6 +485,52 @@ class Api extends MX_Controller
 			$this->JSON_Output(true, "Sales Quote berhasil dibuat", ["redirect" => base_url("backend/sales-quote")]);
 		} else {
 			$this->JSON_Output(true, "Sales Quote gagal dibuat");
+		}
+	}
+
+	public function finish_sales_quote() {
+		$data = [];
+
+		foreach ($this->input->post() as $name => $value) {
+			$data[$name] = $value;
+		}
+
+		$data["status"] = 2;
+		$data["finish_date"] = date("Y-m-d H:i:s");
+
+		$q = [
+			"table" => "sales_quote",
+			"data" => $data,
+			"where" => "id = $data[id]"
+		];
+
+		if ($this->DB_Update($q)) {
+			$this->JSON_Output(true, "Berhasil menandai Sales Quote sebagai selesai", ["redirect" => base_url("backend/sales-quote")]);
+		} else {
+			$this->JSON_Output(true, "Gagal menandai Sales Quote sebagai selesai");
+		}
+	}
+
+	public function cancel_sales_quote() {
+		$data = [];
+
+		foreach ($this->input->post() as $name => $value) {
+			$data[$name] = $value;
+		}
+
+		$data["status"] = 3;
+		$data["finish_date"] = date("Y-m-d H:i:s");
+
+		$q = [
+			"table" => "sales_quote",
+			"data" => $data,
+			"where" => "id = $data[id]"
+		];
+
+		if ($this->DB_Update($q)) {
+			$this->JSON_Output(true, "Berhasil menandai Sales Quote sebagai batal", ["redirect" => base_url("backend/sales-quote")]);
+		} else {
+			$this->JSON_Output(true, "Gagal menandai Sales Quote sebagai batal");
 		}
 	}
 
@@ -508,7 +553,7 @@ class Api extends MX_Controller
 		];
 
 		if ($this->DB_Update($q)) {
-			$this->JSON_Output(true, "Pesanan berhasil diambil, klik OK untuk lanjut ke halaman Sales Quote", ["redirect" => base_url("backend/sales-quote/generate?id=$data[id]")]);
+			$this->JSON_Output(true, "Pesanan berhasil diambil", ["redirect" => base_url("backend/sales-quote")]);
 		} else {
 			$this->JSON_Output(true, "Pesanan gagal diambil");
 		}

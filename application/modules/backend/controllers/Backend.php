@@ -9,7 +9,9 @@ class Backend extends MX_Controller
 		$this->Auth_Guard();
 		$this->data = array();
 		$this->data["ctr"] = $this;
+		$this->data["config"] = $this->db->get("config")->row();
 		$this->data["available_order"] = $this->db->where("status", 0)->count_all_results("sales_quote");
+		$this->data["active_sq"] = $this->db->where("status", 1)->where("taken_by", $this->session->userdata("id"))->count_all_results("sales_quote");
 		parent::__construct();
 	}
 

@@ -176,12 +176,13 @@ $data = json_decode($sales_quote->data);
                         <?php } ?>
                     </tbody>
                     <?php
-                    if (@$data) {
-                        $subTotal = array_sum(array_map(function ($item) {
-                            return $item->price * $item->qty;
-                        }, $products));
+                    $subTotal = array_sum(array_map(function ($item) {
+                        return $item->price * $item->qty;
+                    }, $products));
 
-                        $discountValue = 0;
+                    $discountValue = 0;
+
+                    if (@$data) {
                         if ($data->discountType == 1) {
                             $discountValue = $subTotal * $data->discount / 100;
                         } else {
@@ -194,14 +195,16 @@ $data = json_decode($sales_quote->data);
                             <td colspan="5" class="text-right"><strong>SUB-TOTAL</strong></td>
                             <td class="text-right"><strong><?= $ctr->toRupiah($subTotal) ?></strong></td>
                         </tr>
-                        <tr>
-                            <td colspan="5" class="text-right"><strong>DISCOUNT (<?= $data->discountType == 1 ? "%" : "Rp" ?>)</strong></td>
-                            <td class="text-right"><strong><?= $data->discountType == 1 ? "$data->discount%" : $ctr->toRupiah($data->discount) ?></strong></td>
-                        </tr>
-                        <tr>
-                            <td colspan="5" class="text-right"><strong>TAX <?= $data->tax ?>%</strong></td>
-                            <td class="text-right"><strong><?= $ctr->toRupiah($subTotal * ($data->tax / 100)) ?></strong></td>
-                        </tr>
+                        <?php if (@$data) { ?>
+                            <tr>
+                                <td colspan="5" class="text-right"><strong>DISCOUNT (<?= $data->discountType == 1 ? "%" : "Rp" ?>)</strong></td>
+                                <td class="text-right"><strong><?= $data->discountType == 1 ? "$data->discount%" : $ctr->toRupiah($data->discount) ?></strong></td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="text-right"><strong>TAX <?= $data->tax ?>%</strong></td>
+                                <td class="text-right"><strong><?= $ctr->toRupiah($subTotal * ($data->tax / 100)) ?></strong></td>
+                            </tr>
+                        <?php } ?>
                         <tr>
                             <td colspan="5" class="text-right"><strong style="font-size: 12px;">TOTAL</strong></td>
                             <td class="text-right"><strong style="font-size: 12px;"><?= $ctr->toRupiah($subTotal - $discountValue) ?></strong></td>
@@ -210,10 +213,11 @@ $data = json_decode($sales_quote->data);
                 </table>
             </div>
             <div class="divider"></div>
-            <div class="col-xs-1">
-                <strong>Remarks</strong>
+            <div class="col-xs-2">
+                &nbsp;
             </div>
-            <div class="col-xs-7">
+            <div class="col-xs-8">
+                <strong>Remarks</strong>
                 <div style="border: 1px solid black; padding: 10px;">
                     Syarat dan Ketentuan:<br>
                     <ol style="list-style: numeric; margin-left: 17px; padding-left: 0; margin-top: 5px; margin-bottom: 0;">
@@ -227,14 +231,45 @@ $data = json_decode($sales_quote->data);
                     </ol>
                 </div>
             </div>
-            <div class="col-xs-4">
-
-            </div>
-            <div class="col-xs-1">
+            <div class="col-xs-2">
                 &nbsp;
             </div>
-            <div class="col-xs-11">
-                <p>BCA 7820306362 - Mandiri 0310088000800 - Bri 218201000573508 - Bni 8855588852 A.N Ronald Gunawan</p>
+            <div class="divider"></div>
+
+            <div class="col-xs-3 text-center">
+                <div style="padding: 10px;">
+                    <img src="<?= base_url("assets/backend/images/bca-logo.jpg") ?>" style="width: 60%;" class="img-fluid">
+                    <div><strong>BCA 7820306362</strong></div>
+                    <div>A/N Ronald Gunawan</div>
+                </div>
+
+            </div>
+
+            <div class="col-xs-3 text-center">
+                <div style="padding: 10px;">
+                    <img src="<?= base_url("assets/backend/images/mandiri-logo.jpg") ?>" style="width: 60%;" class="img-fluid">
+                    <div><strong>MANDIRI 0310088000800</strong></div>
+                    <div>A/N Ronald Gunawan</div>
+                </div>
+
+            </div>
+
+            <div class="col-xs-3 text-center">
+                <div style="padding: 10px;">
+                    <img src="<?= base_url("assets/backend/images/bri-logo.jpg") ?>" style="width: 60%;" class="img-fluid">
+                    <div><strong>BRI 218201000573508</strong></div>
+                    <div>A/N Ronald Gunawan</div>
+                </div>
+
+            </div>
+
+            <div class="col-xs-3 text-center">
+                <div style="padding: 10px;">
+                    <img src="<?= base_url("assets/backend/images/bni-logo.jpg") ?>" style="width: 60%;" class="img-fluid">
+                    <div><strong>BNI 8855588852</strong></div>
+                    <div>A/N Ronald Gunawan</div>
+                </div>
+
             </div>
         </div>
     </div>

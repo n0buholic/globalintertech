@@ -19,7 +19,8 @@
                                     <th>Customer</th>
                                     <th>Total Item</th>
                                     <th>Sub-Total</th>
-                                    <th>Tanggal</th>
+                                    <th>Tanggal Pesanan</th>
+                                    <th>Tanggal Selesai</th>
                                     <th>Status</th>
                                     <th></th>
                                 </tr>
@@ -33,7 +34,7 @@
                                 ?>
                                     <tr>
                                         <td>
-                                            SQ-<?= date("m", strtotime($or->generate_date)) . date("y", strtotime($or->generate_date)) . sprintf('%03d', $counter) ?>
+                                            SQ-<?= date("m", strtotime($or->created_at)) . date("y", strtotime($or->created_at)) . sprintf('%03d', $counter) ?>
                                         </td>
                                         <td>
                                             <p class="my-0"><?= $cust->name ?></p>
@@ -45,22 +46,29 @@
                                             }, $prod))) ?>
                                         </td>
                                         <td><?= date("Y-m-d", strtotime($or->created_at)) ?></td>
+                                        <td><?= date("Y-m-d", strtotime($or->finish_date)) ?></td>
                                         <td>
                                             <?php if ($or->status == 1) { ?>
                                                 <span class="badge bg-warning">Proses</span>
                                             <?php } else if ($or->status == 2) { ?>
                                                 <span class="badge bg-success">Selesai</span>
+                                            <?php } else if ($or->status == 3) { ?>
+                                                <span class="badge bg-danger">Batal</span>
                                             <?php } ?>
                                         </td>
                                         <td>
-                                            <div class="float-end">
-                                                <?php if ($or->status == 1) { ?>
-                                                    <a href="<?= base_url("backend/sales-quote/generate?id=$or->id") ?>" class="btn btn-primary btn-sm"><i class="fa fa-fw fa-edit"></i> Buat</a>
-                                                <?php } else if ($or->status == 2) { ?>
-                                                    <a href="<?= base_url("backend/sales-quote/generate?id=$or->id") ?>" class="btn btn-primary btn-sm"><i class="fa fa-fw fa-edit"></i> Ubah</a>
-                                                    <a target="_blank" href="<?= base_url("sales-quote/view?id=$or->id") ?>" class="btn btn-info btn-sm"><i class="fa fa-fw fa-eye"></i> Lihat</a>
-                                                    <a target="_blank" href="<?= base_url("sales-quote/download?id=$or->id") ?>" class="btn btn-success btn-sm"><i class="fa fa-fw fa-download"></i> Unduh</a>
-                                                <?php } ?>
+                                            <div class="d-inline-block dropdown show">
+                                                <a href="#" data-bs-toggle="dropdown" data-bs-display="static">
+                                                    <i class="align-middle text-dark" data-feather="more-vertical"></i>
+                                                </a>
+
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <a href="<?= base_url("backend/sales-quote/generate?id=$or->id") ?>" class="dropdown-item"><i class="fa fa-fw fa-edit"></i> Ubah</a>
+                                                    <a target="_blank" href="<?= base_url("sales-quote/view?id=$or->id") ?>" class="dropdown-item"><i class="fa fa-fw fa-file"></i> PDF</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <button class="dropdown-item finish-sales-quote" data-id="<?= $or->id ?>"><i class="fa fa-fw fa-check"></i> Tandai Selesai</button>
+                                                    <button class="dropdown-item cancel-sales-quote" data-id="<?= $or->id ?>"><i class="fa fa-fw fa-times"></i> Tandai Batal</button>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -82,7 +90,7 @@
                 [1, "desc"],
             ],
             columnDefs: [{
-                targets: [6],
+                targets: [7],
                 sortable: false
             }]
         });

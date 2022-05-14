@@ -70,5 +70,75 @@ function init() {
         if ($(this).attr("href") === window.location.href) {
             $(this).parent().addClass("active");
         }
-    })
+    });
+
+    $(document).on("click", ".finish-sales-quote", function() {
+        const id = $(this).data("id");
+        const data = new FormData();
+        data.append("id", id);
+        $.ajax({
+            url: base_url + "api/finish_sales_quote",
+            type: "POST",
+            data: data,
+            dataType: "JSON",
+            processData: false,
+            contentType: false,
+            cache: false,
+            beforeSend: () => $.LoadingOverlay("show"),
+            complete: () => $.LoadingOverlay("hide"),
+            success: function(data) {
+                if (data.success) {
+                    Swal.fire({
+                        title: "Berhasil",
+                        text: data.message,
+                        icon: "success",
+                        confirmButtonText: "OK",
+                    }).then(() => {
+                        smoothState.load(data.data.redirect);
+                    });
+                } else {
+                    Swal.fire({
+                        title: "Gagal",
+                        text: data.message,
+                        icon: "error",
+                    });
+                }
+            }
+        });
+    });
+
+    $(document).on("click", ".cancel-sales-quote", function() {
+        const id = $(this).data("id");
+        const data = new FormData();
+        data.append("id", id);
+        $.ajax({
+            url: base_url + "api/cancel_sales_quote",
+            type: "POST",
+            data: data,
+            dataType: "JSON",
+            processData: false,
+            contentType: false,
+            cache: false,
+            beforeSend: () => $.LoadingOverlay("show"),
+            complete: () => $.LoadingOverlay("hide"),
+            success: function(data) {
+                if (data.success) {
+                    Swal.fire({
+                        title: "Berhasil",
+                        text: data.message,
+                        icon: "success",
+                        confirmButtonText: "OK",
+                    }).then(() => {
+                        smoothState.load(data.data.redirect);
+                    });
+                } else {
+                    Swal.fire({
+                        title: "Gagal",
+                        text: data.message,
+                        icon: "error",
+                    });
+                }
+            }
+        });
+    });
 }

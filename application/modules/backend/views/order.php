@@ -51,11 +51,13 @@
                                         <td><?= date("Y-m-d", strtotime($or->created_at)) ?></td>
                                         <td>
                                             <?php if ($or->status == 0) : ?>
-                                                <span class="badge bg-warning">Baru</span>
+                                                <span class="badge bg-info">Baru</span>
                                             <?php elseif ($or->status == 1) : ?>
-                                                <span class="badge bg-info">Proses</span>
+                                                <span class="badge bg-warning">Proses</span>
                                             <?php elseif ($or->status == 2) : ?>
                                                 <span class="badge bg-success">Selesai</span>
+                                            <?php elseif ($or->status == 3) : ?>
+                                                <span class="badge bg-danger">Batal</span>
                                             <?php endif ?>
                                         </td>
                                         <td>
@@ -66,12 +68,22 @@
                                             <?php endif ?>
                                         </td>
                                         <td>
-                                            <div class="float-end">
-                                                <?php if ($or->status == 0) : ?>
-                                                    <button class="btn btn-success btn-sm take-order" data-id="<?= $or->id ?>"><i class="fa fa-fw fa-check"></i> Ambil Pesanan</button>
-                                                <?php else: ?>
-                                                    <span class="badge bg-info">Pesana Sudah Diambil</span>
-                                                <?php endif; ?>
+                                            <div class="d-inline-block dropdown show">
+                                                <a href="#" data-bs-toggle="dropdown" data-bs-display="static">
+                                                    <i class="align-middle text-dark" data-feather="more-vertical"></i>
+                                                </a>
+
+                                                <div class="dropdown-menu dropdown-menu-end">
+                                                    <?php if ($or->status == 0) : ?>
+                                                        <?php if ($active_sq < $config->max_active_sq) { ?>
+                                                            <button class="dropdown-item take-order" data-id="<?= $or->id ?>"><i class="fa fa-fw fa-check"></i> Ambil Pesanan</button>
+                                                        <?php } else { ?>
+                                                            <button class="dropdown-item" disabled><i class="fa fa-fw fa-check"></i> Ambil Pesanan</button>
+                                                        <?php } ?>
+                                                    <?php else : ?>
+                                                        <button class="dropdown-item" disabled><i class="fa fa-fw fa-check"></i> Ambil Pesanan</button>
+                                                    <?php endif; ?>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>
@@ -125,6 +137,9 @@
 
     $(document).ready(function() {
         $("#catalogue-table").DataTable({
+            order: [
+                [1, "desc"],
+            ],
             columnDefs: [{
                 targets: [7],
                 sortable: false
