@@ -439,14 +439,19 @@ class Api extends MX_Controller
 			$mail->Subject = "Pratinjau Penawaran #SQ-$sq_no";
 			$mail->Body    = "Hai, $customer->name<br>Berikut adalah pratinjau penawaran untuk produk yang Anda inginkan:<br><br>";
 
-			$arrContextOptions = array(
-				"ssl" => array(
-					"verify_peer" => false,
-					"verify_peer_name" => false,
-				),
-			);
+			// get file
+			$url = base_url("sales-quote-preview/view?id=" . $sq->id);
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_REFERER, 'http://www.example.com/1');
+			curl_setopt($ch, CURLOPT_HEADER, 0);
+			curl_setopt($ch, CURLOPT_VERBOSE, 0);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible;)");
+			curl_setopt($ch, CURLOPT_URL, urlencode($url));
+			$response = curl_exec($ch);
+			curl_close($ch);
 
-			$mail->addStringAttachment(file_get_contents(base_url("sales-quote-preview/view?id=" . $sq->id), false, stream_context_create($arrContextOptions)), "#SQ-" . $sq_no . ".pdf");
+			$mail->addStringAttachment($response, "#SQ-" . $sq_no . ".pdf");
 
 			$mail->send();
 			$this->JSON_Output(true, "Email telah berhasil dikirim");
