@@ -365,9 +365,14 @@ class Api extends MX_Controller
 
 		if ($this->DB_Insert($q)) {
 
-			$sq = $this->db->select("id")->from("sales_quote")->where("id", $this->db->insert_id())->get()->row();
+			$sq = $this->db->from("sales_quote")->where("id", $this->db->insert_id())->get()->row();
+			$return = [];
+			if ($sq) {
+				$return["id"] = $sq->id;
+				$return["no"] = "SQ-" . date("m", strtotime($sq->created_at)) . date("y", strtotime($sq->created_at)) . $this->CounterSQ($sq->id);
+			}
 
-			$this->JSON_Output(true, "Pratinjau penawaran berhasil dibuat", ["sales_quote" => $sq]);
+			$this->JSON_Output(true, "Pratinjau penawaran berhasil dibuat", ["sales_quote" => $return]);
 		} else {
 			$this->JSON_Output(true, "Gagal membuat pratinjau penawaran");
 		}
@@ -391,9 +396,14 @@ class Api extends MX_Controller
 
 		if ($this->DB_Update($q)) {
 
-			$sq = $this->db->select("id")->from("sales_quote")->where("id", $data["id"])->get()->row();
+			$sq = $this->db->from("sales_quote")->where("id", $data["id"])->get()->row();
+			$return = [];
+			if ($sq) {
+				$return["id"] = $sq->id;
+				$return["no"] = "#SQ-" . date("m", strtotime($sq->created_at)) . date("y", strtotime($sq->created_at)) . sprintf('%03d', $this->CounterSQ($sq->id));
+			}
 
-			$this->JSON_Output(true, "Pratinjau penawaran berhasil diperbarui", ["sales_quote" => $sq]);
+			$this->JSON_Output(true, "Pratinjau penawaran berhasil diperbarui", ["sales_quote" => $return]);
 		} else {
 			$this->JSON_Output(true, "Gagal memperbarui pratinjau penawaran");
 		}
@@ -412,9 +422,7 @@ class Api extends MX_Controller
 		$customer = json_decode($sq->customer);
 
 		// config
-		$receipent = getReceipent();
 		$to = $data["email"];
-		$bcc = $receipent["bcc"];
 
 		$account = getSMTPAccount();
 
@@ -430,10 +438,6 @@ class Api extends MX_Controller
 
 			$mail->setFrom("dev@glosindotech.com", "Global Integra Technology");
 			$mail->addAddress($to);
-
-			foreach ($bcc as $e) {
-				$mail->addBCC($e);
-			}
 
 			$mail->isHTML(true);
 			$mail->Subject = "Pratinjau Penawaran #SQ-$sq_no";

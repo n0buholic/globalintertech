@@ -307,7 +307,7 @@
                                                     <p class="product-price"><?= $ctr->toRupiah($item->price) ?></p>
                                                 </div>
                                                 <div class="col-12 action mt-0">
-                                                    <button class="btn-primary-line mt-3 add-to-cart" style="padding: 16px;font-size: 10px;padding: 18px; width: 100% !important;" data-product='<?= json_encode($item) ?>'>Tambah</button>
+                                                    <button class="btn-primary-line mt-3 add-to-cart" style="padding: 16px;font-size: 10px;padding: 18px; width: 100% !important;" data-product='<?= json_encode($item) ?>'><i class="fa-solid fa-plus-circle fa-fw me-1"></i> Tambah</button>
                                                 </div>
                                                 <div class="col-12 d-none">
                                                     <p class="fw-bold mb-2">Spesifikasi:</p>
@@ -364,7 +364,7 @@
                 <p class="fw-bold total-price"></p>
             </div>
             <div class="col-12">
-                <button class="btn-primary-line mt-4 request-quotation-1 float-end">Selanjutnya</button>
+                <button class="btn-primary-line mt-4 request-quotation-1 float-end"><i class="fa-solid fa-arrow-right fa-fw me-1"></i> Selanjutnya</button>
             </div>
         </div>
     </div>
@@ -406,7 +406,7 @@
     <div class="customer-data-footer p-3">
         <div class="row">
             <div class="col-12">
-                <button class="btn-primary-line request-quotation-2 float-end">Buat Penawaran</button>
+                <button class="btn-primary-line request-quotation-2 float-end"><i class="fa-solid fa-receipt fa-fw me-1"></i> Buat Penawaran</button>
             </div>
         </div>
     </div>
@@ -418,9 +418,10 @@
     </div>
     <div class="preview-sales-quote-body p-3 mt-3">
         <div class="row">
-            <div class="col-12 mb-3 text-center ">
+            <div class="col-12 mb- text-center ">
                 <h1 class="text-success display-4 fw-bold mb-4"><i class="fa-solid fa-check-circle"></i> BERHASIL!</h1>
-                <p class="mb-4">Pratinjau penawaran berhasil dibuat, silahkan klik tombol <strong>print</strong> untuk mencetak pratinjau penawaran yang sudah dibuat.</p>
+                <h4 class="sq-no fw-bold mb-4"></h4>
+                <p class="mb-4">Pratinjau penawaran berhasil dibuat dengan nomor <strong class="sq-no text-success"></strong>, silahkan klik tombol <strong>print</strong> untuk mencetak pratinjau penawaran yang sudah dibuat.</p>
                 <p class="text-danger"><strong>Note</strong>: <br>Harga di dalam pratinjau penawaran belum termasuk biaya pemasangan dan lain-lain.</p>
             </div>
         </div>
@@ -428,10 +429,15 @@
     <div class="customer-data-footer p-3">
         <div class="row g-2">
             <div class="col-lg-6 d-grid">
-                <button class="btn-primary-line email-preview-sales-quote" style="width: 100% !important;">Kirim ke Email</button>
+                <button class="btn-primary-line email-preview-sales-quote" style="width: 100% !important;">
+                    <i class="fa-solid fa-envelope fa-fw me-1"></i> Kirim ke Email
+                </button>
             </div>
             <div class="col-lg-6 d-grid">
-                <button class="btn-primary-line print-preview-sales-quote" style="width: 100% !important;">Print</button>
+                <button class="btn-primary-line print-preview-sales-quote" style="width: 100% !important;">
+                    <span class="d-none d-md-block"><i class="fa-solid fa-print fa-fw me-1"></i> Print</span>
+                    <span class="d-md-none d-block"><i class="fa-solid fa-download fa-fw me-1"></i> Unduh</span>
+                </button>
             </div>
         </div>
     </div>
@@ -475,7 +481,7 @@
     </div>
 </div>
 
-<script src="<?=base_url("assets/frontend/vendor/print-js/dist/print.js")?>"></script>
+<script src="<?= base_url("assets/frontend/vendor/print-js/dist/print.js") ?>"></script>
 
 <script>
     $(document).on("click", ".product", function(e) {
@@ -716,12 +722,19 @@
 
     $(document).on("click", ".print-preview-sales-quote", function() {
         const sq = JSON.parse(localStorage.getItem("sales_quote"));
+
         if (sq != null) {
-            printJS({
-                printable: "<?=base_url("sales-quote-preview/view?id=")?>" + sq.id,
-                showModal: true,
-                modalMessage: "Mengambil File..."
-            });
+            if (window.matchMedia("(max-width: 767px)").matches) {
+                // mobile 
+                window.location.href = "<?= base_url("sales-quote-preview/download?id=") ?>" + sq.id
+            } else {
+                // desktop
+                printJS({
+                    printable: "<?= base_url("sales-quote-preview/view?id=") ?>" + sq.id,
+                    showModal: true,
+                    modalMessage: "Mengambil File..."
+                });
+            }
         }
     });
 
@@ -952,7 +965,9 @@
                 if (response.success) {
                     CustomAlert.close();
                     localStorage.setItem("sales_quote", JSON.stringify(response.data.sales_quote));
-                    $(".preview-sales-quote-container").effect("slide", {
+                    const preview = $(".preview-sales-quote-container");
+                    preview.find(".sq-no").text("").text(response.data.sales_quote.no);
+                    preview.effect("slide", {
                         direction: "right",
                         mode: "show",
                     });
