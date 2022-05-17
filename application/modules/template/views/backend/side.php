@@ -3,6 +3,10 @@
 		GIT Backend
 	</a>
 	<div class="sidebar-content">
+		<div class="sidebar-user">
+			<img src="<?= base_url("assets/backend/images/no-photo.png") ?>" class="img-fluid rounded-circle mb-2" alt="<?= $myInfo->name ?>">
+			<div class="fw-bold"><?= $myInfo->name ?></div>
+		</div>
 		<ul class="sidebar-nav mt-2">
 			<li class="sidebar-header">
 				Main
