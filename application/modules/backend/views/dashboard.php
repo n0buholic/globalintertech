@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="header">
         <h1 class="header-title">
-            Selamat datang <?= $this->session->userdata("username") ?>
+            Selamat datang, <?= $myInfo->name ?>!
         </h1>
     </div>
     <div class="row">
