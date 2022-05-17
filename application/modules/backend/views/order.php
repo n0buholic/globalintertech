@@ -33,11 +33,11 @@
                                 foreach ($orders as $or) {
                                     $cust = json_decode($or->customer);
                                     $prod = json_decode($or->products);
-                                    $counter = $ctr->CounterSQ($or->id);
+                                    $counter = $ctr->SQ_Number($or->id);
                                 ?>
                                     <tr>
                                         <td>
-                                            SQ-<?= date("m", strtotime($or->created_at)) . date("y", strtotime($or->created_at)) . sprintf('%03d', $counter) ?>
+                                            SQ-<?= $counter ?>
                                         </td>
                                         <td>
                                             <p class="my-0"><?= $cust->name ?></p>
@@ -56,8 +56,10 @@
                                                 <span class="badge bg-warning">Proses</span>
                                             <?php elseif ($or->status == 2) : ?>
                                                 <span class="badge bg-success">Selesai</span>
+                                                <span class="badge bg-primary">Selesai</span>
                                             <?php elseif ($or->status == 3) : ?>
                                                 <span class="badge bg-danger">Batal</span>
+                                                <span class="badge bg-primary">Selesai</span>
                                             <?php endif ?>
                                         </td>
                                         <td>
@@ -138,7 +140,7 @@
     $(document).ready(function() {
         $("#catalogue-table").DataTable({
             order: [
-                [1, "desc"],
+                [0, "desc"],
             ],
             columnDefs: [{
                 targets: [7],

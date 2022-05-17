@@ -5,7 +5,7 @@ $data = json_decode($sales_quote->data);
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<title>Quote-SQ-<?= date("m", strtotime($sales_quote->created_at)) . date("y", strtotime($sales_quote->created_at)) . sprintf('%03d', $counter) ?></title>
+<title>Quote-SQ-<?= $counter ?></title>
 <link rel="stylesheet" href="<?= base_url("assets/backend/css/mpdf-bootstrap.css") ?>">
 <link href="<?= base_url("assets/frontend/vendor/fontawesome6/css/all.min.css") ?>" rel="stylesheet" type="text/css" />
 <style>

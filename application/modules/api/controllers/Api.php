@@ -369,7 +369,7 @@ class Api extends MX_Controller
 			$return = [];
 			if ($sq) {
 				$return["id"] = $sq->id;
-				$return["no"] = "SQ-" . date("m", strtotime($sq->created_at)) . date("y", strtotime($sq->created_at)) . $this->CounterSQ($sq->id);
+				$return["no"] = "#SQ-" . $this->SQ_NUmber($sq->id);
 			}
 
 			$this->JSON_Output(true, "Pratinjau penawaran berhasil dibuat", ["sales_quote" => $return]);
@@ -386,7 +386,11 @@ class Api extends MX_Controller
 			$data[$name] = $value;
 		}
 
-		$data["status"] = 0;
+		$check = $this->db->from("sales_quote")->where("id", $data["id"])->get()->row();
+
+		if ($check->status > 0) {
+			$this->JSON_Output(false, "Pesanan tidak dapat diubah karena sudah diterima oleh sales kami", ["redirect" => base_url("catalogue")]);
+		}
 
 		$q = [
 			"table" => "sales_quote",
@@ -400,12 +404,146 @@ class Api extends MX_Controller
 			$return = [];
 			if ($sq) {
 				$return["id"] = $sq->id;
-				$return["no"] = "#SQ-" . date("m", strtotime($sq->created_at)) . date("y", strtotime($sq->created_at)) . sprintf('%03d', $this->CounterSQ($sq->id));
+				$return["no"] = "#SQ-" . $this->SQ_NUmber($sq->id);
 			}
 
 			$this->JSON_Output(true, "Pratinjau penawaran berhasil diperbarui", ["sales_quote" => $return]);
 		} else {
 			$this->JSON_Output(true, "Gagal memperbarui pratinjau penawaran");
+		}
+	}
+
+	public function sq_activity_log()
+	{
+		if (!$this->input->get('id')) {
+			$this->JSON_Output(false, "Tidak ada data yang dapat ditampilkan");
+		}
+
+		$sq = $this->db->from("sales_quote")->where("id", $this->input->get("id"))->get()->row();
+		$activity = $this->db->from("sales_quote_activity")->where("sales_quote_id", $this->input->get("id"))->order_by("id", "asc")->get()->result();
+
+		$sq->no = "#SQ-" . $this->SQ_NUmber($sq->id);
+
+		$result = [
+			[
+				"id" => 0,
+				"date" => $sq->created_at,
+				"activity" => "Pesanan dibuat",
+				"showRemove" => false,
+				"removable" => false
+			]
+		];
+
+		if ($sq->status > 0) {
+			$result[] = [
+				"id" => 0,
+				"date" => $sq->taken_date,
+				"activity" => "Pesanan diambil oleh sales",
+				"showRemove" => false,
+				"removable" => false
+			];
+		}
+
+
+		$now = new DateTime("now");
+
+		foreach ($activity as $ac) {
+			$datetime = new DateTime($ac->datetime);
+			$datetime->add(new DateInterval('P1D'));
+
+			$result[] = [
+				"id" => $ac->id,
+				"date" => $ac->datetime,
+				"activity" => $ac->activity,
+				"showRemove" => true,
+				"removable" => $now > $datetime ? false : true,
+				"file" => $ac->file
+			];
+		}
+
+		if ($sq->status == 2) {
+			$result[] = [
+				"id" => 0,
+				"date" => $sq->finish_date,
+				"activity" => "<span class=''><span class='badge bg-success'>DEAL</span> Pesanan selesai</span>",
+				"showRemove" => false,
+				"removable" => false
+			];
+		} else if ($sq->status == 3) {
+			$result[] = [
+				"id" => 0,
+				"date" => $sq->finish_date,
+				"activity" => "<span class=''><span class='badge bg-danger'>BATAL</span> Pesanan selesai</span>",
+				"showRemove" => false,
+				"removable" => false
+			];
+		}
+
+		$result = array_map(function($d) {
+			$d["date"] = date("d/m/Y", strtotime($d["date"])) . "<br><small>" . date("H:i", strtotime($d["date"])) . "</small>";
+			return $d;
+		}, $result);
+
+		$this->JSON_Output(true, "Berhasil mengambil data", ["activity" => $result, "info" => $sq]);
+	}
+
+	public function add_sq_activity() {
+		$data = [];
+
+		foreach ($this->input->post() as $name => $value) {
+			$data[$name] = $value;
+		}
+		
+		$data["datetime"] = date("Y-m-d H:i:s");
+
+		if ($_FILES['file']['size'] > 0) {
+			$time = time();
+
+			$config['upload_path']          = './assets/backend/uploads/sq_file/';
+			$config['allowed_types']        = 'jpg|jpeg|png|pdf';
+			$config['file_ext_tolower']     = TRUE;
+			$config['max_size']				= 1024;
+			$config['file_name']            = "$data[sales_quote_id]-$time}";
+
+			$this->Make_Dir($config['upload_path']);
+
+			$this->load->library('upload', $config);
+
+			if (!$this->upload->do_upload('file')) {
+				$this->JSON_Output(false, "Upload gagal: {$this->upload->display_errors()}");
+			} else {
+				$data['file'] = $this->upload->data()['file_name'];
+			}
+		}
+
+		$q = [
+			"table" => "sales_quote_activity",
+			"data" => $data
+		];
+
+		if ($this->DB_Insert($q)) {
+			$this->JSON_Output(true, "Berhasil menambahkan log aktifitas");
+		} else {
+			$this->JSON_Output(true, "Gagal menambahkan log aktifitas");
+		}
+	}
+
+	public function remove_sq_activity() {
+		$data = [];
+
+		foreach ($this->input->post() as $name => $value) {
+			$data[$name] = $value;
+		}
+
+		$q = [
+			"table" => "sales_quote_activity",
+			"where" => "id = $data[id]"
+		];
+
+		if ($this->DB_Delete($q)) {
+			$this->JSON_Output(true, "Berhasil menghapus log aktifitas");
+		} else {
+			$this->JSON_Output(true, "Gagal menghapus log aktifitas");
 		}
 	}
 
@@ -418,7 +556,7 @@ class Api extends MX_Controller
 		}
 
 		$sq = $this->db->from("sales_quote")->where("id", $data["id"])->get()->row();
-		$sq_no = date("m", strtotime($sq->created_at)) . date("y", strtotime($sq->created_at)) . sprintf('%03d', $this->CounterSQ($sq->id));
+		$sq_no = $this->SQ_NUmber($sq->id);
 		$customer = json_decode($sq->customer);
 
 		// config
@@ -488,7 +626,8 @@ class Api extends MX_Controller
 		}
 	}
 
-	public function finish_sales_quote() {
+	public function finish_sales_quote()
+	{
 		$data = [];
 
 		foreach ($this->input->post() as $name => $value) {
@@ -505,13 +644,14 @@ class Api extends MX_Controller
 		];
 
 		if ($this->DB_Update($q)) {
-			$this->JSON_Output(true, "Berhasil menandai Sales Quote sebagai selesai", ["redirect" => base_url("backend/sales-quote")]);
+			$this->JSON_Output(true, "Berhasil menandai Sales Quote sebagai deal", ["redirect" => base_url("backend/sales-quote")]);
 		} else {
-			$this->JSON_Output(true, "Gagal menandai Sales Quote sebagai selesai");
+			$this->JSON_Output(true, "Gagal menandai Sales Quote sebagai deal");
 		}
 	}
 
-	public function cancel_sales_quote() {
+	public function cancel_sales_quote()
+	{
 		$data = [];
 
 		foreach ($this->input->post() as $name => $value) {
@@ -542,6 +682,12 @@ class Api extends MX_Controller
 			$data[$name] = $value;
 		}
 
+		$check = $this->db->from("sales_quote")->where("id", $data["id"])->get()->row();
+
+		if ($check->status != 0) {
+			$this->JSON_Output(false, "Pesanan sudah diambil");
+		}
+
 		$data["status"] = 1;
 		$data["taken_by"] = $this->session->userdata("id");
 		$data["taken_date"] = date("Y-m-d H:i:s");
@@ -565,7 +711,7 @@ class Api extends MX_Controller
 		if (!$this->data["sales_quote"]) {
 			show_404();
 		}
-		$this->data["counter"] = $this->CounterSQ($this->data["sales_quote"]->id);
+		$this->data["counter"] = $this->SQ_NUmber($this->data["sales_quote"]->id);
 
 		$header = $this->load->view("backend/sales_quote_header", $this->data, true);
 		$footer = $this->load->view("backend/sales_quote_footer", $this->data, true);

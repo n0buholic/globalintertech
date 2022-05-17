@@ -16,7 +16,6 @@
             onReady: {
                 duration: 100,
                 render: function($container, $newContent) {
-                    console.log($($newContent[0]))
                     sidebarOpened ? $($newContent[0]).addClass("toggled") : null;
                     $container.html($newContent);
                 }
@@ -45,4 +44,5 @@
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script src="<?= base_url("assets/backend/js/custom.js?v=" . time()) ?>"></script>

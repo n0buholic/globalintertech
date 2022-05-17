@@ -19,6 +19,8 @@ $(function () {
 });
 
 function init() {
+    $(document).off();
+
     feather.replace();
 
     $.fn.select2.defaults.set("theme","bootstrap4");
@@ -140,5 +142,84 @@ function init() {
                 }
             }
         });
+    });
+
+    $(document).on("click", ".activity-log", function() {
+        loadActivity($(this).data("id"));
+        $("#activity-log-modal").modal("show");
+    });
+
+    $(document).on("click", ".remove-activity", function() {
+        const parent = $(this).closest("tr");
+        const id = $(this).data("id");
+        const data = new FormData();
+        data.append("id", id);
+
+        $.ajax({
+            url: base_url + "api/remove_sq_activity",
+            type: "POST",
+            data: data,
+            contentType: false,
+            processData: false,
+            beforeSend: () => $.LoadingOverlay("show"),
+            complete: () => $.LoadingOverlay("hide"),
+            success: function(response) {
+                if (response.success) {
+                    parent.remove();
+                }
+            }
+        });
+    })
+
+    $(document).on("submit", "#add-activity-form", function(e) {
+        e.preventDefault();
+        const form = $(this);
+        const id = form.find("#id").val();
+        const activity = quillActivity.root.innerHTML;
+        const activityText = quillActivity.root.innerText
+        if (activityText.trim().length == 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Aktifitas tidak boleh kosong!"
+            });
+            return;
+        }
+        const data = new FormData(this);
+        data.append("activity", activity);
+
+        $.ajax({
+            url: form.attr("action"),
+            method: form.attr("method"),
+            beforeSend: () => $.LoadingOverlay("show"),
+            complete: () => $.LoadingOverlay("hide"),
+            data: data,
+            contentType: false,
+            processData: false,
+            dataType: "json",
+            success: function(res) {
+                if (res.success) {
+                    $("#add-activity-modal").find("#activity").val("").trigger("change");
+                    $("#add-activity-modal").modal("hide");
+                    quillActivity.deleteText(0, quillActivity.getLength());
+                    form.find("#file").val("").trigger("change");
+                    form.find("#id").val("").trigger("change");
+                    loadActivity(id);
+                } else {
+                    Swal.fire(
+                        "Gagal",
+                        res.message,
+                        "error"
+                    )
+                }
+            }
+        });
+
+    });
+
+    $(document).on("click", "button.add-activity", function() {
+        const modal = $("#add-activity-modal");
+        modal.find("#id").val($(this).data("id"));
+        modal.modal("show");
     });
 }

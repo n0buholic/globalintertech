@@ -2,6 +2,8 @@ application/config/database.php
 application/helpers/email_account_helper.php
 assets/upload
 assets/frontend/images/uploads
+assets/backend/images/uploads
+assets/backend/uploads
 setty
 file_upload
 /.htaccess

@@ -70,7 +70,7 @@ class MX_Controller
 		return "Rp " . number_format($num, 0, '.', '.');
 	}
 
-	public function CounterSQ($id) {
+	public function SQ_Number($id) {
 		$sq = $this->db->from("sales_quote")->where("id", $id)->get()->row();
 		$sq_month = date("m", strtotime($sq->created_at));
 		$sq_year = date("Y", strtotime($sq->created_at));
@@ -81,7 +81,7 @@ class MX_Controller
 		if ($sales_quote_this_month > 0) {
 			$counter = $sales_quote_this_month + 1;
 		}
-		return $counter;
+		return date("m", strtotime($sq->created_at)) . date("y", strtotime($sq->created_at)) . sprintf('%03d', $counter);
 	}
 
 	public function Make_Dir($dir)

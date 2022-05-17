@@ -439,6 +439,11 @@
                     <span class="d-md-none d-block"><i class="fa-solid fa-download fa-fw me-1"></i> Unduh</span>
                 </button>
             </div>
+            <div class="col-lg-12 d-grid">
+                <button class="btn-primary-line clear-session" style="width: 100% !important;">
+                    <i class="fa-solid fa-times-circle fa-fw me-1"></i> Akhiri Sesi
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -657,6 +662,13 @@
             mode: "hide"
         });
     });
+
+    $(document).on("click", ".clear-session", function() {
+        localStorage.removeItem("cart");
+        localStorage.removeItem("customer");
+        localStorage.removeItem("sales_quote");
+        window.location.reload();
+    })
 
     $(document).on("click", ".add-to-cart", function(e) {
         const fixedCart = $(".fixed-cart");
@@ -978,6 +990,12 @@
                         text: response.message,
                         icon: "error",
                     })
+                }
+
+                if (response.data?.redirect) {
+                    setTimeout(function() {
+                        window.location.href = response.data.redirect;
+                    }, 1000);
                 }
             },
         });
