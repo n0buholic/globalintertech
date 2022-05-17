@@ -55,7 +55,7 @@
                                             <?php elseif ($or->status == 1) : ?>
                                                 <span class="badge bg-warning">Proses</span>
                                             <?php elseif ($or->status == 2) : ?>
-                                                <span class="badge bg-success">Selesai</span>
+                                                <span class="badge bg-success">Deal</span>
                                                 <span class="badge bg-primary">Selesai</span>
                                             <?php elseif ($or->status == 3) : ?>
                                                 <span class="badge bg-danger">Batal</span>
