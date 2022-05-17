@@ -192,8 +192,13 @@
 
     async function loadActivity(id) {
         const modal = $("#activity-log-modal");
+        modal.find(".table-log tbody").html("");
+        modal.find("#customer").html("");
+        modal.find("#sq-no").text("");
+        modal.find("button.add-activity").hide();
         const activity = await fetch(base_url + "api/sq_activity_log?id=" + id).then(res => res.json());
         modal.find("#sq-no").text(activity.data.info.no);
+        modal.find("button.add-activity").show();
         if (parseInt(activity.data.info.status) <= 1) {
             modal.find("button.add-activity").prop("disabled", false)
             modal.find("button.add-activity").attr("data-id", activity.data.info.id);
@@ -203,7 +208,6 @@
         }
         const cust = JSON.parse(activity.data.info.customer);
         modal.find("#customer").html(`${cust.name}<br>${cust.phone}<br>${cust.address}`);
-        modal.find(".table-log tbody").html("");
         activity.data.activity.forEach(item => {
             let file = ``;
             if (item?.file) {
