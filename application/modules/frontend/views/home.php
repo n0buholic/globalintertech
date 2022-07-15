@@ -592,8 +592,8 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="row gx-1">
-                <div class="col-6"><a target="_blank" href="<?= base_url("promo-2022-hikvision") ?>"><img class="w-100" src="<?= base_url("assets/frontend/images/promo/banner_promo_hikvision.jpeg") ?>" alt=""></a></div>
-                <div class="col-6"><a target="_blank" href="<?= base_url("promo-2022-proview") ?>"><img class="w-100" src="<?= base_url("assets/frontend/images/promo/banner_promo_proview.jpeg") ?>" alt=""></a></div>
+                <div class="col-6"><a target="_blank" href="<?= base_url("promo-2022-colorvu-2mp") ?>"><img class="w-100" src="<?= base_url("assets/frontend/images/promo/COLORVU_2MP_PAKET.jpeg") ?>" alt=""></a></div>
+                <div class="col-6"><a target="_blank" href="<?= base_url("promo-2022-colorvu-5mp") ?>"><img class="w-100" src="<?= base_url("assets/frontend/images/promo/COLORVU_5MP_PAKET.jpeg") ?>" alt=""></a></div>
             </div>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i class="fas fa-times"></i></button>
         </div>
