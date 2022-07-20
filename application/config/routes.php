@@ -74,3 +74,8 @@ $route['sales-quote/download'] = 'api/sales_quote_view/download/view';
 
 $route['sales-quote-preview/view'] = 'api/sales_quote_view/view/preview';
 $route['sales-quote-preview/download'] = 'api/sales_quote_view/download/preview';
+
+$route['backend/support-link'] = 'backend/support_link';
+
+$route['download-support-link'] = 'api/support_link';
+$route['support-link'] = 'frontend/support_link';

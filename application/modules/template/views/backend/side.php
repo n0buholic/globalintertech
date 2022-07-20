@@ -35,6 +35,14 @@
 					<i class="align-middle me-2 fas fa-fw fa-scroll"></i> <span class="align-middle">Sales Quote</span>
 				</a>
 			</li>
+			<li class="sidebar-header">
+				Landing Page
+			</li>
+			<li class="sidebar-item">
+				<a class="sidebar-link" href="<?= base_url("backend/support-link") ?>">
+					<i class="align-middle me-2 fas fa-fw fa-link"></i> <span class="align-middle">Support Link</span>
+				</a>
+			</li>
 			<!--
 			<li class="sidebar-item">
 				<a class="sidebar-link" href="<?= base_url("backend/sort-catalogue") ?>">
@@ -43,7 +51,7 @@
 			</li>
 			-->
 			<li class="sidebar-header">
-				Landing
+				Mobile Landing
 			</li>
 			<li class="sidebar-item">
 				<a class="sidebar-link" href="<?= base_url("backend/promo") ?>">

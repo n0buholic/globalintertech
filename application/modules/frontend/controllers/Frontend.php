@@ -20,6 +20,13 @@ class Frontend extends MX_Controller
 		viewPage("base/frontend", "home", $this->data);
 	}
 
+	public function support_link()
+	{
+		$this->data["title"] = "Global Integra Technology - Support Link";
+		$this->data["support"] = $this->db->select("a.*, (SELECT count(id) FROM support_link_clicked WHERE support_link_id = a.id LIMIT 1) as total_click")->from("support_link a")->get()->result();
+		viewPage("base/frontend", "support_link", $this->data);
+	}
+
 	public function landing()
 	{
 		$now = date("Y-m-d H:i:s");

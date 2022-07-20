@@ -112,4 +112,27 @@ class Backend extends MX_Controller
 		}
 		viewPage("base/backend", "edit_promo", $this->data);
 	}
+
+	public function support_link()
+	{
+		$this->data["title"] = "Support Link";
+		$this->data["data"] = $this->db->select("a.*, (SELECT count(id) FROM support_link_clicked WHERE support_link_id = a.id LIMIT 1) as total_click")->from("support_link a")->get()->result();
+		viewPage("base/backend", "support_link", $this->data);
+	}
+
+	public function add_support_link()
+	{
+		$this->data["title"] = "Tambah Support Link";
+		viewPage("base/backend", "add_support_link", $this->data);
+	}
+
+	public function edit_support_link()
+	{
+		$this->data["title"] = "Ubah Support Link";
+		$this->data["data"] = $this->db->from("support_link")->get()->row();
+		if (!$this->data["data"]) {
+			redirect("backend/support_link");
+		}
+		viewPage("base/backend", "edit_support_link", $this->data);
+	}
 }

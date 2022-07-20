@@ -348,6 +348,58 @@ class Api extends MX_Controller
 		redirect("backend/promo");
 	}
 
+	public function add_support_link()
+	{
+		$data = [];
+
+		foreach ($this->input->post() as $name => $value) {
+			$data[$name] = $value;
+		}
+
+		$q = [
+			"table" => "support_link",
+			"data" => $data
+		];
+
+		if ($this->DB_Insert($q)) {
+			$this->JSON_Output(true, "Berhasil menambah support link", ["redirect" => base_url("backend/support-link")]);
+		} else {
+			$this->JSON_Output(true, "Gagal menambah support link");
+		}
+	}
+
+	public function edit_support_link()
+	{
+		$data = [];
+
+		foreach ($this->input->post() as $name => $value) {
+			$data[$name] = $value;
+		}
+
+		$q = [
+			"table" => "support_link",
+			"data" => $data,
+			"where" => "id = $data[id]"
+		];
+
+		if ($this->DB_Update($q)) {
+			$this->JSON_Output(true, "Berhasil mengubah support link", ["redirect" => base_url("backend/support-link")]);
+		} else {
+			$this->JSON_Output(true, "Gagal mengubah support link");
+		}
+	}
+
+	public function delete_support_link()
+	{
+		$q = [
+			"table" => "support_link",
+			"where" => "id = {$this->input->get('id')}"
+		];
+
+		$this->DB_Delete($q);
+		redirect("backend/support-link");
+	}
+
 	public function request_quotation()
 	{
 		$data = [];
@@ -479,7 +531,7 @@ class Api extends MX_Controller
 			];
 		}
 
-		$result = array_map(function($d) {
+		$result = array_map(function ($d) {
 			$d["date"] = date("d/m/Y", strtotime($d["date"])) . "<br><small>" . date("H:i", strtotime($d["date"])) . "</small>";
 			return $d;
 		}, $result);
@@ -487,13 +539,14 @@ class Api extends MX_Controller
 		$this->JSON_Output(true, "Berhasil mengambil data", ["activity" => $result, "info" => $sq]);
 	}
 
-	public function add_sq_activity() {
+	public function add_sq_activity()
+	{
 		$data = [];
 
 		foreach ($this->input->post() as $name => $value) {
 			$data[$name] = $value;
 		}
-		
+
 		$data["datetime"] = date("Y-m-d H:i:s");
 
 		if ($_FILES['file']['size'] > 0) {
@@ -528,7 +581,8 @@ class Api extends MX_Controller
 		}
 	}
 
-	public function remove_sq_activity() {
+	public function remove_sq_activity()
+	{
 		$data = [];
 
 		foreach ($this->input->post() as $name => $value) {
@@ -730,6 +784,25 @@ class Api extends MX_Controller
 			$mpdf->Output("Quote-SQ-" . date("m", strtotime($this->data["sales_quote"]->created_at)) . date("y", strtotime($this->data["sales_quote"]->created_at)) . sprintf('%03d', $this->data["counter"]) . ".pdf", "D");
 		} else {
 			$mpdf->Output("Quote-SQ-" . date("m", strtotime($this->data["sales_quote"]->created_at)) . date("y", strtotime($this->data["sales_quote"]->created_at)) . sprintf('%03d', $this->data["counter"]) . ".pdf", "I");
+		}
+	}
+
+	public function support_link()
+	{
+		$id = @$this->input->get("id");
+		$link = $this->db->where("id", $id)->get("support_link")->row();
+
+		if ($link) {
+			$this->DB_Insert([
+				"table" => "support_link_clicked",
+				"data" => [
+					"support_link_id" => $link->id
+				]
+			]);
+			header("Location: $link->url", true, 301);
+			exit();
+		} else {
+			$this->JSON_Output(false, "ID tidak ditemukan");
 		}
 	}
 }
