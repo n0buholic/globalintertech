@@ -11,7 +11,7 @@
                     <div class="card-actions float-end">
                         <a href="<?= base_url("backend/add_support_link") ?>" class="btn btn-primary text-white"><i class="fa fa-fw fa-plus"></i> Tambah</a>
                     </div>
-                    <h5 class="card-title">List Promo</h5>
+                    <h5 class="card-title">List Support Link</h5>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
