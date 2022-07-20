@@ -9,20 +9,26 @@
             <div class="card">
                 <div class="card-body">
                     <form id="support-link-form" action="<?= base_url("api/edit_support_link") ?>" method="POST">
-                    <input type="hidden" name="id" value="<?=$data->id?>">
+                        <input type="hidden" name="id" value="<?= $data->id ?>">
                         <div class="row">
                             <div class="col-md-12">
                                 <h5 class="card-title mb-3">Informasi</h5>
-                                <div class="form-group mb-3">
-                                    <label class="form-label" for="name">Nama</label>
-                                    <input type="text" class="form-control" name="name" id="name" placeholder="Nama Link" value="<?= $data->name ?>" required>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label class="form-label" for="url">URL Tujuan</label>
-                                    <input type="url" class="form-control" name="url" id="url" placeholder="URL Tujuan" value="<?= $data->url ?>" required>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label class="form-label" for="name">Nama</label>
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Nama Link" value="<?= $data->name ?>" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label class="form-label" for="url">URL Tujuan</label>
+                                            <input type="url" class="form-control" name="url" id="url" placeholder="URL Tujuan" value="<?= $data->url ?>" required>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group mb-3 float-start">
-                                    <a href="<?=base_url("api/delete_support_link?id=$data->id")?>" class="btn btn-danger no-smoothstate"><i class="fa fa-fw fa-trash me-1"></i>Hapus</a>
+                                    <a href="<?= base_url("api/delete_support_link?id=$data->id") ?>" class="btn btn-danger no-smoothstate"><i class="fa fa-fw fa-trash me-1"></i>Hapus</a>
                                 </div>
                                 <div class="form-group mb-3 float-end">
                                     <button class="btn btn-primary"><i class="fa fa-fw fa-edit me-1"></i>Ubah</button>

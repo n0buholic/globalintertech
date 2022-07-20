@@ -12,13 +12,19 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <h5 class="card-title mb-3">Informasi</h5>
-                                <div class="form-group mb-3">
-                                    <label class="form-label" for="name">Nama</label>
-                                    <input type="text" class="form-control" name="name" id="name" placeholder="Nama Link" required>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label class="form-label" for="url">URL Tujuan</label>
-                                    <input type="url" class="form-control" name="url" id="url" placeholder="URL Tujuan" required>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label class="form-label" for="name">Nama</label>
+                                            <input type="text" class="form-control" name="name" id="name" placeholder="Nama Link" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group mb-3">
+                                            <label class="form-label" for="url">URL Tujuan</label>
+                                            <input type="url" class="form-control" name="url" id="url" placeholder="URL Tujuan" required>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-group mb-3 float-end">
                                     <button class="btn btn-primary"><i class="fa fa-fw fa-plus me-1"></i>Tambah</button>
