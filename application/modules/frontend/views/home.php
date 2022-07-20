@@ -27,6 +27,7 @@
                                 <li><a href="garansi">Masa Garansi</a></li>
                             </ul>
                         </li>
+                        <li><a href="<?= base_url("support-link") ?>">Support</a></li>
                     </ul>
                     <a class="menu-trigger">
                         <span>Menu</span>
