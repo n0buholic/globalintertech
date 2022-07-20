@@ -63,6 +63,20 @@ class Frontend extends MX_Controller
 		viewPage("base/frontend", "promo_imlek_proview", $this->data);
 	}
 
+	public function promo_2022_colorvu_2mp()
+	{
+		$this->data["title"] = "Promo ColorVu Hikvision 2MP 2022 - Global Integra Technology";
+		$this->data["product"] = $this->db->where("type", "colorvu2")->get("promo_package")->result();
+		viewPage("base/promo", "promo_2022_colorvu_2mp", $this->data);
+	}
+
+	public function promo_2022_colorvu_5mp()
+	{
+		$this->data["title"] = "Promo ColorVu Hikvision 5MP 2022 - Global Integra Technology";
+		$this->data["product"] = $this->db->where("type", "colorvu5")->get("promo_package")->result();
+		viewPage("base/promo", "promo_2022_colorvu_5mp", $this->data);
+	}
+
 	public function catalogue()
 	{
 		$this->data["title"] = "Katalog";
