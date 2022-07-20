@@ -30,7 +30,9 @@
                                         <td>
                                             <?= $supp->name ?>
                                         </td>
-                                        <td><a target="_blank" href="<?= $supp->url ?>"><?= $supp->url ?></a></td>
+                                        <td>
+                                            <input type="text" class="form-control" value="<?= $supp->url ?>" readonly>
+                                        </td>
                                         <td><?= $supp->total_click ?></td>
                                         <td>
                                             <div class="float-end">
